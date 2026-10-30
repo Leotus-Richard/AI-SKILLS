@@ -13,6 +13,12 @@ Source references identify the versions used to create this collection. They do 
 
 ## Workflow skills
 
+### Agile Work Hierarchy
+
+Agile Work Hierarchy is original Apache-2.0 guidance implementing the repository owner's Epic/Milestone → Feature → User Story → Task convention, with Bugs independent unless explicitly specified. It adapts Graph Engineering's contracts, distinct dependency edges, validation, and resumable mutation model into a self-contained skill.
+
+Its four provider references use dated official documentation and distinguish native hierarchy from logical projections. Its bundled offline validator checks declared graph invariants and completion assertions; it does not establish live tracker enforcement or delivered software. Exact sources, attribution limits, and the reference Graph Engineering revision are in [`skills/agile-work-hierarchy/SOURCE.md`](../skills/agile-work-hierarchy/SOURCE.md).
+
 ### Enterprise Agent Architecture
 
 Enterprise Agent Architecture is user-supplied design guidance, contributed under Apache-2.0. The supplied entrypoint describes its two-plane model, eight pillars, evidence authority tiers, retrieval, tool governance, observability, and evaluation.

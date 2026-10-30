@@ -2,10 +2,11 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **4 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+This repository contains **5 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
 
 | Skill | Category | License | Description |
 | --- | --- | --- | --- |
+| [agile-work-hierarchy](../skills/agile-work-hierarchy/SKILL.md) | workflow | Apache-2.0 | Plan, create, review, or reconcile Agile work items as an explicit Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies. Use for hierarchical backlogs and delivery plans across Linear, GitHub Issues, Azure DevOps, and Jira. |
 | [enterprise-agent-architecture](../skills/enterprise-agent-architecture/SKILL.md) | workflow | Apache-2.0 | Design, review, or document governed enterprise AI agents using the Two-Plane blueprint (Domain Knowledge Plane + Agent Capability Plane), eight design pillars, T0–T5 source authority tiers, five-mechanism hybrid retrieval, intent-scoped tool gateways, risk-tiered governance (Low/Medium/High with HITL), OpenTelemetry auditability, and nine-dimension evaluation. Use this whenever the user is architecting a domain-specific knowledge agent, ops/diagnostic agent, or multi-agent system; choosing between Microsoft Agent Framework, Google ADK/Gemini Enterprise, OpenAI Agents SDK, CrewAI or LangGraph; defining agent guardrails, approval gates, tool permissions or blast radius; or writing an agent design doc, ADR, capability contract or governance baseline — even if they just say "build an agent for our platform" or "how should we govern our agents". |
 | [graph-engineering](../skills/graph-engineering/SKILL.md) | workflow | Apache-2.0 | Design, review, or refactor AI agent workflows into explicit execution graphs. Use when orchestration has meaningful branches, parallel workers, approvals, retries, or stateful handoffs, including slow or flaky agent loops; prefer a script for simple sequential work. |
 | [grill-with-docs](../skills/grill-with-docs/SKILL.md) | workflow | MIT | Interview the user about a plan, design, or decision in dependency-aware rounds with recommendations, while maintaining a domain glossary and qualifying architecture decision records. Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session. |
@@ -13,6 +14,7 @@ This repository contains **4 skills**. Each Perplexity upload archive contains o
 
 ## Provenance
 
+- **agile-work-hierarchy**: original; <https://github.com/Leotus-Richard/AI-SKILLS/tree/881f8a1e46a3f8b64f22ac9d6d95824f137e26ea/skills/graph-engineering>, <https://docs.github.com/en/rest/issues/sub-issues>, <https://linear.app/docs/parent-and-sub-issues>, <https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops>, <https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/>.
 - **enterprise-agent-architecture**: user-supplied; user-supplied source with no independently verified URL.
 - **graph-engineering**: user-supplied; user-supplied source with no independently verified URL.
 - **grill-with-docs**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.

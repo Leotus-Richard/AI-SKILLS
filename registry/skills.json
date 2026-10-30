@@ -2,6 +2,22 @@
   "schemaVersion": 1,
   "skills": [
     {
+      "name": "agile-work-hierarchy",
+      "category": "workflow",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "original",
+        "urls": [
+          "https://github.com/Leotus-Richard/AI-SKILLS/tree/881f8a1e46a3f8b64f22ac9d6d95824f137e26ea/skills/graph-engineering",
+          "https://docs.github.com/en/rest/issues/sub-issues",
+          "https://linear.app/docs/parent-and-sub-issues",
+          "https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops",
+          "https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/"
+        ],
+        "notes": "Original user-defined Agile work hierarchy based on Graph Engineering, with independent Bugs, portable provider projections, and a local plan validator. Official provider documentation checked on 2026-10-29; native mappings require target-specific capability discovery."
+      }
+    },
+    {
       "name": "enterprise-agent-architecture",
       "category": "workflow",
       "license": "Apache-2.0",

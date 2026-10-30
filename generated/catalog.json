@@ -2,6 +2,27 @@
   "schemaVersion": 1,
   "skills": [
     {
+      "name": "agile-work-hierarchy",
+      "description": "Plan, create, review, or reconcile Agile work items as an explicit Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies. Use for hierarchical backlogs and delivery plans across Linear, GitHub Issues, Azure DevOps, and Jira.",
+      "category": "workflow",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "original",
+        "notes": "Original user-defined Agile work hierarchy based on Graph Engineering, with independent Bugs, portable provider projections, and a local plan validator. Official provider documentation checked on 2026-10-29; native mappings require target-specific capability discovery.",
+        "urls": [
+          "https://github.com/Leotus-Richard/AI-SKILLS/tree/881f8a1e46a3f8b64f22ac9d6d95824f137e26ea/skills/graph-engineering",
+          "https://docs.github.com/en/rest/issues/sub-issues",
+          "https://linear.app/docs/parent-and-sub-issues",
+          "https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops",
+          "https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/"
+        ]
+      },
+      "path": "skills/agile-work-hierarchy",
+      "fileCount": 12,
+      "uncompressedBytes": 89146,
+      "contentSha256": "d2236c9045a09590e83760ee487a28e8e543d1d5fc1b674241d4907f76e0b218"
+    },
+    {
       "name": "enterprise-agent-architecture",
       "description": "Design, review, or document governed enterprise AI agents using the Two-Plane blueprint (Domain Knowledge Plane + Agent Capability Plane), eight design pillars, T0–T5 source authority tiers, five-mechanism hybrid retrieval, intent-scoped tool gateways, risk-tiered governance (Low/Medium/High with HITL), OpenTelemetry auditability, and nine-dimension evaluation. Use this whenever the user is architecting a domain-specific knowledge agent, ops/diagnostic agent, or multi-agent system; choosing between Microsoft Agent Framework, Google ADK/Gemini Enterprise, OpenAI Agents SDK, CrewAI or LangGraph; defining agent guardrails, approval gates, tool permissions or blast radius; or writing an agent design doc, ADR, capability contract or governance baseline — even if they just say \"build an agent for our platform\" or \"how should we govern our agents\".",
       "category": "workflow",

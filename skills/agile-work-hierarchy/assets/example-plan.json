@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "mvp",
+      "kind": "epic",
+      "title": "Saved-search export MVP",
+      "parentId": null,
+      "dependsOn": [],
+      "outcome": "Pilot customers can take their saved search data with them.",
+      "acceptanceCriteria": ["The required export capability works end to end for pilot customers."],
+      "verification": ["Record a pilot acceptance session with a successful downloaded export."],
+      "goalMode": "bounded",
+      "status": "backlog"
+    },
+    {
+      "id": "export",
+      "kind": "feature",
+      "title": "Download saved searches as CSV",
+      "parentId": "mvp",
+      "dependsOn": [],
+      "outcome": "An authenticated customer can download their own saved searches in the agreed CSV format.",
+      "acceptanceCriteria": ["The pilot environment provides a documented export action producing only the requesting customer's data."],
+      "verification": ["Exercise the deployed action with pilot accounts and inspect output and access isolation."],
+      "status": "backlog"
+    },
+    {
+      "id": "download-story",
+      "kind": "story",
+      "title": "Export my saved searches without exposing another customer's data",
+      "parentId": "export",
+      "dependsOn": [],
+      "outcome": "A customer obtains a valid file containing exactly their own saved searches, including an empty collection.",
+      "acceptanceCriteria": ["Given a customer with saved searches, the download contains those rows in the agreed format.", "Given an empty collection, the download contains headers and no data rows.", "A customer cannot export another customer's saved searches."],
+      "verification": ["Run end-to-end cases for populated, empty, and unauthorized cross-account requests."],
+      "status": "backlog"
+    },
+    {
+      "id": "format-task",
+      "kind": "task",
+      "title": "Define the CSV contract and examples",
+      "parentId": "download-story",
+      "dependsOn": [],
+      "outcome": "An agreed contract defines columns, escaping, encoding, and empty-file behavior.",
+      "acceptanceCriteria": ["The contract includes sample populated and empty exports and escaping examples."],
+      "verification": ["Review fixtures against the agreed consumer requirements and record the decision."],
+      "status": "backlog"
+    },
+    {
+      "id": "download-task",
+      "kind": "task",
+      "title": "Implement and verify the authenticated CSV download",
+      "parentId": "download-story",
+      "dependsOn": ["format-task"],
+      "dependencyReasons": {"format-task": "The download implementation consumes the agreed CSV columns, encoding, and fixtures."},
+      "outcome": "The export action emits contract-compliant CSV for the requesting account.",
+      "acceptanceCriteria": ["Populated, empty, escaped-value, and unauthorized requests match the agreed behavior."],
+      "verification": ["Run contract and access-isolation tests and inspect an actual downloaded file."],
+      "status": "backlog"
+    },
+    {
+      "id": "login-bug",
+      "kind": "bug",
+      "title": "Fix the existing login crash after session expiry",
+      "parentId": null,
+      "dependsOn": [],
+      "outcome": "The existing login flow handles an expired session without crashing.",
+      "component": "authentication",
+      "expectedBehavior": "The established session-expiry contract returns the customer to sign-in.",
+      "observedBehavior": "The current flow crashes after an expired session is submitted.",
+      "acceptanceCriteria": ["An expired session returns to sign-in without an unhandled error."],
+      "verification": ["Reproduce the expired-session case and add/run a regression check for the established behavior."],
+      "status": "backlog"
+    }
+  ],
+  "externalReferences": []
+}
