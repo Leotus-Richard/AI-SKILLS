@@ -1,0 +1,17 @@
+# Skill catalog
+
+Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
+
+This repository contains **3 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+
+| Skill | Category | License | Description |
+| --- | --- | --- | --- |
+| [graph-engineering](../skills/graph-engineering/SKILL.md) | workflow | Apache-2.0 | Design, review, or refactor AI agent workflows into explicit execution graphs. Use when orchestration has meaningful branches, parallel workers, approvals, retries, or stateful handoffs, including slow or flaky agent loops; prefer a script for simple sequential work. |
+| [grill-with-docs](../skills/grill-with-docs/SKILL.md) | workflow | MIT | Interview the user about a plan, design, or decision in dependency-aware rounds with recommendations, while maintaining a domain glossary and qualifying architecture decision records. Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session. |
+| [wayfinder](../skills/wayfinder/SKILL.md) | workflow | MIT | Plan a large, uncertain effort across multiple sessions as a map of decision tickets. Use when asked to chart a route, establish a planning frontier, resolve planning decisions, or resume a Wayfinder map. Maintain the destination, dependencies, decisions, unresolved fog, and a resume packet. |
+
+## Provenance
+
+- **graph-engineering**: user-supplied; user-supplied source with no independently verified URL.
+- **grill-with-docs**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.
+- **wayfinder**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/wayfinder/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/research/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/prototype/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.

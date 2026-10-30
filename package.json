@@ -1,0 +1,30 @@
+{
+  "name": "@leotus-richard/ai-skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Portable skills with a pinned multi-harness installer and reproducible upload packages.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Leotus-Richard/AI-SKILLS.git"
+  },
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "scripts": {
+    "skills:list": "skills add ./skills --list",
+    "skills:install": "skills add ./skills",
+    "skills:check": "skills check",
+    "skills:update": "skills update",
+    "catalog": "node scripts/catalog.mjs",
+    "catalog:check": "node scripts/catalog.mjs --check",
+    "validate": "node scripts/validate.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "fflate": "0.8.2",
+    "skills": "1.7.4",
+    "yaml": "2.8.1"
+  }
+}

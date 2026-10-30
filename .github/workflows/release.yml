@@ -1,0 +1,81 @@
+name: Release packages
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    name: Validate and package
+    runs-on: ubuntu-latest
+    env:
+      DISABLE_TELEMETRY: '1'
+      DO_NOT_TRACK: '1'
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.20.0'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Validate skills and registry
+        run: npm run validate
+      - name: Check generated catalog
+        run: npm run catalog:check
+      - name: Run tests
+        run: npm test
+      - name: Build upload packages
+        run: npm run build
+      - name: Upload release packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-skills-release
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    name: Publish tagged release
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download validated packages
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-skills-release
+          path: dist/
+      - name: Publish existing tag and generated assets
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mapfile -d '' release_assets < <(find dist -type f -print0)
+          if (( ${#release_assets[@]} == 0 )); then
+            echo 'No release assets were produced.' >&2
+            exit 1
+          fi
+          gh release create "$RELEASE_TAG" \
+            --repo "$RELEASE_REPOSITORY" \
+            --verify-tag \
+            --title "$RELEASE_TAG" \
+            --generate-notes \
+            "${release_assets[@]}"

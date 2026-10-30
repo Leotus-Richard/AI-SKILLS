@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "skills": [
+    {
+      "name": "graph-engineering",
+      "description": "Design, review, or refactor AI agent workflows into explicit execution graphs. Use when orchestration has meaningful branches, parallel workers, approvals, retries, or stateful handoffs, including slow or flaky agent loops; prefer a script for simple sequential work.",
+      "category": "workflow",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "notes": "User-supplied Graph Engineering runbook contributed under Apache-2.0; the unverified publication-attribution caveat is preserved in SKILL.md.",
+        "urls": []
+      },
+      "path": "skills/graph-engineering",
+      "fileCount": 6,
+      "uncompressedBytes": 33367,
+      "contentSha256": "1146b36c8d1b1849479580661b19eb65ab896774b62836119f27dacbe3847af3"
+    },
+    {
+      "name": "grill-with-docs",
+      "description": "Interview the user about a plan, design, or decision in dependency-aware rounds with recommendations, while maintaining a domain glossary and qualifying architecture decision records. Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session.",
+      "category": "workflow",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "Portable adaptation of Matt Pocock skills with required interview/domain-modeling guidance included locally; upstream MIT notice retained.",
+        "revision": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa",
+        "urls": [
+          "https://github.com/mattpocock/skills",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md"
+        ]
+      },
+      "path": "skills/grill-with-docs",
+      "fileCount": 3,
+      "uncompressedBytes": 11203,
+      "contentSha256": "3d43924d4c62c0d5a97de8b2b82aebc6eb9264c5a1c1d2e3acffaec1821c743b"
+    },
+    {
+      "name": "wayfinder",
+      "description": "Plan a large, uncertain effort across multiple sessions as a map of decision tickets. Use when asked to chart a route, establish a planning frontier, resolve planning decisions, or resume a Wayfinder map. Maintain the destination, dependencies, decisions, unresolved fog, and a resume packet.",
+      "category": "workflow",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "Portable adaptation of Matt Pocock skills with required interview/domain-modeling guidance included locally; upstream MIT notice retained.",
+        "revision": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa",
+        "urls": [
+          "https://github.com/mattpocock/skills",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/wayfinder/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/research/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/prototype/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md"
+        ]
+      },
+      "path": "skills/wayfinder",
+      "fileCount": 4,
+      "uncompressedBytes": 27136,
+      "contentSha256": "af1fa53c339e36f06ed2d3ae66b642b7176a342f4741078304eac2a5428e1fc1"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "skills": [
+    {
+      "name": "graph-engineering",
+      "category": "workflow",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "urls": [],
+        "notes": "User-supplied Graph Engineering runbook contributed under Apache-2.0; the unverified publication-attribution caveat is preserved in SKILL.md."
+      }
+    },
+    {
+      "name": "grill-with-docs",
+      "category": "workflow",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/mattpocock/skills",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md"
+        ],
+        "revision": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa",
+        "notes": "Portable adaptation of Matt Pocock skills with required interview/domain-modeling guidance included locally; upstream MIT notice retained."
+      }
+    },
+    {
+      "name": "wayfinder",
+      "category": "workflow",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/mattpocock/skills",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/wayfinder/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/research/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/prototype/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md",
+          "https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md"
+        ],
+        "revision": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa",
+        "notes": "Portable adaptation of Matt Pocock skills with required interview/domain-modeling guidance included locally; upstream MIT notice retained."
+      }
+    }
+  ]
+}

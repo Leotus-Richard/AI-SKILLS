@@ -1,0 +1,11 @@
+AI-SKILLS
+
+Repository scaffolding and original contributions are provided under the
+Apache License, Version 2.0 in LICENSE.
+
+Imported and adapted skills retain their own attribution and license notices
+in their skill folders. These include MIT-licensed material from Matt Pocock.
+The root license does not replace those third-party notices.
+
+Provenance and adaptation details are recorded in registry/skills.json,
+docs/PROVENANCE.md, and individual SOURCE.md files.
