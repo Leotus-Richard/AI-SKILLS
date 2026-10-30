@@ -13,6 +13,14 @@ Source references identify the versions used to create this collection. They do 
 
 ## Workflow skills
 
+### Enterprise Agent Architecture
+
+Enterprise Agent Architecture is user-supplied design guidance, contributed under Apache-2.0. The supplied entrypoint describes its two-plane model, eight pillars, evidence authority tiers, retrieval, tool governance, observability, and evaluation.
+
+The source mentioned a long-form reference that was not supplied. This import removes the dangling reference pointers and keeps the entrypoint self-contained; it does not invent or bundle the missing material. Framework-specific claims are retained as a selection heuristic and require current primary-source verification before implementation. An example request and expected result make the intended use explicit. The import also distinguishes observed state from policy authority and replaces raw approval-token/payload logging with receipt references and redacted audit evidence.
+
+The original attachment's digest and the limited adaptation are recorded in [`skills/enterprise-agent-architecture/SOURCE.md`](../skills/enterprise-agent-architecture/SOURCE.md).
+
 ### Graph Engineering
 
 Graph Engineering is the user's supplied runbook, contributed here under Apache-2.0. Its core guide and local design, review, and incident references are retained. Host interface metadata is omitted because it is not needed for a standalone portable skill.

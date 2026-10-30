@@ -2,6 +2,21 @@
   "schemaVersion": 1,
   "skills": [
     {
+      "name": "enterprise-agent-architecture",
+      "description": "Design, review, or document governed enterprise AI agents using the Two-Plane blueprint (Domain Knowledge Plane + Agent Capability Plane), eight design pillars, T0–T5 source authority tiers, five-mechanism hybrid retrieval, intent-scoped tool gateways, risk-tiered governance (Low/Medium/High with HITL), OpenTelemetry auditability, and nine-dimension evaluation. Use this whenever the user is architecting a domain-specific knowledge agent, ops/diagnostic agent, or multi-agent system; choosing between Microsoft Agent Framework, Google ADK/Gemini Enterprise, OpenAI Agents SDK, CrewAI or LangGraph; defining agent guardrails, approval gates, tool permissions or blast radius; or writing an agent design doc, ADR, capability contract or governance baseline — even if they just say \"build an agent for our platform\" or \"how should we govern our agents\".",
+      "category": "workflow",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "notes": "User-supplied Enterprise Agent Architecture guide contributed under Apache-2.0; unavailable long-form reference pointers removed for a self-contained import. Framework-specific claims require current primary-source verification.",
+        "urls": []
+      },
+      "path": "skills/enterprise-agent-architecture",
+      "fileCount": 3,
+      "uncompressedBytes": 24541,
+      "contentSha256": "169195ae23ff38f5ff398d2f905eea4265aa0001f3d133e2b244aae89e28ed60"
+    },
+    {
       "name": "graph-engineering",
       "description": "Design, review, or refactor AI agent workflows into explicit execution graphs. Use when orchestration has meaningful branches, parallel workers, approvals, retries, or stateful handoffs, including slow or flaky agent loops; prefer a script for simple sequential work.",
       "category": "workflow",

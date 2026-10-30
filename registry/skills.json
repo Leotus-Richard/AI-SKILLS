@@ -2,6 +2,16 @@
   "schemaVersion": 1,
   "skills": [
     {
+      "name": "enterprise-agent-architecture",
+      "category": "workflow",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "urls": [],
+        "notes": "User-supplied Enterprise Agent Architecture guide contributed under Apache-2.0; unavailable long-form reference pointers removed for a self-contained import. Framework-specific claims require current primary-source verification."
+      }
+    },
+    {
       "name": "graph-engineering",
       "category": "workflow",
       "license": "Apache-2.0",

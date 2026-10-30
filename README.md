@@ -1,6 +1,6 @@
 # AI-SKILLS
 
-A personal library of portable agent skills for planning, workflow design, and decision documentation.
+A personal library of portable agent skills for planning, workflow design, enterprise agent architecture, and decision documentation.
 
 Skills live in a flat `skills/<name>/` layout. The [catalog](docs/CATALOG.md) groups them by workload and links to their instructions, references, and provenance. The [registry](registry/skills.json) records category and source metadata; descriptions stay in each `SKILL.md`.
 
