@@ -30,9 +30,9 @@ These are reusable skill files. This repository does not promise native plugin r
 
 ## Perplexity Computer
 
-Download a release's individual skill ZIP and upload it through **Plugins → Add custom → Upload plugin or skill**. Each generated ZIP has `SKILL.md` at its archive root. If the older interface is shown, use **Customize → Skills → Create skill → Upload skill**. The current [official upload requirements](https://www.perplexity.ai/help-center/en/articles/13914413-how-to-use-computer-skills) are documented in the installation guide.
+Build the upload ZIPs from a checkout with `npm run build`, then upload a skill's ZIP from `dist/perplexity/` through **Plugins → Add custom → Upload plugin or skill**. Each generated ZIP has `SKILL.md` at its archive root. If the older interface is shown, use **Customize → Skills → Create skill → Upload skill**. The current [official upload requirements](https://www.perplexity.ai/help-center/en/articles/13914413-how-to-use-computer-skills) are documented in the installation guide.
 
-The optional collection ZIP is a download bundle: **extract it first**, then upload the individual ZIPs in its `perplexity/` directory. Do not upload the outer collection as one skill. Release assets include a manifest and SHA-256 checksums.
+A release carries the source only: the tag, its notes, and the source code archives GitHub attaches. No built ZIP is attached, because the skills are meant to be edited as source and installed by tag.
 
 ## Work on the library
 
@@ -46,7 +46,7 @@ npm run build
 
 Run `npm run catalog` after changing skill metadata or the registry. It regenerates `generated/catalog.json` and `docs/CATALOG.md`. Build output goes to `dist/`; source skills remain the canonical files.
 
-CI runs validation, catalog checks, tests, and packaging with Node `26.13.1` (the current LTS) on self-hosted ARM64 Linux runners plus GitHub-hosted macOS and Windows, and repeats them on Linux with Node `22.20.0`, the minimum supported version. Every skill change is also scanned by NVIDIA SkillSpector and graded by SkillEvaluator; see [skill evaluation](docs/SKILL-EVALUATION.md) for the pipeline, runner setup, and how to measure whether a skill actually helps. Tests include isolated installer checks; routine validation must not change the contributor's global skills. A manually dispatched release workflow builds downloadable Actions artifacts. A pushed `v*` tag additionally publishes the built files as a GitHub release.
+CI runs validation, catalog checks, tests, and packaging with Node `26.13.1` (the current LTS) on self-hosted ARM64 Linux runners plus GitHub-hosted macOS and Windows, and repeats them on Linux with Node `22.20.0`, the minimum supported version. Every skill change is also scanned by NVIDIA SkillSpector and graded by SkillEvaluator; see [skill evaluation](docs/SKILL-EVALUATION.md) for the pipeline, runner setup, and how to measure whether a skill actually helps. Tests include isolated installer checks; routine validation must not change the contributor's global skills. A pushed `v*` tag runs the same checks and then publishes a source-only GitHub release; a manually dispatched release workflow keeps the built packages as an Actions artifact for review.
 
 Each skill is versioned on its own; see [versioning](docs/VERSIONING.md) for the bump rules and how tested models are recorded. Read [CONTRIBUTING.md](CONTRIBUTING.md) before adding or adapting a skill.
 
