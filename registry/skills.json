@@ -50,6 +50,29 @@
       "evaluations": []
     },
     {
+      "name": "domain-modeling",
+      "category": "workflow",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/domain-modeling/SKILL.md",
+          "https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336"
+        ],
+        "revision": "49dd158d1076134a641b33efb035946536778336",
+        "notes": "mattpocock:domain-modeling imported from Engineering Toolkit v1.3; upstream original preserved byte for byte."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs."
+        }
+      ],
+      "evaluations": []
+    },
+    {
       "name": "enterprise-agent-architecture",
       "category": "workflow",
       "license": "Apache-2.0",
@@ -709,6 +732,29 @@
           "date": "2026-11-24",
           "bump": "initial",
           "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "prototype",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/prototype/SKILL.md",
+          "https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336"
+        ],
+        "revision": "49dd158d1076134a641b33efb035946536778336",
+        "notes": "mattpocock:prototype imported from Engineering Toolkit v1.3; upstream original preserved byte for byte."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Create a disposable local logic or UI prototype to settle a named design question; not production implementation."
         }
       ],
       "evaluations": []

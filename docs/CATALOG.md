@@ -2,15 +2,16 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **33 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+This repository contains **35 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
 
-## engineering-practice (4)
+## engineering-practice (5)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
 | [deslop](../skills/deslop/SKILL.md) | 1.0.0 | MIT | Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries. |
 | [interrogate](../skills/interrogate/SKILL.md) | 1.0.0 | MIT | Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real. |
 | [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 1.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
+| [prototype](../skills/prototype/SKILL.md) | 1.0.0 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
 | [retro](../skills/retro/SKILL.md) | 1.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
 
 ## engineering-principles (24)
@@ -42,11 +43,12 @@ This repository contains **33 skills**. Each Perplexity upload archive contains 
 | [principle-test-behavior-not-implementation](../skills/principle-test-behavior-not-implementation/SKILL.md) | 1.0.0 | MIT | Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined. |
 | [principle-type-system-discipline](../skills/principle-type-system-discipline/SKILL.md) | 1.0.0 | MIT | Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas. |
 
-## workflow (5)
+## workflow (6)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
 | [agile-work-hierarchy](../skills/agile-work-hierarchy/SKILL.md) | 1.0.0 | Apache-2.0 | Use when planning, creating, reviewing, or reconciling Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies, in Linear, GitHub Issues, Azure DevOps, or Jira. |
+| [domain-modeling](../skills/domain-modeling/SKILL.md) | 1.0.0 | MIT | Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs. |
 | [enterprise-agent-architecture](../skills/enterprise-agent-architecture/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph. |
 | [graph-engineering](../skills/graph-engineering/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work. |
 | [grill-with-docs](../skills/grill-with-docs/SKILL.md) | 1.0.0 | MIT | Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder. |
@@ -58,6 +60,7 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 
 - **agile-work-hierarchy** 1.0.0: not yet tested with a model
 - **deslop** 1.0.0: not yet tested with a model
+- **domain-modeling** 1.0.0: not yet tested with a model
 - **enterprise-agent-architecture** 1.0.0: not yet tested with a model
 - **graph-engineering** 1.0.0: not yet tested with a model
 - **grill-with-docs** 1.0.0: not yet tested with a model
@@ -87,6 +90,7 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **principle-subtract-before-you-add** 1.0.0: not yet tested with a model
 - **principle-test-behavior-not-implementation** 1.0.0: not yet tested with a model
 - **principle-type-system-discipline** 1.0.0: not yet tested with a model
+- **prototype** 1.0.0: not yet tested with a model
 - **retro** 1.0.0: not yet tested with a model
 - **wayfinder** 1.0.0: not yet tested with a model
 
@@ -101,6 +105,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ### deslop
 
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries.
+
+### domain-modeling
+
+- **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs.
 
 ### enterprise-agent-architecture
 
@@ -218,6 +226,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas.
 
+### prototype
+
+- **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Create a disposable local logic or UI prototype to settle a named design question; not production implementation.
+
 ### retro
 
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.
@@ -230,6 +242,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 - **agile-work-hierarchy**: original; <https://github.com/Leotus-Richard/AI-SKILLS/tree/881f8a1e46a3f8b64f22ac9d6d95824f137e26ea/skills/graph-engineering>, <https://docs.github.com/en/rest/issues/sub-issues>, <https://linear.app/docs/parent-and-sub-issues>, <https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops>, <https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/>.
 - **deslop**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/deslop/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit>.
+- **domain-modeling**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>.
 - **enterprise-agent-architecture**: user-supplied; user-supplied source with no independently verified URL.
 - **graph-engineering**: user-supplied; user-supplied source with no independently verified URL.
 - **grill-with-docs**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.
@@ -259,5 +272,6 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **principle-subtract-before-you-add**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-subtract-before-you-add/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **principle-test-behavior-not-implementation**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-test-behavior-not-implementation/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **principle-type-system-discipline**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-type-system-discipline/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **prototype**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/prototype/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>.
 - **retro**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/retro/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336/skills/productivity/writing-for-agents>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/correct>.
 - **wayfinder**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/wayfinder/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/research/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/prototype/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.
