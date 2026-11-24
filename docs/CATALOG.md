@@ -2,15 +2,46 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **5 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+This repository contains **29 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
 
-| Skill | Version | Category | License | Description |
-| --- | --- | --- | --- | --- |
-| [agile-work-hierarchy](../skills/agile-work-hierarchy/SKILL.md) | 1.0.0 | workflow | Apache-2.0 | Use when planning, creating, reviewing, or reconciling Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies, in Linear, GitHub Issues, Azure DevOps, or Jira. |
-| [enterprise-agent-architecture](../skills/enterprise-agent-architecture/SKILL.md) | 1.0.0 | workflow | Apache-2.0 | Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph. |
-| [graph-engineering](../skills/graph-engineering/SKILL.md) | 1.0.0 | workflow | Apache-2.0 | Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work. |
-| [grill-with-docs](../skills/grill-with-docs/SKILL.md) | 1.0.0 | workflow | MIT | Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder. |
-| [wayfinder](../skills/wayfinder/SKILL.md) | 1.0.0 | workflow | MIT | Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs. |
+## engineering-principles (24)
+
+| Skill | Version | License | Description |
+| --- | --- | --- | --- |
+| [principle-attack-the-premise](../skills/principle-attack-the-premise/SKILL.md) | 1.0.0 | MIT | Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it. |
+| [principle-boundary-discipline](../skills/principle-boundary-discipline/SKILL.md) | 1.0.0 | MIT | Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions. |
+| [principle-build-the-lever](../skills/principle-build-the-lever/SKILL.md) | 1.0.0 | MIT | Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun. |
+| [principle-encode-lessons-in-structure](../skills/principle-encode-lessons-in-structure/SKILL.md) | 1.0.0 | MIT | Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text. |
+| [principle-exhaust-the-design-space](../skills/principle-exhaust-the-design-space/SKILL.md) | 1.0.0 | MIT | Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing. |
+| [principle-experience-first](../skills/principle-experience-first/SKILL.md) | 1.0.0 | MIT | Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones. |
+| [principle-explain-the-number](../skills/principle-explain-the-number/SKILL.md) | 1.0.0 | MIT | Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think. |
+| [principle-fix-root-causes](../skills/principle-fix-root-causes/SKILL.md) | 1.0.0 | MIT | Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes. |
+| [principle-foundational-thinking](../skills/principle-foundational-thinking/SKILL.md) | 1.0.0 | MIT | Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious. |
+| [principle-guard-the-context-window](../skills/principle-guard-the-context-window/SKILL.md) | 1.0.0 | MIT | Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads. |
+| [principle-laziness-protocol](../skills/principle-laziness-protocol/SKILL.md) | 1.0.0 | MIT | Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem. |
+| [principle-make-operations-idempotent](../skills/principle-make-operations-idempotent/SKILL.md) | 1.0.0 | MIT | Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs. |
+| [principle-migrate-callers-then-delete-legacy-apis](../skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md) | 1.0.0 | MIT | Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers. |
+| [principle-minimize-reader-load](../skills/principle-minimize-reader-load/SKILL.md) | 1.0.0 | MIT | Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope. |
+| [principle-model-the-domain](../skills/principle-model-the-domain/SKILL.md) | 1.0.0 | MIT | Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files. |
+| [principle-never-block-on-the-human](../skills/principle-never-block-on-the-human/SKILL.md) | 1.0.0 | MIT | Apply when tempted to ask 'should I do X?' on reversible work. |
+| [principle-outcome-oriented-execution](../skills/principle-outcome-oriented-execution/SKILL.md) | 1.0.0 | MIT | Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code. |
+| [principle-prove-it-works](../skills/principle-prove-it-works/SKILL.md) | 1.0.0 | MIT | Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.' |
+| [principle-redesign-from-first-principles](../skills/principle-redesign-from-first-principles/SKILL.md) | 1.0.0 | MIT | Apply when integrating a new requirement into an existing design. |
+| [principle-separate-before-serializing-shared-state](../skills/principle-separate-before-serializing-shared-state/SKILL.md) | 1.0.0 | MIT | Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant. |
+| [principle-sequence-verifiable-units](../skills/principle-sequence-verifiable-units/SKILL.md) | 1.0.0 | MIT | Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer. |
+| [principle-subtract-before-you-add](../skills/principle-subtract-before-you-add/SKILL.md) | 1.0.0 | MIT | Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base. |
+| [principle-test-behavior-not-implementation](../skills/principle-test-behavior-not-implementation/SKILL.md) | 1.0.0 | MIT | Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined. |
+| [principle-type-system-discipline](../skills/principle-type-system-discipline/SKILL.md) | 1.0.0 | MIT | Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas. |
+
+## workflow (5)
+
+| Skill | Version | License | Description |
+| --- | --- | --- | --- |
+| [agile-work-hierarchy](../skills/agile-work-hierarchy/SKILL.md) | 1.0.0 | Apache-2.0 | Use when planning, creating, reviewing, or reconciling Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies, in Linear, GitHub Issues, Azure DevOps, or Jira. |
+| [enterprise-agent-architecture](../skills/enterprise-agent-architecture/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph. |
+| [graph-engineering](../skills/graph-engineering/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work. |
+| [grill-with-docs](../skills/grill-with-docs/SKILL.md) | 1.0.0 | MIT | Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder. |
+| [wayfinder](../skills/wayfinder/SKILL.md) | 1.0.0 | MIT | Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs. |
 
 ## Tested with
 
@@ -20,6 +51,30 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **enterprise-agent-architecture** 1.0.0: not yet tested with a model
 - **graph-engineering** 1.0.0: not yet tested with a model
 - **grill-with-docs** 1.0.0: not yet tested with a model
+- **principle-attack-the-premise** 1.0.0: not yet tested with a model
+- **principle-boundary-discipline** 1.0.0: not yet tested with a model
+- **principle-build-the-lever** 1.0.0: not yet tested with a model
+- **principle-encode-lessons-in-structure** 1.0.0: not yet tested with a model
+- **principle-exhaust-the-design-space** 1.0.0: not yet tested with a model
+- **principle-experience-first** 1.0.0: not yet tested with a model
+- **principle-explain-the-number** 1.0.0: not yet tested with a model
+- **principle-fix-root-causes** 1.0.0: not yet tested with a model
+- **principle-foundational-thinking** 1.0.0: not yet tested with a model
+- **principle-guard-the-context-window** 1.0.0: not yet tested with a model
+- **principle-laziness-protocol** 1.0.0: not yet tested with a model
+- **principle-make-operations-idempotent** 1.0.0: not yet tested with a model
+- **principle-migrate-callers-then-delete-legacy-apis** 1.0.0: not yet tested with a model
+- **principle-minimize-reader-load** 1.0.0: not yet tested with a model
+- **principle-model-the-domain** 1.0.0: not yet tested with a model
+- **principle-never-block-on-the-human** 1.0.0: not yet tested with a model
+- **principle-outcome-oriented-execution** 1.0.0: not yet tested with a model
+- **principle-prove-it-works** 1.0.0: not yet tested with a model
+- **principle-redesign-from-first-principles** 1.0.0: not yet tested with a model
+- **principle-separate-before-serializing-shared-state** 1.0.0: not yet tested with a model
+- **principle-sequence-verifiable-units** 1.0.0: not yet tested with a model
+- **principle-subtract-before-you-add** 1.0.0: not yet tested with a model
+- **principle-test-behavior-not-implementation** 1.0.0: not yet tested with a model
+- **principle-type-system-discipline** 1.0.0: not yet tested with a model
 - **wayfinder** 1.0.0: not yet tested with a model
 
 ## Version history
@@ -42,6 +97,102 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 - **1.0.0** (2026-11-24, initial): Interviews the user in dependency-aware rounds with recommendations to settle a plan or design in one session, maintaining a domain glossary and qualifying ADRs. Points multi-session planning to Wayfinder and does not treat the interview as authorization to implement.
 
+### principle-attack-the-premise
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it.
+
+### principle-boundary-discipline
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions.
+
+### principle-build-the-lever
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun.
+
+### principle-encode-lessons-in-structure
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text.
+
+### principle-exhaust-the-design-space
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing.
+
+### principle-experience-first
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones.
+
+### principle-explain-the-number
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think.
+
+### principle-fix-root-causes
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes.
+
+### principle-foundational-thinking
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious.
+
+### principle-guard-the-context-window
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads.
+
+### principle-laziness-protocol
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem.
+
+### principle-make-operations-idempotent
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs.
+
+### principle-migrate-callers-then-delete-legacy-apis
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers.
+
+### principle-minimize-reader-load
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope.
+
+### principle-model-the-domain
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files.
+
+### principle-never-block-on-the-human
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when tempted to ask 'should I do X?' on reversible work.
+
+### principle-outcome-oriented-execution
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code.
+
+### principle-prove-it-works
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'
+
+### principle-redesign-from-first-principles
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when integrating a new requirement into an existing design.
+
+### principle-separate-before-serializing-shared-state
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant.
+
+### principle-sequence-verifiable-units
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer.
+
+### principle-subtract-before-you-add
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base.
+
+### principle-test-behavior-not-implementation
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined.
+
+### principle-type-system-discipline
+
+- **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas.
+
 ### wayfinder
 
 - **1.0.0** (2026-11-24, initial): Charts and maintains a multi-session decision map: destination, separate decision tickets, frontier, fog, and a resume packet. Plans only, never implements, and points decisions that fit one session to grill-with-docs.
@@ -52,4 +203,28 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **enterprise-agent-architecture**: user-supplied; user-supplied source with no independently verified URL.
 - **graph-engineering**: user-supplied; user-supplied source with no independently verified URL.
 - **grill-with-docs**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.
+- **principle-attack-the-premise**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-attack-the-premise/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-boundary-discipline**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-boundary-discipline/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-build-the-lever**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-build-the-lever/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-encode-lessons-in-structure**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-encode-lessons-in-structure/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-exhaust-the-design-space**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-exhaust-the-design-space/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-experience-first**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-experience-first/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-explain-the-number**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-explain-the-number/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-fix-root-causes**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-fix-root-causes/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-foundational-thinking**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-foundational-thinking/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-guard-the-context-window**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-guard-the-context-window/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-laziness-protocol**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-laziness-protocol/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-make-operations-idempotent**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-make-operations-idempotent/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-migrate-callers-then-delete-legacy-apis**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-minimize-reader-load**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-minimize-reader-load/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-model-the-domain**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-model-the-domain/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-never-block-on-the-human**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-never-block-on-the-human/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-outcome-oriented-execution**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-outcome-oriented-execution/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-prove-it-works**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-prove-it-works/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-redesign-from-first-principles**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-redesign-from-first-principles/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-separate-before-serializing-shared-state**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-sequence-verifiable-units**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-sequence-verifiable-units/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-subtract-before-you-add**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-subtract-before-you-add/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-test-behavior-not-implementation**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-test-behavior-not-implementation/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **principle-type-system-discipline**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-type-system-discipline/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **wayfinder**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/wayfinder/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/research/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/prototype/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.

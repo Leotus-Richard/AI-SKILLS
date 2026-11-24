@@ -187,13 +187,18 @@ export function renderCatalogMarkdown(catalog, { linkMode = 'source' } = {}) {
     '',
     `This repository contains **${catalog.skills.length} skills**. Each Perplexity upload archive contains one skill with \`SKILL.md\` at its root.`,
     '',
-    '| Skill | Version | Category | License | Description |',
-    '| --- | --- | --- | --- | --- |',
   ];
-  for (const skill of catalog.skills) {
-    const href = linkMode === 'archive' ? `perplexity/${skill.name}.zip` : `../${skill.path}/SKILL.md`;
-    lines.push(`| [${skill.name}](${href}) | ${markdownCell(skill.version ?? 'unversioned')} | ${markdownCell(skill.category)} | ${markdownCell(skill.license)} | ${markdownCell(skill.description)} |`);
+  const categories = [...new Set(catalog.skills.map(skill => skill.category))].sort(compareText);
+  for (const category of categories) {
+    const members = catalog.skills.filter(skill => skill.category === category);
+    lines.push(`## ${markdownCell(category)} (${members.length})`, '', '| Skill | Version | License | Description |', '| --- | --- | --- | --- |');
+    for (const skill of members) {
+      const href = linkMode === 'archive' ? `perplexity/${skill.name}.zip` : `../${skill.path}/SKILL.md`;
+      lines.push(`| [${skill.name}](${href}) | ${markdownCell(skill.version ?? 'unversioned')} | ${markdownCell(skill.license)} | ${markdownCell(skill.description)} |`);
+    }
+    lines.push('');
   }
+  lines.pop();
   lines.push('', '## Tested with', '', 'Models used by the latest live evaluation (`skill-eval.yml`) of each skill\'s current version, from `registry/skills.json`.', '');
   for (const skill of catalog.skills) {
     lines.push(`- **${skill.name}** ${markdownCell(skill.version ?? 'unversioned')}: ${markdownCell(testedWithText(skill.testedWith))}`);
