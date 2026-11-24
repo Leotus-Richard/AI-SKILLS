@@ -2,17 +2,20 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **35 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+This repository contains **38 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
 
-## engineering-practice (5)
+## engineering-practice (8)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
+| [create-verification-skill](../skills/create-verification-skill/SKILL.md) | 1.0.0 | MIT | Generate and execute a project-local verification skill for a local app; not remote deployment or installation. |
 | [deslop](../skills/deslop/SKILL.md) | 1.0.0 | MIT | Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries. |
+| [how-it-works](../skills/how-it-works/SKILL.md) | 1.0.0 | MIT | Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation. |
 | [interrogate](../skills/interrogate/SKILL.md) | 1.0.0 | MIT | Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real. |
 | [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 1.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
 | [prototype](../skills/prototype/SKILL.md) | 1.0.0 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
 | [retro](../skills/retro/SKILL.md) | 1.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
+| [show-me-your-work](../skills/show-me-your-work/SKILL.md) | 1.0.0 | MIT | Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review. |
 
 ## engineering-principles (24)
 
@@ -59,11 +62,13 @@ This repository contains **35 skills**. Each Perplexity upload archive contains 
 Models used by the latest live evaluation (`skill-eval.yml`) of each skill's current version, from `registry/skills.json`.
 
 - **agile-work-hierarchy** 1.0.0: not yet tested with a model
+- **create-verification-skill** 1.0.0: not yet tested with a model
 - **deslop** 1.0.0: not yet tested with a model
 - **domain-modeling** 1.0.0: not yet tested with a model
 - **enterprise-agent-architecture** 1.0.0: not yet tested with a model
 - **graph-engineering** 1.0.0: not yet tested with a model
 - **grill-with-docs** 1.0.0: not yet tested with a model
+- **how-it-works** 1.0.0: not yet tested with a model
 - **interrogate** 1.0.0: not yet tested with a model
 - **maintain-verification-skill** 1.0.0: not yet tested with a model
 - **principle-attack-the-premise** 1.0.0: not yet tested with a model
@@ -92,6 +97,7 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **principle-type-system-discipline** 1.0.0: not yet tested with a model
 - **prototype** 1.0.0: not yet tested with a model
 - **retro** 1.0.0: not yet tested with a model
+- **show-me-your-work** 1.0.0: not yet tested with a model
 - **wayfinder** 1.0.0: not yet tested with a model
 
 ## Version history
@@ -101,6 +107,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ### agile-work-hierarchy
 
 - **1.0.0** (2026-11-24, initial): Plans, reviews, or reconciles Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error).
+
+### create-verification-skill
+
+- **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Generate and execute a project-local verification skill for a local app; not remote deployment or installation.
 
 ### deslop
 
@@ -121,6 +131,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ### grill-with-docs
 
 - **1.0.0** (2026-11-24, initial): Interviews the user in dependency-aware rounds with recommendations to settle a plan or design in one session, maintaining a domain glossary and qualifying ADRs. Points multi-session planning to Wayfinder and does not treat the interview as authorization to implement.
+
+### how-it-works
+
+- **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation.
 
 ### interrogate
 
@@ -234,6 +248,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.
 
+### show-me-your-work
+
+- **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review.
+
 ### wayfinder
 
 - **1.0.0** (2026-11-24, initial): Charts and maintains a multi-session decision map: destination, separate decision tickets, frontier, fog, and a resume packet. Plans only, never implements, and points decisions that fit one session to grill-with-docs.
@@ -241,11 +259,13 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ## Provenance
 
 - **agile-work-hierarchy**: original; <https://github.com/Leotus-Richard/AI-SKILLS/tree/881f8a1e46a3f8b64f22ac9d6d95824f137e26ea/skills/graph-engineering>, <https://docs.github.com/en/rest/issues/sub-issues>, <https://linear.app/docs/parent-and-sub-issues>, <https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops>, <https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/>.
+- **create-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill>.
 - **deslop**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/deslop/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit>.
 - **domain-modeling**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>.
 - **enterprise-agent-architecture**: user-supplied; user-supplied source with no independently verified URL.
 - **graph-engineering**: user-supplied; user-supplied source with no independently verified URL.
 - **grill-with-docs**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.
+- **how-it-works**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/how/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **interrogate**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/interrogate/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **maintain-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill>.
 - **principle-attack-the-premise**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-attack-the-premise/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
@@ -274,4 +294,5 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **principle-type-system-discipline**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-type-system-discipline/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **prototype**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/prototype/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>.
 - **retro**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/retro/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336/skills/productivity/writing-for-agents>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/correct>.
+- **show-me-your-work**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/show-me-your-work/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/unslop>.
 - **wayfinder**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/wayfinder/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/research/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/prototype/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.
