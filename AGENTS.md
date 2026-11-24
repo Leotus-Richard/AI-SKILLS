@@ -9,7 +9,7 @@
 - `evals/<name>/` holds SkillEvaluator eval datasets for `skills/<name>/`; they stay out of release packages. `.skillspector-baseline.yaml` records reviewed SkillSpector suppressions, each with a reason. See `docs/SKILL-EVALUATION.md`.
 - Every skill has a semantic version in `metadata.version`. Any change under `skills/<name>/` needs a bump plus a `versions` entry in `registry/skills.json` describing the expected behavior; `evaluations` there record which models tested each version. Follow `docs/VERSIONING.md`.
 - `dist/` contains generated release packages and checksums. Do not commit build output or installed agent copies.
-- This library reuses the pinned Vercel Skills CLI. `scripts/install.mjs` only works out which skills are required and passes them to that CLI. Do not introduce a competing installer or native plugin manifests without a concrete requested need.
+- This library reuses the pinned Vercel Skills CLI. `scripts/install.mjs` only works out which skills are required and passes them to that CLI. It is also the package's `bin`, so other projects can run it with `npx github:Leotus-Richard/AI-SKILLS`. For that, `skills` stays under `dependencies` (npx does not install `devDependencies`) and `files` in `package.json` must list everything the script imports; a test checks both. Do not introduce a competing installer or native plugin manifests without a concrete requested need.
 
 ## Working rules
 

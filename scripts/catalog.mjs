@@ -236,7 +236,7 @@ function renderDependencies(catalog, linkMode) {
     'A skill lists the skills it needs under `requires` in `registry/skills.json`, and the ones its text names as optional under `related`. ' +
     (linkMode === 'archive'
       ? 'Each upload ZIP includes the skills it requires under `required-skills/`.'
-      : '`npm run skills:install` adds required skills automatically; see [installation](INSTALLATION.md#skills-that-require-other-skills).') +
+      : '`npm run skills:install` from a checkout, or `npx --yes github:Leotus-Richard/AI-SKILLS --skill <name>` from any project, adds required skills automatically; see [installation](INSTALLATION.md#skills-that-require-other-skills).') +
     ' A skill not listed here names no other skill.',
     '',
   ];

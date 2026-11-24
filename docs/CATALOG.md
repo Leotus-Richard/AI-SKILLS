@@ -68,7 +68,7 @@ This repository contains **42 skills**. Each Perplexity upload archive contains 
 
 ## Dependencies
 
-A skill lists the skills it needs under `requires` in `registry/skills.json`, and the ones its text names as optional under `related`. `npm run skills:install` adds required skills automatically; see [installation](INSTALLATION.md#skills-that-require-other-skills). A skill not listed here names no other skill.
+A skill lists the skills it needs under `requires` in `registry/skills.json`, and the ones its text names as optional under `related`. `npm run skills:install` from a checkout, or `npx --yes github:Leotus-Richard/AI-SKILLS --skill <name>` from any project, adds required skills automatically; see [installation](INSTALLATION.md#skills-that-require-other-skills). A skill not listed here names no other skill.
 
 - **create-verification-skill** optionally works with `maintain-verification-skill`.
 - **domain-modeling** optionally works with `grill-with-docs`.

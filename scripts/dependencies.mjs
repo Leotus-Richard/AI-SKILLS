@@ -119,7 +119,7 @@ export function findDependencyIssues(skills, texts) {
 // Split installer arguments into the skills to resolve, this script's own
 // options, and everything else, which goes to the Skills CLI untouched.
 export function parseInstallArguments(argv) {
-  const options = { skills: [], all: false, withRelated: false, print: false, source: null, rest: [] };
+  const options = { skills: [], all: false, withRelated: false, print: false, source: null, ref: null, rest: [] };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--skill' || arg === '-s') {
@@ -134,9 +134,9 @@ export function parseInstallArguments(argv) {
       if (!taken) throw new Error(`${arg} needs a skill name`);
     } else if (arg === '--with-related') options.withRelated = true;
     else if (arg === '--print') options.print = true;
-    else if (arg === '--source') {
-      if (i + 1 >= argv.length) throw new Error('--source needs a value');
-      options.source = argv[++i];
+    else if (arg === '--source' || arg === '--ref') {
+      if (i + 1 >= argv.length || argv[i + 1].startsWith('-')) throw new Error(`${arg} needs a value`);
+      options[arg.slice(2)] = argv[++i];
     } else options.rest.push(arg);
   }
   return options;
@@ -148,6 +148,30 @@ export function installArguments(source, skillNames, rest = []) {
 }
 
 export function installCommand(skillNames, { source = INSTALL_SOURCE, rest = [] } = {}) {
-  const quote = value => (/^[\w@%+=:,./-]+$/.test(value) ? value : `'${value.replaceAll("'", "'\\''")}'`);
+  // A '#' inside a word is not a comment in any common shell, so owner/repo#ref needs no quotes.
+  const quote = value => (/^[\w@%+=:,./-][\w@%+=:,./#-]*$/.test(value) ? value : `'${value.replaceAll("'", "'\\''")}'`);
   return ['npx', '--yes', `skills@${SKILLS_CLI_VERSION}`, ...installArguments(source, skillNames, rest)].map(quote).join(' ');
+}
+
+// Where to install from. An explicit --source wins, and --ref pins a Git source to a
+// tag, branch or commit. Otherwise a checkout installs its own skills/ folder, and a
+// copy fetched by npx installs from GitHub at the commit that copy came from, so the
+// registry that decided the requirements and the skill text are the same revision.
+export function chooseSource({ source = null, ref = null, local = null, detected = null } = {}) {
+  if (source) return ref ? `${source}#${ref}` : source;
+  if (ref) return `${INSTALL_SOURCE}#${ref}`;
+  if (local) return local;
+  return detected ? `${INSTALL_SOURCE}#${detected}` : INSTALL_SOURCE;
+}
+
+// npm records what it installed in node_modules/.package-lock.json. For a package fetched
+// from Git, `resolved` ends in the commit. Returns that commit when the entry at
+// `packageKey` came from `source` on GitHub, otherwise null.
+export function revisionFromLockfile(lockText, packageKey, source = INSTALL_SOURCE) {
+  let lock;
+  try { lock = JSON.parse(lockText); } catch { return null; }
+  const resolved = lock?.packages?.[packageKey]?.resolved;
+  if (typeof resolved !== 'string') return null;
+  const match = new RegExp(`github\\.com[:/]${escapeRegExp(source)}(?:\\.git)?#([0-9a-f]{40})$`, 'i').exec(resolved);
+  return match ? match[1].toLowerCase() : null;
 }

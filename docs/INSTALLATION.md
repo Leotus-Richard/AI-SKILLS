@@ -67,11 +67,30 @@ npm run skills:install -- --skill wayfinder --agent codex --copy
 | --- | --- |
 | `--print` | Prints the equivalent `npx` command for GitHub and installs nothing |
 | `--with-related` | Also installs the skills the named ones mention as optional |
+| `--ref <tag, branch or commit>` | Installs from the GitHub repository at that revision |
 | `--source <path or owner/repo>` | Installs from somewhere other than this checkout |
 
 Skills listed under `related` are optional. The text names them as companions or alternatives, and the skill works without them, so they are not installed unless you ask. `--with-related` goes one level only: it adds the named skills' related skills, not those skills' own related skills.
 
 An upload ZIP cannot install anything, so each ZIP carries the skills it requires under `required-skills/`, and its `SKILL.md` ends with a list of where they are.
+
+### From another project, without a checkout
+
+The same command runs straight from GitHub, so a project that uses these skills, such as an agent, needs no copy of this repository. Run it in that project:
+
+```sh
+npx --yes github:Leotus-Richard/AI-SKILLS#<tag or commit> --skill wayfinder --agent claude-code --copy
+```
+
+`npx` fetches this repository's install command at that tag or commit. The command works out the required skills from the registry at that revision, then has the Skills CLI install them from GitHub at the same commit. One revision decides both, so the requirements and the skill text cannot drift apart. Leave out `#<tag or commit>` to use the default branch as it is at that moment.
+
+- To take the skill text from a different revision than the command, add `--ref <tag, branch or commit>`.
+- If the command cannot tell which commit it was fetched at, it says so and installs from the default branch.
+- The project's `skills-lock.json` records the repository, the commit and a content hash for each installed skill, with no local paths, so it is safe to commit.
+- To move to a newer revision, run the command again with the new tag or commit.
+- Every other option works as it does from a checkout, including `--print` and `--with-related`.
+
+This needs Git and Node.js 22.20.0 or newer on the machine, as the Skills CLI does.
 
 ## Use a local checkout
 

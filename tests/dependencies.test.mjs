@@ -1,13 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  INSTALL_SOURCE, SKILLS_CLI_VERSION, findDependencyIssues, findNamedSkills, installCommand,
-  parseInstallArguments, requiredClosure, resolveInstallSet,
+  INSTALL_SOURCE, SKILLS_CLI_VERSION, chooseSource, findDependencyIssues, findNamedSkills, installCommand,
+  parseInstallArguments, requiredClosure, resolveInstallSet, revisionFromLockfile,
 } from '../scripts/dependencies.mjs';
-import { planInstall } from '../scripts/install.mjs';
+import { findSkillsCli, planInstall } from '../scripts/install.mjs';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -95,6 +97,8 @@ test('installer arguments keep the CLI options and expand only the skills', () =
   assert.equal(parsed.withRelated, true);
   assert.throws(() => parseInstallArguments(['--skill', '--agent', 'codex']), /--skill needs a skill name/);
   assert.throws(() => parseInstallArguments(['--source']), /--source needs a value/);
+  assert.throws(() => parseInstallArguments(['--ref', '--yes']), /--ref needs a value/);
+  assert.equal(parseInstallArguments(['--ref', 'v1.2.0', '--skill', 'retro']).ref, 'v1.2.0');
 
   const plan = planInstall(['--skill', 'map-maker', '--agent', 'codex'], { skills: library });
   assert.deepEqual(plan.skills, ['map-maker', 'interview', 'glossary']);
@@ -109,6 +113,109 @@ test('installer arguments keep the CLI options and expand only the skills', () =
 
 test('the printed install command uses the pinned CLI and this repository', () => {
   const manifest = JSON.parse(readFileSync(join(repoRoot, 'package.json'), 'utf8'));
-  assert.equal(manifest.devDependencies.skills, SKILLS_CLI_VERSION);
+  assert.equal(manifest.dependencies.skills, SKILLS_CLI_VERSION, 'npx installs dependencies, not devDependencies');
+  assert.equal(manifest.devDependencies.skills, undefined);
   assert.equal(manifest.repository.url, `https://github.com/${INSTALL_SOURCE}.git`);
+});
+
+test('the source is the checkout, an explicit choice, or GitHub at the fetched commit', () => {
+  const sha = '0123456789abcdef0123456789abcdef01234567';
+  assert.equal(chooseSource({ local: '/work/AI-SKILLS/skills' }), '/work/AI-SKILLS/skills');
+  assert.equal(chooseSource({ detected: sha }), `${INSTALL_SOURCE}#${sha}`);
+  assert.equal(chooseSource({}), INSTALL_SOURCE);
+  assert.equal(chooseSource({ ref: 'v1.2.0', local: '/work/AI-SKILLS/skills', detected: sha }), `${INSTALL_SOURCE}#v1.2.0`, '--ref beats both');
+  assert.equal(chooseSource({ source: 'someone/fork', ref: 'main', detected: sha }), 'someone/fork#main');
+  assert.equal(chooseSource({ source: '../elsewhere/skills', detected: sha }), '../elsewhere/skills');
+  assert.equal(installCommand(['retro'], { source: chooseSource({ ref: 'v1.2.0' }) }),
+    `npx --yes skills@${SKILLS_CLI_VERSION} add ${INSTALL_SOURCE}#v1.2.0 --skill retro`);
+});
+
+test('the fetched commit is read from npm\'s record only when it names this repository', () => {
+  const sha = 'ABCDEF0123456789abcdef0123456789abcdef01';
+  const key = 'node_modules/@leotus-richard/ai-skills';
+  const lock = resolved => JSON.stringify({ packages: { [key]: { resolved } } });
+  assert.equal(revisionFromLockfile(lock(`git+ssh://git@github.com/Leotus-Richard/AI-SKILLS.git#${sha}`), key), sha.toLowerCase());
+  assert.equal(revisionFromLockfile(lock(`git+https://github.com/leotus-richard/ai-skills#${sha}`), key), sha.toLowerCase());
+  assert.equal(revisionFromLockfile(lock(`git+ssh://git@github.com/someone/AI-SKILLS.git#${sha}`), key), null, 'a fork is not this repository');
+  assert.equal(revisionFromLockfile(lock(`git+ssh://git@github.com/Leotus-Richard/AI-SKILLS-extra.git#${sha}`), key), null);
+  assert.equal(revisionFromLockfile(lock('https://registry.npmjs.org/x/-/x-1.0.0.tgz'), key), null);
+  assert.equal(revisionFromLockfile(lock(`git+ssh://git@github.com/Leotus-Richard/AI-SKILLS.git#${sha}`), 'node_modules/other'), null);
+  assert.equal(revisionFromLockfile('not json', key), null);
+});
+
+// Lay the package out the way npx does: beside the CLI, under node_modules, without the skills folder.
+function fetchedCopy(t, resolved) {
+  const cache = mkdtempSync(join(tmpdir(), 'ai-skills-npx-'));
+  t.after(() => {
+    assert.equal(dirname(resolve(cache)), resolve(tmpdir()));
+    rmSync(cache, { recursive: true, force: true });
+  });
+  const manifest = JSON.parse(readFileSync(join(repoRoot, 'package.json'), 'utf8'));
+  const packageRoot = join(cache, 'node_modules', '@leotus-richard', 'ai-skills');
+  for (const file of [...manifest.files, 'package.json']) {
+    mkdirSync(dirname(join(packageRoot, file)), { recursive: true });
+    cpSync(join(repoRoot, file), join(packageRoot, file));
+  }
+  if (resolved) {
+    writeFileSync(join(cache, 'node_modules', '.package-lock.json'),
+      JSON.stringify({ packages: { 'node_modules/@leotus-richard/ai-skills': { resolved } } }));
+  }
+  return { cache, packageRoot, command: join(packageRoot, manifest.bin['ai-skills']) };
+}
+
+test('a copy fetched by npx has what it needs and pins skills to the commit it came from', t => {
+  const sha = '0123456789abcdef0123456789abcdef01234567';
+  const copy = fetchedCopy(t, `git+ssh://git@github.com/${INSTALL_SOURCE}.git#${sha}`);
+  assert.equal(existsSync(join(copy.packageRoot, 'skills')), false, 'the fixture has no skills folder, like the real package');
+  const run = args => spawnSync(process.execPath, [copy.command, ...args], { cwd: copy.cache, encoding: 'utf8' });
+
+  const pinned = run(['--skill', 'wayfinder', '--agent', 'codex', '--print']);
+  assert.equal(pinned.status, 0, pinned.stderr);
+  assert.equal(pinned.stdout.trim(),
+    `npx --yes skills@${SKILLS_CLI_VERSION} add ${INSTALL_SOURCE}#${sha} --skill wayfinder --skill grill-with-docs --agent codex`);
+  assert.match(pinned.stderr, /Also installing grill-with-docs \(required by wayfinder\)\./);
+
+  // npm starts a package command through a link in node_modules/.bin, not by its real path.
+  const link = join(copy.cache, 'node_modules', '.bin', 'ai-skills');
+  mkdirSync(dirname(link), { recursive: true });
+  let linked = true;
+  try { symlinkSync(copy.command, link); }
+  catch (error) { if (error.code !== 'EPERM') throw error; linked = false; } // Windows without the symlink privilege
+  if (linked) {
+    const viaLink = spawnSync(process.execPath, [link, '--skill', 'wayfinder', '--agent', 'codex', '--print'], { cwd: copy.cache, encoding: 'utf8' });
+    assert.equal(viaLink.stdout, pinned.stdout, 'the command must run when started through the link');
+  }
+
+  const chosen = run(['--skill', 'retro', '--ref', 'v9.9.9', '--print']);
+  assert.equal(chosen.stdout.trim(), `npx --yes skills@${SKILLS_CLI_VERSION} add ${INSTALL_SOURCE}#v9.9.9 --skill retro`);
+
+  // The CLI is found beside the package, where npm puts a shared dependency.
+  assert.throws(() => findSkillsCli(copy.packageRoot), /Skills CLI is not installed/);
+  mkdirSync(join(copy.cache, 'node_modules', 'skills', 'bin'), { recursive: true });
+  writeFileSync(join(copy.cache, 'node_modules', 'skills', 'bin', 'cli.mjs'), '');
+  assert.equal(findSkillsCli(copy.packageRoot), join(copy.cache, 'node_modules', 'skills', 'bin', 'cli.mjs'));
+});
+
+test('a fetched copy that cannot tell its commit says so instead of pinning silently', t => {
+  const copy = fetchedCopy(t, null);
+  const result = spawnSync(process.execPath, [copy.command, '--skill', 'retro', '--print'], { cwd: copy.cache, encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout.trim(), `npx --yes skills@${SKILLS_CLI_VERSION} add ${INSTALL_SOURCE} --skill retro`);
+  assert.match(result.stderr, /Could not tell which revision this copy came from.*Pass --ref to pin them\./);
+});
+
+test('the package npx fetches lists every file its command imports', () => {
+  const manifest = JSON.parse(readFileSync(join(repoRoot, 'package.json'), 'utf8'));
+  const command = manifest.bin['ai-skills'];
+  assert.ok(manifest.files.includes(command));
+  assert.ok(manifest.files.includes('registry/skills.json'));
+  assert.ok(readFileSync(join(repoRoot, command), 'utf8').startsWith('#!/usr/bin/env node\n'));
+  const pending = [command];
+  for (const file of pending) {
+    for (const [, specifier] of readFileSync(join(repoRoot, file), 'utf8').matchAll(/from '(\.[^']+)'/g)) {
+      const imported = join(dirname(file), specifier).replaceAll('\\', '/');
+      assert.ok(manifest.files.includes(imported), `${file} imports ${imported}, which "files" leaves out`);
+      if (!pending.includes(imported)) pending.push(imported);
+    }
+  }
 });
