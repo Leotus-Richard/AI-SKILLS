@@ -12,13 +12,10 @@ Changes at import:
 - The toolkit's metadata (`profile`, `invocation`, `integration-status`) is replaced with `version`, `author`, and `tags`; the description is kept.
 - `LICENSE` is renamed `LICENSE.txt`, as this repository requires.
 - The commit handoff now applies only when a `commit-workflow` skill is installed. That skill was written for the toolkit and has no public source, so it is not bundled.
-- Bundled pstack's create-verification-skill from <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill> into `references/upstream/related/create-verification-skill/`. Its `SKILL.md` is stored as `create-verification-skill.md`, because nested `SKILL.md` files are not allowed here. Only link targets changed: links to `SKILL.md` now name `create-verification-skill.md`, and a link to a folder now names its `README.md`.
 
-Bundled files:
+Changes in 2.0.0 (24 November 2026):
 
-  - `related/create-verification-skill/create-verification-skill.md`: upstream SHA-256 `d353973547bf8ad8977eca645f4cd4feaed0d32f4b43d1448f906b0a76c4d694`
-  - `related/create-verification-skill/references/feature-map-example/README.md`: upstream SHA-256 `cb7bd782cf89968a4ba3d58a5151db837430db92d19a6f52a906973b77b516ba`
-  - `related/create-verification-skill/references/feature-map-example/create-note.md`: upstream SHA-256 `644a44c74f35d38c2feb7cd05a0121fdebbb623e8dc376c185b565a581d1ccf7`
-  - `related/create-verification-skill/references/feature-map-example/search.md`: upstream SHA-256 `6e87b9e7f2791a7776ba1bb83f371cd285c306c67f19d245cc4dd6ca3015c823`
+- Versions before 2.0.0 bundled a copy of pstack's create-verification-skill under `references/upstream/related/`. That skill is in this library, so the copy is removed. `registry/skills.json` lists `create-verification-skill` under `requires`, the installer adds it with this skill, and the upload ZIP carries it under `required-skills/`.
+- Step 1 of the workflow names `create-verification-skill` where it said "the generator".
 
 The license, MIT (Copyright (c) 2026 Lauren Tan), is bundled in `LICENSE.txt`.

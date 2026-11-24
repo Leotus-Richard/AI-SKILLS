@@ -4,6 +4,7 @@ Prerequisites, limitations, and troubleshooting for [Wayfinder](../SKILL.md). Ke
 
 ## Prerequisites
 
+- The `grill-with-docs` skill, which holds the interview method and the glossary and ADR formats. The installer adds it with Wayfinder.
 - A place to keep the decision register between sessions: files, a connected tracker the user asks to use, or copies the user saves and pastes back.
 - The latest register and resume packet when resuming. Do not assume another conversation's copy is current.
 

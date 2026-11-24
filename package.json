@@ -13,7 +13,7 @@
   },
   "scripts": {
     "skills:list": "skills add ./skills --list",
-    "skills:install": "skills add ./skills",
+    "skills:install": "node scripts/install.mjs",
     "skills:check": "skills check",
     "skills:update": "skills update",
     "catalog": "node scripts/catalog.mjs",

@@ -7,6 +7,8 @@
       "description": "Use when planning, creating, reviewing, or reconciling Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies, in Linear, GitHub Issues, Azure DevOps, or Jira.",
       "category": "workflow",
       "license": "Apache-2.0",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "original",
         "notes": "Original user-defined Agile work hierarchy based on Graph Engineering, with independent Bugs, portable provider projections, and a local plan validator. Official provider documentation checked on 2026-10-29; native mappings require target-specific capability discovery.",
@@ -34,20 +36,23 @@
     },
     {
       "name": "create-verification-skill",
-      "version": "1.0.1",
+      "version": "2.0.0",
       "description": "Generate and execute a project-local verification skill for a local app; not remote deployment or installation.",
       "category": "engineering-practice",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "maintain-verification-skill"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
-        "notes": "pstack:create-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",
+        "notes": "pstack:create-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved. control-ui and control-cli, which are not in this library, are bundled from the same pinned commit.",
         "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
         "urls": [
           "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md",
           "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack",
           "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui",
-          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli",
-          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill"
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli"
         ]
       },
       "testedWith": null,
@@ -63,12 +68,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.",
           "version": "1.0.1"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "No longer carries a copy of maintain-verification-skill under references/upstream/related/; it names that skill as an optional follow-up for upkeep. Existing users who read the bundled copy should install maintain-verification-skill. control-ui and control-cli stay bundled, and generating and proving a verification skill is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/create-verification-skill",
-      "fileCount": 11,
-      "uncompressedBytes": 41705,
-      "contentSha256": "435e22ba9294f08aa90c4eeec96652052a8ee0a5bbc01db914d0a28bce073023"
+      "fileCount": 10,
+      "uncompressedBytes": 36411,
+      "contentSha256": "0da42ad3603b329beb3983a3e8cd9fce5d9c78b1714f00451fd040ef00f95bcb"
     },
     {
       "name": "deslop",
@@ -76,6 +87,8 @@
       "description": "Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries.",
       "category": "engineering-practice",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "cursor-team-kit:deslop imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
@@ -105,6 +118,10 @@
       "description": "Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs.",
       "category": "workflow",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "grill-with-docs"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "mattpocock:domain-modeling imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
@@ -134,6 +151,8 @@
       "description": "Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph.",
       "category": "workflow",
       "license": "Apache-2.0",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "user-supplied",
         "notes": "User-supplied Enterprise Agent Architecture guide contributed under Apache-2.0; unavailable long-form reference pointers removed for a self-contained import. Framework-specific claims require current primary-source verification.",
@@ -159,6 +178,8 @@
       "description": "Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work.",
       "category": "workflow",
       "license": "Apache-2.0",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "user-supplied",
         "notes": "User-supplied Graph Engineering runbook contributed under Apache-2.0; the unverified publication-attribution caveat is preserved in SKILL.md.",
@@ -184,6 +205,10 @@
       "description": "Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder.",
       "category": "workflow",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "domain-modeling"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "Portable adaptation of Matt Pocock skills with required interview/domain-modeling guidance included locally; upstream MIT notice retained.",
@@ -217,6 +242,8 @@
       "description": "Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation.",
       "category": "engineering-practice",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack:how imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
@@ -246,6 +273,10 @@
       "description": "Design, review or refine frontend interfaces using Impeccable's product-specific UX and visual craft playbooks. Use for UI hierarchy, accessibility, responsive states, typography, copy or design systems; not backend-only tasks or automatic browser overlays, hooks or publishing.",
       "category": "design-and-formatting",
       "license": "Apache-2.0",
+      "requires": [],
+      "related": [
+        "create-verification-skill"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "Impeccable 4.0.3 (tag skill-v4.0.3, GitHub Copilot variant) with the Engineering Toolkit v1.3 hub. Native scripts and the live, hooks and doctor playbooks are not included.",
@@ -275,6 +306,8 @@
       "description": "Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real.",
       "category": "engineering-practice",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack:interrogate imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
@@ -304,6 +337,8 @@
       "description": "Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support.",
       "category": "design-and-formatting",
       "license": "Apache-2.0",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "user-supplied",
         "notes": "Toolkit-written hub from Engineering Toolkit v1.3, contributed by the repository owner under Apache-2.0. Adapted from a skill bundled with the GitHub Copilot app; that original is not redistributed.",
@@ -325,18 +360,21 @@
     },
     {
       "name": "maintain-verification-skill",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Refresh an existing local verification skill and feature map against observed app behavior.",
       "category": "engineering-practice",
       "license": "MIT",
+      "requires": [
+        "create-verification-skill"
+      ],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
-        "notes": "pstack:maintain-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",
+        "notes": "pstack:maintain-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Requires create-verification-skill from this library rather than bundling a copy.",
         "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
         "urls": [
           "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md",
-          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack",
-          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill"
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
         ]
       },
       "testedWith": null,
@@ -346,12 +384,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Refresh an existing local verification skill and feature map against observed app behavior.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "Uses the create-verification-skill skill when the project does not have a verification skill yet, and no longer carries a copy of it under references/upstream/related/. Existing users: create-verification-skill must be installed too; the installer adds it and the upload ZIP includes it. The maintenance pass itself is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/maintain-verification-skill",
-      "fileCount": 9,
-      "uncompressedBytes": 31543,
-      "contentSha256": "002c574788a5109ccfd6ae7ccc0607cc886ea64d11d865c6dd16d1ab62d184d6"
+      "fileCount": 5,
+      "uncompressedBytes": 15227,
+      "contentSha256": "8c8c8f59ead2f1993dfb5ba9e84cc4dd1904691f98ea5e66659f0f5368f7e2b9"
     },
     {
       "name": "negative-space-programming",
@@ -359,6 +403,8 @@
       "description": "Use when code relies on optional values, loose data, state transitions, or implicit assumptions: enforce internal invariants with assertions that fail fast. Not for expected user or network errors.",
       "category": "engineering-practice",
       "license": "Apache-2.0",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "original",
         "notes": "Original skill by the repository owner, from their private Notion Skills database (last edited 2026-11-11), contributed under Apache-2.0. One-word fix to the bundled TypeScript example at import.",
@@ -384,6 +430,11 @@
       "description": "Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion.",
       "category": "workflow",
       "license": "Apache-2.0",
+      "requires": [],
+      "related": [
+        "graph-engineering",
+        "show-me-your-work"
+      ],
       "provenance": {
         "kind": "user-supplied",
         "notes": "Toolkit-written hub from Engineering Toolkit v1.3, contributed by the repository owner under Apache-2.0. Adapted from a skill bundled with the GitHub Copilot app; that original is not redistributed.",
@@ -409,6 +460,13 @@
       "description": "Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "principle-build-the-lever",
+        "principle-fix-root-causes",
+        "principle-laziness-protocol",
+        "principle-redesign-from-first-principles"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0. Names these related principles without bundling them: principle-build-the-lever, principle-fix-root-causes, principle-laziness-protocol, principle-redesign-from-first-principles.",
@@ -444,6 +502,8 @@
       "description": "Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -479,6 +539,12 @@
       "description": "Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "principle-encode-lessons-in-structure",
+        "principle-laziness-protocol",
+        "principle-prove-it-works"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0. Names these related principles without bundling them: principle-laziness-protocol, principle-encode-lessons-in-structure, principle-prove-it-works.",
@@ -514,6 +580,8 @@
       "description": "Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -549,6 +617,8 @@
       "description": "Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -584,6 +654,8 @@
       "description": "Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -619,6 +691,10 @@
       "description": "Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "principle-prove-it-works"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0. Names these related principles without bundling them: principle-prove-it-works. Bundles pstack benchmark-checklist, which is not in this library.",
@@ -654,6 +730,8 @@
       "description": "Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -689,6 +767,8 @@
       "description": "Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -724,6 +804,8 @@
       "description": "Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -759,6 +841,8 @@
       "description": "Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -794,6 +878,8 @@
       "description": "Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -829,6 +915,8 @@
       "description": "Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -864,6 +952,10 @@
       "description": "Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "principle-guard-the-context-window"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0. Names these related principles without bundling them: principle-guard-the-context-window.",
@@ -899,6 +991,8 @@
       "description": "Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -934,6 +1028,8 @@
       "description": "Apply when tempted to ask 'should I do X?' on reversible work.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -969,6 +1065,8 @@
       "description": "Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -1004,6 +1102,10 @@
       "description": "Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "show-me-your-work"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -1039,6 +1141,8 @@
       "description": "Apply when integrating a new requirement into an existing design.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -1074,6 +1178,8 @@
       "description": "Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -1109,6 +1215,11 @@
       "description": "Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "principle-build-the-lever",
+        "principle-prove-it-works"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0. Names these related principles without bundling them: principle-prove-it-works, principle-build-the-lever.",
@@ -1144,6 +1255,8 @@
       "description": "Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -1179,6 +1292,8 @@
       "description": "Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0.",
@@ -1214,6 +1329,11 @@
       "description": "Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas.",
       "category": "engineering-principles",
       "license": "MIT",
+      "requires": [],
+      "related": [
+        "principle-boundary-discipline",
+        "principle-encode-lessons-in-structure"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack principle. SKILL.md is the upstream text with the changes listed in SOURCE.md. First imported from Engineering Toolkit v1.3, whose wrapper was removed in 2.0.0. Names these related principles without bundling them: principle-boundary-discipline, principle-encode-lessons-in-structure.",
@@ -1249,6 +1369,8 @@
       "description": "Create a disposable local logic or UI prototype to settle a named design question; not production implementation.",
       "category": "engineering-practice",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "mattpocock:prototype imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
@@ -1284,6 +1406,8 @@
       "description": "Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.",
       "category": "engineering-practice",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "mattpocock:retro imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",
@@ -1315,6 +1439,8 @@
       "description": "Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review.",
       "category": "engineering-practice",
       "license": "MIT",
+      "requires": [],
+      "related": [],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack:show-me-your-work imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",
@@ -1341,13 +1467,19 @@
     },
     {
       "name": "wayfinder",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs.",
       "category": "workflow",
       "license": "MIT",
+      "requires": [
+        "grill-with-docs"
+      ],
+      "related": [
+        "domain-modeling"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
-        "notes": "Portable adaptation of Matt Pocock skills with required interview/domain-modeling guidance included locally; upstream MIT notice retained.",
+        "notes": "Portable adaptation of Matt Pocock skills. The interview and domain-modeling method is the required grill-with-docs skill; upstream MIT notice retained.",
         "revision": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa",
         "urls": [
           "https://github.com/mattpocock/skills",
@@ -1368,12 +1500,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Charts and maintains a multi-session decision map: destination, separate decision tickets, frontier, fog, and a resume packet. Plans only, never implements, and points decisions that fit one session to grill-with-docs.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "Uses the grill-with-docs skill for its interviews and glossary and ADR formats, and no longer carries a copy at references/grill-with-docs.md. Existing users: grill-with-docs must be installed too; the installer adds it and the upload ZIP includes it. The decision map, tickets, frontier, fog and resume packet are unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/wayfinder",
-      "fileCount": 5,
-      "uncompressedBytes": 29349,
-      "contentSha256": "8e8d451b6e708307591abf0c7d52d1c3aa6b26b714e3696de886d559d2d767db"
+      "fileCount": 4,
+      "uncompressedBytes": 21355,
+      "contentSha256": "f65240815697789ca0c922253ad92b5b581676aee289432929aadceb1548d6dc"
     }
   ]
 }

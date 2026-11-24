@@ -9,6 +9,7 @@ Each skill has its own [semantic version](https://semver.org/). Everything in `s
 | Current version | `metadata.version` in the skill's `SKILL.md` frontmatter, as a quoted `"MAJOR.MINOR.PATCH"` string. This is the field SkillEvaluator's semantic version check reads |
 | Version history and expected behavior | `versions` in the skill's entry in `registry/skills.json`, oldest first |
 | Models that tested a version | `evaluations` in the same registry entry, added by live evaluation runs |
+| Other skills it needs | `requires` and `related` in the same registry entry; see [dependencies](#dependencies) |
 
 The [catalog](CATALOG.md) shows each skill's version, what each version is expected to do, and which models last tested it.
 
@@ -21,7 +22,7 @@ A skill's public contract is what users and agents depend on: **when it triggers
 - The skill is renamed, or its description changes so that requests it used to handle no longer trigger it, or it now claims a different domain.
 - A capability, mode, section the workflow depends on, reference, asset or script is removed or renamed.
 - An output contract changes incompatibly: a plan or document format, required fields, a script's arguments, exit codes or error codes.
-- A new required prerequisite, such as a tool, credential or account, or a higher minimum runtime version.
+- A new required prerequisite, such as a tool, credential, account or another skill, or a higher minimum runtime version.
 - Safety or authorization behavior changes in either direction, for example acting without asking where it used to ask, or the reverse.
 
 ### MINOR: new behavior, nothing existing breaks
@@ -43,6 +44,16 @@ When unsure, choose the higher bump.
 **No bump is needed** for changes outside `skills/<name>/`: eval datasets in `evals/`, registry evaluation records, CI, or docs. Re-testing an unchanged skill with another model is also not a version change. It adds an evaluation record instead.
 
 Versions start at `1.0.0`. Never reuse or lower a version.
+
+## Dependencies
+
+A skill's registry entry may list `requires` (skills its workflow sends the agent to, installed with it) and `related` (skills its text names as optional). They describe what `SKILL.md` says, and `npm run validate` fails when the two disagree, so a dependency change always comes with a text change. The bump follows that change:
+
+- A new `requires` entry is **major**: existing users must install another skill.
+- Dropping a `requires` entry is **minor**, or major if a capability went with it.
+- Adding or dropping a `related` entry is **minor**.
+
+Do not copy a library skill into another skill to avoid a dependency. See [installation](INSTALLATION.md#skills-that-require-other-skills) for how required skills are installed.
 
 ## The expected-behavior entry
 

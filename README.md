@@ -16,6 +16,8 @@ npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --list
 npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill graph-engineering --agent codex
 ```
 
+Each skill installs on its own. A few require another skill: the [catalog](docs/CATALOG.md#dependencies) lists them with the command that installs both, and `npm run skills:install` from a checkout adds them for you.
+
 The CLI also supports agents such as `claude-code` and `cursor`. Installation is project-scoped by default; `--global` selects the user scope, and `--copy` uses independent files instead of links. See [installation](docs/INSTALLATION.md) for local checkout commands, updates, Windows considerations, and Perplexity imports.
 
 These are reusable skill files. This repository does not promise native plugin registration, a hosted tool server, or identical tool capabilities across agents. Installing instructions is separate from having the files, tools, account access, and context that a task requires.

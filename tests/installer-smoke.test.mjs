@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, existsSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -62,4 +62,45 @@ test('pinned installer places complete skills for Codex, Cursor and Claude in an
     }
   }
   assert.ok(existsSync(join(project, 'skills-lock.json')), 'project installation should retain its source lock');
+});
+
+test('the install command adds required skills and leaves optional ones out', { timeout: 60_000 }, t => {
+  const fixture = mkdtempSync(join(tmpdir(), 'ai-skills-installer-'));
+  t.after(() => {
+    assert.equal(dirname(resolve(fixture)), resolve(tmpdir()));
+    rmSync(fixture, { recursive: true, force: true });
+  });
+  const project = join(fixture, 'project');
+  const profile = join(fixture, 'profile');
+  mkdirSync(project);
+  mkdirSync(profile);
+  const environment = {
+    ...process.env,
+    HOME: profile,
+    USERPROFILE: profile,
+    APPDATA: join(profile, 'appdata'),
+    LOCALAPPDATA: join(profile, 'localappdata'),
+    XDG_CONFIG_HOME: join(profile, 'config'),
+    XDG_DATA_HOME: join(profile, 'data'),
+    XDG_CACHE_HOME: join(profile, 'cache'),
+    XDG_STATE_HOME: join(profile, 'state'),
+    CODEX_HOME: join(profile, '.codex'),
+    CLAUDE_CONFIG_DIR: join(profile, '.claude'),
+    NPM_CONFIG_CACHE: join(profile, 'npm-cache'),
+    DISABLE_TELEMETRY: '1',
+    DO_NOT_TRACK: '1',
+    NODE_DISABLE_COMPILE_CACHE: '1',
+    CI: '1',
+  };
+  const command = spawnSync(process.execPath, [
+    join(repoRoot, 'scripts', 'install.mjs'),
+    '--skill', 'wayfinder', 'principle-attack-the-premise', '--agent', 'claude-code', '--copy', '--yes',
+  ], { cwd: project, env: environment, encoding: 'utf8', timeout: 45_000, maxBuffer: 4_000_000 });
+  assert.equal(command.error, undefined, command.error?.message);
+  assert.equal(command.status, 0, `${command.stdout}\n${command.stderr}`);
+  assert.match(command.stderr, /Also installing grill-with-docs \(required by wayfinder\)\./);
+  const installed = readdirSync(join(project, '.claude', 'skills')).sort();
+  // wayfinder requires grill-with-docs. The principle only names other principles as optional.
+  assert.deepEqual(installed, ['grill-with-docs', 'principle-attack-the-premise', 'wayfinder']);
+  assert.ok(existsSync(join(project, '.claude', 'skills', 'grill-with-docs', 'SKILL.md')));
 });

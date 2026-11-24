@@ -1,6 +1,6 @@
 # Source and adaptation notes
 
-Adapted for portable agent use with a decision map and separate decision records. The interview and domain-modeling dependency is included locally. Research, prototype, and prerequisite-task procedures are stated directly; no external Skill tool, setup command, or mandatory background process is assumed.
+Adapted for portable agent use with a decision map and separate decision records. The interview and domain-modeling method comes from the `grill-with-docs` skill, which this skill requires. Research, prototype, and prerequisite-task procedures are stated directly; no external Skill tool, setup command, or mandatory background process is assumed.
 
 Source repository: https://github.com/mattpocock/skills
 
@@ -22,3 +22,7 @@ The MIT license for this source is included in LICENSE.txt.
 ## Revision on 24 November 2026
 
 Front-loaded the description's "Use when" trigger; added `metadata.author` and `references/operating-notes.md` with prerequisites, limitations, and troubleshooting drawn from the skill's existing guidance, linked from SKILL.md rather than inlined so SKILL.md stays under OpenClaw's 16,000-character read limit for models with under 100K tokens of context (tags were left out for the same reason). Guided by SkillEvaluator 1.0.1 Tier 1 findings; no new capability is claimed. The description now points one-session decisions to grill-with-docs. Author metadata credits Matt Pocock as the source author.
+
+## Revision on 24 November 2026 (2.0.0)
+
+Versions before 2.0.0 carried a copy of the `grill-with-docs` method at `references/grill-with-docs.md`. Every sentence of that copy was also in the `grill-with-docs` skill, so each edit had to be made twice. The copy is removed. `registry/skills.json` now lists `grill-with-docs` under `requires`, the installer adds it with this skill, and the upload ZIP carries it under `required-skills/`. The four links to the copy now name the skill.

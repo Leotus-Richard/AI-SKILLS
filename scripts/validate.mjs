@@ -3,6 +3,7 @@ import { resolve, join, dirname, relative, sep, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseDocument } from 'yaml';
 import { assertPortableRelativePaths } from './catalog.mjs';
+import { findDependencyIssues } from './dependencies.mjs';
 import { findEvaluationIssues, findVersionHistoryIssues, parseSemver } from './versioning.mjs';
 
 const NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -127,6 +128,7 @@ export function validateRepository(repoRoot) {
   if (!existsSync(skillsDir)) throw new Error('Missing canonical skills directory');
   const seen = new Set();
   const skills = [];
+  const texts = new Map();
   for (const item of readdirSync(skillsDir, { withFileTypes: true })) {
     const folder = join(skillsDir, item.name);
     if (lstatSync(folder).isSymbolicLink()) { issues.push(`${folder}: skill directory cannot be a symlink/junction`); continue; }
@@ -147,6 +149,8 @@ export function validateRepository(repoRoot) {
     if (parsed && parsed.metadata.name !== item.name) issues.push(`${folder}: folder and frontmatter name must match`);
     if (!entries.has(item.name)) issues.push(`${folder}: missing registry entry`);
     if (parsed) {
+      // What an agent always reads: the description that triggers the skill, and the body.
+      texts.set(item.name, `${parsed.metadata.description ?? ''}\n${parsed.text.replace(/^---\n[\s\S]*?\n---(?:\n|$)/, '')}`);
       const version = parsed.metadata.metadata?.version;
       if (!parseSemver(version)) {
         issues.push(`${folder}: metadata.version must be a quoted "MAJOR.MINOR.PATCH" string`);
@@ -171,6 +175,7 @@ export function validateRepository(repoRoot) {
     skills.push({ name: item.name, fileCount: files.length, uncompressedBytes, localLinks });
   }
   for (const name of entries.keys()) if (!seen.has(name.toLowerCase())) issues.push(`${name}: registry points to a missing skill`);
+  issues.push(...findDependencyIssues([...entries.values()], texts));
   if (!skills.length) issues.push('The repository contains no canonical skills');
   if (issues.length) throw new Error(`Skill validation failed:\n${issues.map(s => `- ${s}`).join('\n')}`);
   return { skills: skills.sort((a, b) => a.name.localeCompare(b.name)), warnings: [] };
@@ -182,6 +187,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     if (args.length && (args[0] !== '--root' || args.length !== 2)) throw new Error('Usage: node scripts/validate.mjs [--root PATH]');
     const root = args.length ? args[1] : resolve(dirname(fileURLToPath(import.meta.url)), '..');
     const result = validateRepository(root);
-    console.log(`Validated ${result.skills.length} standalone skills; ${result.skills.reduce((n, s) => n + s.localLinks, 0)} local references checked.`);
+    console.log(`Validated ${result.skills.length} skills; ${result.skills.reduce((n, s) => n + s.localLinks, 0)} local references checked.`);
   } catch (error) { console.error(error.message); process.exitCode = 1; }
 }
