@@ -2,7 +2,7 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **44 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root, plus any skills it requires.
+This repository contains **45 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root, plus any skills it requires.
 
 ## design-and-formatting (2)
 
@@ -11,10 +11,11 @@ This repository contains **44 skills**. Each Perplexity upload archive contains 
 | [impeccable](../skills/impeccable/SKILL.md) | 2.0.0 | Apache-2.0 | Design, review or refine frontend interfaces using Impeccable's product-specific UX and visual craft playbooks. Use for UI hierarchy, accessibility, responsive states, typography, copy or design systems; not backend-only tasks or automatic browser overlays, hooks or publishing. |
 | [latex](../skills/latex/SKILL.md) | 2.0.0 | Apache-2.0 | Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support. |
 
-## engineering-practice (11)
+## engineering-practice (12)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
+| [bug-report](../skills/bug-report/SKILL.md) | 1.0.0 | Apache-2.0 | Use when filing, drafting or tidying a bug report or issue for a defect: write a summary of the bug, steps to reproduce it, the expected behavior, the environment, screenshots and additional notes, from what was actually observed. |
 | [commit-workflow](../skills/commit-workflow/SKILL.md) | 1.0.0 | Apache-2.0 | Prepare small, tested Git commits with structured messages, confirmed requester identity and no agent credit or co-author trailers. Use for implementation checkpoints or commit policy; not permission to push, rewrite history or commit someone else's work. |
 | [create-verification-skill](../skills/create-verification-skill/SKILL.md) | 3.0.0 | MIT | Generate and execute a project-local verification skill for a local app; not remote deployment or installation. |
 | [deslop](../skills/deslop/SKILL.md) | 2.0.0 | MIT | Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries. |
@@ -96,6 +97,7 @@ A skill lists the skills it needs under `requires` in `registry/skills.json`, an
 Every live evaluation (`skill-eval.yml`) of each skill's current version, newest first, from `registry/skills.json`. A result speaks only for the models it names: the same skill can help one model and not another. Lift is the Tier 3 score with the skill minus the score without it.
 
 - **agile-work-hierarchy** 1.0.0: not yet tested with a model
+- **bug-report** 1.0.0: not yet tested with a model
 - **commit-workflow** 1.0.0: not yet tested with a model
 - **create-verification-skill** 3.0.0: not yet tested with a model
 - **deslop** 2.0.0: not yet tested with a model
@@ -148,6 +150,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ### agile-work-hierarchy
 
 - **1.0.0** (2026-11-24, initial): Plans, reviews, or reconciles Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error).
+
+### bug-report
+
+- **1.0.0** (2026-11-24, initial): Writes a bug report from what was observed, using the repository's own issue template when it has one and the bundled one otherwise: a summary of the bug, numbered steps to reproduce it, the expected behavior and why, the environment with versions read from the system, screenshots, and additional notes. Writes "unknown" where a fact is missing instead of inventing it, takes secrets out of logs, says when something is a feature request, and sends a security weakness to private reporting. Files a report only when asked.
 
 ### commit-workflow
 
@@ -365,6 +371,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ## Provenance
 
 - **agile-work-hierarchy**: original; <https://github.com/Leotus-Richard/AI-SKILLS/tree/881f8a1e46a3f8b64f22ac9d6d95824f137e26ea/skills/graph-engineering>, <https://docs.github.com/en/rest/issues/sub-issues>, <https://linear.app/docs/parent-and-sub-issues>, <https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops>, <https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/>.
+- **bug-report**: original; user-supplied source with no independently verified URL.
 - **commit-workflow**: user-supplied; user-supplied source with no independently verified URL.
 - **create-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli>.
 - **deslop**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/deslop/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit>.

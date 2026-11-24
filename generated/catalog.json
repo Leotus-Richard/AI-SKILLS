@@ -36,6 +36,34 @@
       "contentSha256": "1a72c81bb5e10b4fccedd723671ae3cb9247ebe982e350ee8928a3462a63d72c"
     },
     {
+      "name": "bug-report",
+      "version": "1.0.0",
+      "description": "Use when filing, drafting or tidying a bug report or issue for a defect: write a summary of the bug, steps to reproduce it, the expected behavior, the environment, screenshots and additional notes, from what was actually observed.",
+      "category": "engineering-practice",
+      "license": "Apache-2.0",
+      "requires": [],
+      "related": [],
+      "provenance": {
+        "kind": "original",
+        "notes": "Original skill for this repository, contributed by the repository owner under Apache-2.0. The six-section bug report template is the owner's; the workflow around it was drafted at their request on 2026-11-24.",
+        "urls": []
+      },
+      "testedWith": null,
+      "evaluations": [],
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Writes a bug report from what was observed, using the repository's own issue template when it has one and the bundled one otherwise: a summary of the bug, numbered steps to reproduce it, the expected behavior and why, the environment with versions read from the system, screenshots, and additional notes. Writes \"unknown\" where a fact is missing instead of inventing it, takes secrets out of logs, says when something is a feature request, and sends a security weakness to private reporting. Files a report only when asked.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/bug-report",
+      "fileCount": 4,
+      "uncompressedBytes": 18885,
+      "contentSha256": "336b0c5e79999fe8d94da0c0d0af62da14e782c92e0f1ec7b00374147f82490d"
+    },
+    {
       "name": "commit-workflow",
       "version": "1.0.0",
       "description": "Prepare small, tested Git commits with structured messages, confirmed requester identity and no agent credit or co-author trailers. Use for implementation checkpoints or commit policy; not permission to push, rewrite history or commit someone else's work.",
