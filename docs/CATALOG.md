@@ -2,7 +2,7 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **41 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+This repository contains **42 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
 
 ## design-and-formatting (2)
 
@@ -11,7 +11,7 @@ This repository contains **41 skills**. Each Perplexity upload archive contains 
 | [impeccable](../skills/impeccable/SKILL.md) | 1.0.0 | Apache-2.0 | Design, review or refine frontend interfaces using Impeccable's product-specific UX and visual craft playbooks. Use for UI hierarchy, accessibility, responsive states, typography, copy or design systems; not backend-only tasks or automatic browser overlays, hooks or publishing. |
 | [latex](../skills/latex/SKILL.md) | 1.0.0 | Apache-2.0 | Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support. |
 
-## engineering-practice (8)
+## engineering-practice (9)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
@@ -20,6 +20,7 @@ This repository contains **41 skills**. Each Perplexity upload archive contains 
 | [how-it-works](../skills/how-it-works/SKILL.md) | 1.0.0 | MIT | Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation. |
 | [interrogate](../skills/interrogate/SKILL.md) | 1.0.0 | MIT | Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real. |
 | [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 1.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
+| [negative-space-programming](../skills/negative-space-programming/SKILL.md) | 1.0.0 | Apache-2.0 | Use when code relies on optional values, loose data, state transitions, or implicit assumptions: enforce internal invariants with assertions that fail fast. Not for expected user or network errors. |
 | [prototype](../skills/prototype/SKILL.md) | 1.0.1 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
 | [retro](../skills/retro/SKILL.md) | 1.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
 | [show-me-your-work](../skills/show-me-your-work/SKILL.md) | 1.0.0 | MIT | Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review. |
@@ -81,6 +82,7 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **interrogate** 1.0.0: not yet tested with a model
 - **latex** 1.0.0: not yet tested with a model
 - **maintain-verification-skill** 1.0.0: not yet tested with a model
+- **negative-space-programming** 1.0.0: not yet tested with a model
 - **orchestrate** 1.0.0: not yet tested with a model
 - **principle-attack-the-premise** 1.0.0: not yet tested with a model
 - **principle-boundary-discipline** 1.0.0: not yet tested with a model
@@ -163,6 +165,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ### maintain-verification-skill
 
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Refresh an existing local verification skill and feature map against observed app behavior.
+
+### negative-space-programming
+
+- **1.0.0** (2026-11-24, initial): Identifies the invariant a code path relies on and enforces it with a throwing assertion placed before mutation or side effects, with a message naming the value and the expected condition. Keeps expected user and network errors in normal error handling, and never substitutes a silent default for a violated invariant.
 
 ### orchestrate
 
@@ -295,6 +301,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **interrogate**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/interrogate/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **latex**: user-supplied; user-supplied source with no independently verified URL.
 - **maintain-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill>.
+- **negative-space-programming**: original; user-supplied source with no independently verified URL.
 - **orchestrate**: user-supplied; user-supplied source with no independently verified URL.
 - **principle-attack-the-premise**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-attack-the-premise/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **principle-boundary-discipline**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-boundary-discipline/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
