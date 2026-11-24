@@ -64,3 +64,10 @@ Keep upstream notices with copied or substantially adapted material. When changi
 External links are citations, not bundled grants for unrelated publications, services, or assets. A reusable workflow also does not grant authority to mutate an external tracker, send communications, spend money, or publish work. Those actions remain governed by the user's actual task and the available tools.
 
 Generated catalogs and ZIPs preserve provenance rather than creating a new upstream claim. Packaging checks, checksums, and isolated installer tests establish structural evidence. They do not establish that every agent has loaded a skill or that a consequential workflow has been run successfully.
+
+## Engineering principles (pstack)
+
+The 24 `principle-*` skills come from pstack in [cursor/plugins](https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack), pinned to commit `1e5c90a4b6f249917bd21fe361b3a2a7deb741b8`, under the MIT license (Copyright (c) 2026 Lauren Tan) bundled in each skill.
+
+They were imported from Engineering Toolkit v1.3. The toolkit wraps each upstream skill in a task-scoped hub and keeps the original byte for byte at `references/upstream/ORIGINAL-SKILL.md`; each original's SHA-256 was checked against the pinned upstream file. The archive does not record who prepared the toolkit adaptation. At import, each description was restored from upstream and the toolkit-specific metadata was replaced. Four originals link to other pstack skills. Those skills' files were fetched from the same pinned commit into each skill's `references/upstream/related/`, and the links now point at the local copies, so every skill stays self-contained. Those four `SOURCE.md` files list each bundled file with its upstream SHA-256. Each skill's `SOURCE.md` has the details.
+

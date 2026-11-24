@@ -116,6 +116,702 @@
       "contentSha256": "ce4861f7fa682b3bf41b75e88a4c294a1ed752caea515cf09f79788eb3e55755"
     },
     {
+      "name": "principle-attack-the-premise",
+      "version": "1.0.0",
+      "description": "Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream. Related principles: principle-build-the-lever, principle-fix-root-causes, principle-laziness-protocol, principle-redesign-from-first-principles.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-attack-the-premise/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-attack-the-premise",
+      "fileCount": 11,
+      "uncompressedBytes": 20899,
+      "contentSha256": "3cf185322d42e2d291b7f727d513f4c0479bf8a420630d1e98be5cf0a57c15c3"
+    },
+    {
+      "name": "principle-boundary-discipline",
+      "version": "1.0.0",
+      "description": "Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-boundary-discipline/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-boundary-discipline",
+      "fileCount": 5,
+      "uncompressedBytes": 11234,
+      "contentSha256": "7688569e8583fee7b7c2954563e578bf0610326a4379017caf242949cc4383ac"
+    },
+    {
+      "name": "principle-build-the-lever",
+      "version": "1.0.0",
+      "description": "Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream. Related principles: principle-laziness-protocol, principle-encode-lessons-in-structure, principle-prove-it-works.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-build-the-lever/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-build-the-lever",
+      "fileCount": 8,
+      "uncompressedBytes": 16013,
+      "contentSha256": "40b9afd6d4988a3e4fdccd7645be0196c73e0edce46ea43b5698ef6c08179eb5"
+    },
+    {
+      "name": "principle-encode-lessons-in-structure",
+      "version": "1.0.0",
+      "description": "Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-encode-lessons-in-structure/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-encode-lessons-in-structure",
+      "fileCount": 5,
+      "uncompressedBytes": 9942,
+      "contentSha256": "fd46fe49c648309d2b1a22d26b0973ab293e96707e74797a8b60c9f13f85d1b1"
+    },
+    {
+      "name": "principle-exhaust-the-design-space",
+      "version": "1.0.0",
+      "description": "Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-exhaust-the-design-space/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-exhaust-the-design-space",
+      "fileCount": 5,
+      "uncompressedBytes": 9741,
+      "contentSha256": "d53f942a8a22253a854d2cfa69bf302bddd58d7b59f11101a2b9648b8f6b7b38"
+    },
+    {
+      "name": "principle-experience-first",
+      "version": "1.0.0",
+      "description": "Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-experience-first/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-experience-first",
+      "fileCount": 5,
+      "uncompressedBytes": 10469,
+      "contentSha256": "090aa5bd82873df8707e6419cde13464bbbb20270017dccfb107c927c61eb9e5"
+    },
+    {
+      "name": "principle-explain-the-number",
+      "version": "1.0.0",
+      "description": "Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream. Related principles: benchmark-checklist, principle-prove-it-works.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-explain-the-number/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-explain-the-number",
+      "fileCount": 7,
+      "uncompressedBytes": 18738,
+      "contentSha256": "d86e6036b81e1eb2a745b6c3f99f92f6a0c4537b9a3583319de9e9ff3dc5b615"
+    },
+    {
+      "name": "principle-fix-root-causes",
+      "version": "1.0.0",
+      "description": "Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-fix-root-causes/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-fix-root-causes",
+      "fileCount": 5,
+      "uncompressedBytes": 10652,
+      "contentSha256": "9438bb984a1cc0303ea81152f4bd3dc6eb6095955d8575d131d2e9bb02559538"
+    },
+    {
+      "name": "principle-foundational-thinking",
+      "version": "1.0.0",
+      "description": "Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-foundational-thinking/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-foundational-thinking",
+      "fileCount": 5,
+      "uncompressedBytes": 10890,
+      "contentSha256": "989a22aeb3bd92549263599b169ffa337417b48a607882f17c3a7e95c4ea54e5"
+    },
+    {
+      "name": "principle-guard-the-context-window",
+      "version": "1.0.0",
+      "description": "Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-guard-the-context-window/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-guard-the-context-window",
+      "fileCount": 5,
+      "uncompressedBytes": 9861,
+      "contentSha256": "f69bb345616d344bab263b579d00c690ca761ad48add374a7b0e056f93742e27"
+    },
+    {
+      "name": "principle-laziness-protocol",
+      "version": "1.0.0",
+      "description": "Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-laziness-protocol/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-laziness-protocol",
+      "fileCount": 5,
+      "uncompressedBytes": 9856,
+      "contentSha256": "1e35e38035a2ba7454a8190a278072ecc5fd3074fc1dc56e1c915a5d3c3f9816"
+    },
+    {
+      "name": "principle-make-operations-idempotent",
+      "version": "1.0.0",
+      "description": "Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-make-operations-idempotent/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-make-operations-idempotent",
+      "fileCount": 5,
+      "uncompressedBytes": 10750,
+      "contentSha256": "a6d34e046524d4826e074b4ea402cbf5effb3b99b159529dd82d66c0f86dfd63"
+    },
+    {
+      "name": "principle-migrate-callers-then-delete-legacy-apis",
+      "version": "1.0.0",
+      "description": "Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-migrate-callers-then-delete-legacy-apis",
+      "fileCount": 5,
+      "uncompressedBytes": 10578,
+      "contentSha256": "4f2f0b4f23cc52a95c823569a84a486ca1bfa2d2fe55bbed5d6793dcc0924af2"
+    },
+    {
+      "name": "principle-minimize-reader-load",
+      "version": "1.0.0",
+      "description": "Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream. Related principles: principle-guard-the-context-window.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-minimize-reader-load/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-minimize-reader-load",
+      "fileCount": 6,
+      "uncompressedBytes": 12885,
+      "contentSha256": "e9a2fdbe2f051c0db4fa793e36716c6be71086583ee4d133cf013bd75165091f"
+    },
+    {
+      "name": "principle-model-the-domain",
+      "version": "1.0.0",
+      "description": "Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-model-the-domain/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-model-the-domain",
+      "fileCount": 5,
+      "uncompressedBytes": 11086,
+      "contentSha256": "47f83da460faf27c15468a0f3501c1357dc89759f549eea9cbd1982bc5ead6d0"
+    },
+    {
+      "name": "principle-never-block-on-the-human",
+      "version": "1.0.0",
+      "description": "Apply when tempted to ask 'should I do X?' on reversible work.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-never-block-on-the-human/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when tempted to ask 'should I do X?' on reversible work.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-never-block-on-the-human",
+      "fileCount": 5,
+      "uncompressedBytes": 10142,
+      "contentSha256": "ae5541bfa1890c50e56da915ece209e3c1c3c227053881285ce3685f4ce080a7"
+    },
+    {
+      "name": "principle-outcome-oriented-execution",
+      "version": "1.0.0",
+      "description": "Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-outcome-oriented-execution/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-outcome-oriented-execution",
+      "fileCount": 5,
+      "uncompressedBytes": 10450,
+      "contentSha256": "68bcf4b81981539b85166db08c19496861a37b3cd9985b65ab825370eae51cdb"
+    },
+    {
+      "name": "principle-prove-it-works",
+      "version": "1.0.0",
+      "description": "Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-prove-it-works/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-prove-it-works",
+      "fileCount": 5,
+      "uncompressedBytes": 10671,
+      "contentSha256": "a33e5ca0fb4f5ae91929008139cecd8d834cb70be1160ac6d69669cac738b9fc"
+    },
+    {
+      "name": "principle-redesign-from-first-principles",
+      "version": "1.0.0",
+      "description": "Apply when integrating a new requirement into an existing design.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-redesign-from-first-principles/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when integrating a new requirement into an existing design.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-redesign-from-first-principles",
+      "fileCount": 5,
+      "uncompressedBytes": 10029,
+      "contentSha256": "08df09965cbd5627d5012bea4ae6f3bfacec393887eb10e159f4b80decf4d1ae"
+    },
+    {
+      "name": "principle-separate-before-serializing-shared-state",
+      "version": "1.0.0",
+      "description": "Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-separate-before-serializing-shared-state",
+      "fileCount": 5,
+      "uncompressedBytes": 11020,
+      "contentSha256": "1f4835d355db670d066689d75d0c71d16341940d19b6a79a197ab81e7ee3a4c4"
+    },
+    {
+      "name": "principle-sequence-verifiable-units",
+      "version": "1.0.0",
+      "description": "Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-sequence-verifiable-units",
+      "fileCount": 5,
+      "uncompressedBytes": 11144,
+      "contentSha256": "7794922cb7fde2a8c37965337fbc5673a30b148a1aa9c1fbc24999172f46260f"
+    },
+    {
+      "name": "principle-subtract-before-you-add",
+      "version": "1.0.0",
+      "description": "Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-subtract-before-you-add/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-subtract-before-you-add",
+      "fileCount": 5,
+      "uncompressedBytes": 10228,
+      "contentSha256": "811ba9f0fe231a916c823d8815d8185ad9cde927f4172dfe934f4ff10cfc275c"
+    },
+    {
+      "name": "principle-test-behavior-not-implementation",
+      "version": "1.0.0",
+      "description": "Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-test-behavior-not-implementation",
+      "fileCount": 5,
+      "uncompressedBytes": 10805,
+      "contentSha256": "a89929ee1ac56abf3a3f70417956b345cddbb85bd7474c7991326cc16bede8b9"
+    },
+    {
+      "name": "principle-type-system-discipline",
+      "version": "1.0.0",
+      "description": "Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas.",
+      "category": "engineering-principles",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack principle imported from Engineering Toolkit v1.3; upstream original preserved byte for byte; description restored from upstream.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-type-system-discipline/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/principle-type-system-discipline",
+      "fileCount": 5,
+      "uncompressedBytes": 13111,
+      "contentSha256": "40a577eaf5a6b367cacacd2611b5c35ba9ae5136d6a83615607ec90d35207fd9"
+    },
+    {
       "name": "wayfinder",
       "version": "1.0.0",
       "description": "Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs.",
