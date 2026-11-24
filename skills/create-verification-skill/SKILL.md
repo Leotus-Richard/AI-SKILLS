@@ -2,7 +2,7 @@
 name: create-verification-skill
 description: "Generate and execute a project-local verification skill for a local app; not remote deployment or installation."
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   author: "Lauren Tan (pstack)"
   tags: [engineering-practice]
 ---

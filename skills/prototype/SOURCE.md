@@ -11,7 +11,7 @@ Changes at import:
 
 - The toolkit's metadata (`profile`, `invocation`, `integration-status`) is replaced with `version`, `author`, and `tags`. The description is kept.
 - `LICENSE` is renamed `LICENSE.txt`, as this repository requires.
-- In `LOGIC.md`, `UI.md`, links to the upstream `SKILL.md` now name the bundled `ORIGINAL-SKILL.md`. Tier 1 reported them as dead links; only link targets changed.
+- In `LOGIC.md`, `UI.md`, links to the upstream `SKILL.md` now name the bundled `ORIGINAL-SKILL.md`. Tier 1 reported them as dead links; only link targets changed. Their current SHA-256: `LOGIC.md` `5d625cfffcf314d806b1846fc74e732ed6552e729526f96a2223296024cfe1e6`, `UI.md` `a707b419fa436abfefe2325b1d05e42f8004dfc95bce350a80f288a2dfff6170`.
 - The commit handoff now applies only when a `commit-workflow` skill is installed. That skill was written for the toolkit and has no public source, so it is not bundled.
 
 The license, MIT (Copyright (c) 2026 Matt Pocock), is bundled in `LICENSE.txt`.
