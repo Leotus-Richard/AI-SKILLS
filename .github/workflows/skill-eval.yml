@@ -1,0 +1,266 @@
+name: Skill evaluation (live)
+
+# Model-backed evaluation on the self-hosted ARM64 Linux runners. Advisory: it
+# produces reports to act on and never gates merges.
+#   - Tier 2: repeated guidance inside each skill and overlap across the library.
+#   - SkillSpector with LLM semantic analysis (deeper than the keyless PR scan).
+#   - Tier 3: agents run each skill's eval cases with and without the skill;
+#     the difference is Skill Lift. Only skills with evals/<skill>/ are run.
+#
+# Providers:
+#   lmstudio   Open-weight models served by LM Studio on the Mac that hosts the
+#              runner, reached at host.docker.internal. No cloud calls for
+#              grading, embeddings or agents. Needs repository variables
+#              LOCAL_LLM_MODEL and LOCAL_EMBEDDING_MODEL; see
+#              docs/SKILL-EVALUATION.md.
+#   nv_build   NVIDIA_API_KEY secret.
+#   anthropic  ANTHROPIC_API_KEY secret (Tier 2 is unavailable: no embeddings API).
+#   openai     OPENAI_API_KEY secret.
+# The weekly schedule only runs when the repository variable
+# SKILL_EVAL_SCHEDULED is 'true'.
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: Model provider for grading, embeddings and agents
+        type: choice
+        options: [lmstudio, nv_build, anthropic, openai]
+        default: lmstudio
+      skills:
+        description: Space-separated skill names (empty = all)
+        type: string
+        default: ''
+      tiers:
+        description: What to run
+        type: choice
+        options: ['2,3', '2', '3']
+        default: '2,3'
+      n-attempts:
+        description: Tier 3 attempts per case and arm
+        type: number
+        default: 3
+      agents:
+        description: Tier 3 agents, comma-separated (empty = provider default; lmstudio uses opencode)
+        type: string
+        default: ''
+  schedule:
+    - cron: '17 6 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skill-eval
+  cancel-in-progress: false
+
+env:
+  SKILLEVALUATOR_VERSION: 1.0.1
+  SKILLSPECTOR_REF: e2674da339b0bddc6e565d059c0577c6d9cd25da
+  DO_NOT_TRACK: '1'
+
+jobs:
+  evaluate:
+    name: Tier 2/3 evaluation
+    if: github.event_name != 'schedule' || vars.SKILL_EVAL_SCHEDULED == 'true'
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
+    timeout-minutes: 360
+    env:
+      PROVIDER: ${{ inputs.provider || vars.SKILL_EVAL_PROVIDER || 'lmstudio' }}
+      TIERS: ${{ inputs.tiers || '2,3' }}
+      N_ATTEMPTS: ${{ inputs.n-attempts || 3 }}
+      AGENTS: ${{ inputs.agents }}
+      SKILLS: ${{ inputs.skills }}
+      REPORTS: ${{ github.workspace }}/.tmp/skill-eval-reports
+    steps:
+      # Exports only the selected provider's settings and key to later steps,
+      # so a local run never has cloud credentials in its environment.
+      - name: Configure provider
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LOCAL_LLM_API_KEY: ${{ secrets.LOCAL_LLM_API_KEY }}
+          # LM Studio runs on the macOS host; the runner and the Tier 3 agent
+          # containers run under Docker, where localhost is the container.
+          # Docker Desktop's host.docker.internal reaches the Mac from both,
+          # without leaving the machine. For LM Studio on another tailnet
+          # machine, use its Tailscale IP instead: http://100.x.y.z:<port>/v1.
+          LOCAL_LLM_BASE_URL: ${{ vars.LOCAL_LLM_BASE_URL || 'http://host.docker.internal:8105/v1' }}
+          # Hosts SkillEvaluator may call over plain HTTP. Defaults to the base
+          # URL's host (local to the Mac, or a WireGuard-encrypted tailnet peer).
+          LOCAL_LLM_ALLOW_HTTP_HOSTS: ${{ vars.LOCAL_LLM_ALLOW_HTTP_HOSTS }}
+          LOCAL_LLM_MODEL: ${{ vars.LOCAL_LLM_MODEL }}
+          LOCAL_AGENT_MODEL: ${{ vars.LOCAL_AGENT_MODEL }}
+          LOCAL_EMBEDDING_MODEL: ${{ vars.LOCAL_EMBEDDING_MODEL }}
+        run: |
+          set -euo pipefail
+          fail() { echo "::error::$1"; exit 1; }
+          case "$PROVIDER" in
+            lmstudio)
+              [ -n "$LOCAL_LLM_MODEL" ] || fail "Set the repository variable LOCAL_LLM_MODEL to an LM Studio model id (see 'lms ls')."
+              if [ -z "$LOCAL_LLM_ALLOW_HTTP_HOSTS" ]; then
+                host="${LOCAL_LLM_BASE_URL#*://}"; host="${host%%[:/]*}"
+                LOCAL_LLM_ALLOW_HTTP_HOSTS="$host"
+              fi
+              key="${LOCAL_LLM_API_KEY:-lm-studio}"   # LM Studio accepts any key unless auth is enabled
+              echo "::add-mask::$key"
+              {
+                echo "SKILL_EVAL_LLM_PROVIDER=openai-compatible"
+                echo "SKILL_EVAL_LLM_BASE_URL=$LOCAL_LLM_BASE_URL"
+                echo "SKILL_EVAL_LLM_API_KEY=$key"
+                echo "SKILL_EVAL_LLM_MODEL=$LOCAL_LLM_MODEL"
+                echo "SKILL_EVAL_EMBEDDING_PROVIDER=openai-compatible"
+                echo "SKILL_EVAL_MODEL_CATALOG_ALLOW_HTTP_HOSTS=$LOCAL_LLM_ALLOW_HTTP_HOSTS"
+                echo "SKILLSPECTOR_PROVIDER=openai_compatible"
+                echo "SKILLSPECTOR_COMPAT_BASE_URL=$LOCAL_LLM_BASE_URL"
+                echo "SKILLSPECTOR_COMPAT_API_KEY=$key"
+                echo "SKILLSPECTOR_MODEL=$LOCAL_LLM_MODEL"
+                echo "LOCAL_AGENT_MODEL=${LOCAL_AGENT_MODEL:-$LOCAL_LLM_MODEL}"
+                echo "LOCAL_EMBEDDING_MODEL=$LOCAL_EMBEDDING_MODEL"
+              } >> "$GITHUB_ENV"
+              if [ -n "$LOCAL_EMBEDDING_MODEL" ]; then
+                echo "SKILL_EVAL_EMBEDDING_MODEL=$LOCAL_EMBEDDING_MODEL" >> "$GITHUB_ENV"
+              elif [[ "$TIERS" == *2* ]]; then
+                fail "Set the repository variable LOCAL_EMBEDDING_MODEL (for example an LM Studio embedding model) or run tiers 3 only."
+              fi
+              ;;
+            nv_build|anthropic|openai)
+              case "$PROVIDER" in
+                nv_build) name=NVIDIA_API_KEY ;;
+                anthropic) name=ANTHROPIC_API_KEY ;;
+                openai) name=OPENAI_API_KEY ;;
+              esac
+              [ -n "${!name}" ] || fail "Add the repository secret $name to run live evaluation with provider $PROVIDER."
+              {
+                echo "SKILL_EVAL_LLM_PROVIDER=$PROVIDER"
+                echo "SKILLSPECTOR_PROVIDER=$PROVIDER"
+                echo "$name=${!name}"
+              } >> "$GITHUB_ENV"
+              ;;
+            *) fail "Unknown provider $PROVIDER" ;;
+          esac
+      - name: Check Docker on the runner
+        run: |
+          docker info --format 'Docker {{.ServerVersion}}' || {
+            echo '::error::Docker is not usable by the runner user. Tier 3 runs agents in Docker sandboxes.'
+            exit 1
+          }
+      # uv's standalone Python, not actions/setup-python: SkillEvaluator runs
+      # helper tools with an environment that drops LD_LIBRARY_PATH, which
+      # setup-python's Linux interpreter needs (see skill-checks.yml).
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+      - name: Install SkillEvaluator and SkillSpector
+        run: |
+          uv python install 3.13
+          uv venv --python 3.13 --python-preference only-managed "$RUNNER_TEMP/eval-venv"
+          uv pip install --quiet --python "$RUNNER_TEMP/eval-venv/bin/python" \
+            "skillevaluator[all]==${SKILLEVALUATOR_VERSION}" \
+            "skillspector @ git+https://github.com/NVIDIA/SkillSpector.git@${SKILLSPECTOR_REF}"
+          echo "$RUNNER_TEMP/eval-venv/bin" >> "$GITHUB_PATH"
+      - name: Check LM Studio from the host and from a container
+        if: env.PROVIDER == 'lmstudio'
+        run: |
+          set -euo pipefail
+          models="$(curl -fsS -m 15 -H "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$SKILL_EVAL_LLM_BASE_URL/models")" || {
+            echo "::error::Cannot reach LM Studio at $SKILL_EVAL_LLM_BASE_URL from the runner VM. Check the LM Studio server is running on the Mac, the port matches, and the runner can resolve the host."
+            exit 1
+          }
+          ids="$(printf '%s' "$models" | python3 -I -c 'import json,sys; print("\n".join(m["id"] for m in json.load(sys.stdin)["data"]))')"
+          echo "LM Studio models:"; printf '  %s\n' $ids
+          for want in "$SKILL_EVAL_LLM_MODEL" "$LOCAL_AGENT_MODEL" ${LOCAL_EMBEDDING_MODEL:+"$LOCAL_EMBEDDING_MODEL"}; do
+            grep -qxF "$want" <<<"$ids" || { echo "::error::LM Studio does not list model '$want'. Download it, or load it, or enable just-in-time loading."; exit 1; }
+          done
+          # Agent sandboxes are containers: localhost there is the container itself.
+          docker run --rm busybox:1.37 wget -q -T 15 -O /dev/null \
+            --header "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$SKILL_EVAL_LLM_BASE_URL/models" || {
+            echo "::error::Containers in the runner VM cannot reach $SKILL_EVAL_LLM_BASE_URL although the VM can. Containers must resolve and reach the host (host.docker.internal on Docker Desktop)."
+            exit 1
+          }
+          echo "Containers can reach LM Studio."
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.20.0'
+      - name: Stage skills with their eval datasets
+        run: |
+          # shellcheck disable=SC2086 # SKILLS is an intentional word list
+          node scripts/stage-evals.mjs --out "$RUNNER_TEMP/eval-skills" $SKILLS
+          mkdir -p "$REPORTS"
+
+      - name: Tier 2 - repeated guidance within each skill
+        if: contains(env.TIERS, '2') && env.PROVIDER != 'anthropic'
+        continue-on-error: true
+        run: |
+          for dir in "$RUNNER_TEMP"/eval-skills/*/; do
+            name="$(basename "$dir")"
+            skillevaluator tier2 "$dir" -r json,html,markdown -o "$REPORTS/tier2/$name" || echo "::warning::Tier 2 reported issues for $name"
+          done
+      - name: Tier 2 - overlap across the library
+        if: contains(env.TIERS, '2') && env.PROVIDER != 'anthropic'
+        continue-on-error: true
+        run: skillevaluator similarity-check "$RUNNER_TEMP/eval-skills" -r json,html,markdown -o "$REPORTS/similarity"
+      - name: SkillSpector with LLM analysis
+        if: contains(env.TIERS, '2')
+        continue-on-error: true
+        run: |
+          mkdir -p "$REPORTS/skillspector-llm"
+          for dir in "$RUNNER_TEMP"/eval-skills/*/; do
+            name="$(basename "$dir")"
+            skillspector scan "$dir" --baseline .skillspector-baseline.yaml \
+              --exclude 'evals/*' --format markdown --output "$REPORTS/skillspector-llm/$name.md" \
+              || echo "::warning::SkillSpector LLM scan flagged $name"
+          done
+
+      - name: Tier 3 - skill lift on skills with eval datasets
+        if: contains(env.TIERS, '3')
+        continue-on-error: true
+        run: |
+          agent_args=()
+          if [ "$PROVIDER" = lmstudio ]; then
+            # OpenCode talks Chat Completions with tools, which LM Studio serves.
+            # One trial at a time: a single local GPU serializes requests anyway.
+            agent_args=(--agents "${AGENTS:-opencode}" --agent-model "opencode=openai/$LOCAL_AGENT_MODEL"
+                        --n-concurrent "${{ vars.LOCAL_N_CONCURRENT || 1 }}" --timeout-multiplier "${{ vars.LOCAL_TIMEOUT_MULTIPLIER || 3 }}")
+          elif [ -n "$AGENTS" ]; then
+            agent_args=(--agents "$AGENTS")
+          fi
+          ran=0
+          for dir in "$RUNNER_TEMP"/eval-skills/*/; do
+            name="$(basename "$dir")"
+            [ -d "$dir/evals" ] || continue
+            ran=1
+            skillevaluator tier3 validate "$dir" --strict || { echo "::error::$name eval dataset is invalid"; continue; }
+            skillevaluator tier3 evaluate "$dir" --env-mode docker --n-attempts "$N_ATTEMPTS" \
+              "${agent_args[@]}" --results-dir "$REPORTS/tier3/$name" \
+              || echo "::warning::Tier 3 did not complete for $name"
+          done
+          [ "$ran" = 1 ] || echo "::notice::No skill has an evals/<skill>/ dataset yet; Tier 3 skipped."
+
+      - name: Summarize
+        if: always()
+        run: |
+          {
+            echo "## Skill evaluation ($PROVIDER, tiers $TIERS)"
+            [ "$PROVIDER" = lmstudio ] && echo "Judge/evaluator: \`${SKILL_EVAL_LLM_MODEL:-}\` · agent: \`${LOCAL_AGENT_MODEL:-}\` · embeddings: \`${LOCAL_EMBEDDING_MODEL:-}\`. Compare lift only between runs that use the same models."
+            echo
+            for f in "$REPORTS"/similarity/*.md "$REPORTS"/tier2/*/*.md; do
+              [ -f "$f" ] && { echo "<details><summary>${f#"$REPORTS"/}</summary>"; echo; head -c 20000 "$f"; echo; echo "</details>"; }
+            done
+            echo
+            echo "Download the **skill-eval-reports** artifact for HTML reports and Tier 3 results."
+            echo "Locally: \`skillevaluator tier3 history <skill> --results-dir <dir>\` and \`skillevaluator tier3 feedback\`."
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skill-eval-reports
+          path: ${{ env.REPORTS }}
+          if-no-files-found: warn
+          retention-days: 30

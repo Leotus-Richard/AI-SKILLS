@@ -1,0 +1,218 @@
+name: Skill checks
+
+# Keyless static gates for every skill change, on the self-hosted ARM64 runners:
+#   - SkillSpector: security scan of each skill. Blocks on any active finding
+#     not accepted in .skillspector-baseline.yaml.
+#   - SkillEvaluator Tier 1: quality score, schema, harness compatibility, PII,
+#     license, Unicode, secrets and code checks. Installed natively from PyPI
+#     because NVIDIA's Tier 1 image is amd64-only and the runners are ARM64.
+#     Advisory until the repository variable SKILL_TIER1_ENFORCE is 'true'.
+#
+# Live agent evaluation (Tier 2/3) needs a model key and lives in skill-eval.yml.
+# See docs/SKILL-EVALUATION.md.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      scan-mode:
+        description: Tier 1 scope (changed skills only, or all)
+        type: choice
+        options: [all, changed]
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skill-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # SkillEvaluator 1.0.1 pins its own scanners: SkillSpector 2.13.4, Gitleaks 8.30.0.
+  SKILLEVALUATOR_VERSION: 1.0.1
+  # SkillSpector v2.13.6.
+  SKILLSPECTOR_REF: e2674da339b0bddc6e565d059c0577c6d9cd25da
+  DO_NOT_TRACK: '1'
+
+jobs:
+  skillspector:
+    name: SkillSpector security scan
+    # Self-hosted runners run trusted code only. Fork PRs need a maintainer to
+    # review the change and run this workflow manually from a branch.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install SkillSpector
+        run: |
+          python -m venv "$RUNNER_TEMP/skillspector-venv"
+          "$RUNNER_TEMP/skillspector-venv/bin/pip" install --quiet --disable-pip-version-check \
+            "skillspector @ git+https://github.com/NVIDIA/SkillSpector.git@${SKILLSPECTOR_REF}"
+          echo "$RUNNER_TEMP/skillspector-venv/bin" >> "$GITHUB_PATH"
+      - name: Scan each skill
+        run: |
+          set -uo pipefail
+          out="$RUNNER_TEMP/skillspector-reports"
+          mkdir -p "$out"
+          status=0
+          for dir in skills/*/; do
+            name="$(basename "$dir")"
+            [ -f "$dir/SKILL.md" ] || continue
+            # Actions runs bash with -e; capture the code so every skill is scanned.
+            rc=0
+            skillspector scan "$dir" --no-llm --fail-on-findings \
+              --baseline .skillspector-baseline.yaml \
+              --format json --output "$out/$name.json" || rc=$?
+            echo "$name exit=$rc"
+            if [ "$rc" -ne 0 ]; then
+              status=1
+              echo "::error title=SkillSpector::$name has active findings or the scan failed (exit $rc). Fix them or add a reviewed rule to .skillspector-baseline.yaml."
+            fi
+          done
+          exit "$status"
+      - name: Summarize findings
+        if: always()
+        run: |
+          python3 -I - "$RUNNER_TEMP/skillspector-reports" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json, pathlib, sys
+          rows, details = [], []
+          for path in sorted(pathlib.Path(sys.argv[1]).glob("*.json")):
+              data = json.loads(path.read_text())
+              risk = data.get("risk_assessment") or {}
+              issues = data.get("issues") or []
+              done = (data.get("analysis_completeness") or {}).get("status", "?")
+              rows.append(f"| {path.stem} | {risk.get('recommendation', '?')} | {len(issues)} | {data.get('suppressed_count', 0)} | {done} |")
+              for issue in issues:
+                  loc = issue.get("location") or {}
+                  details.append(f"- **{path.stem}** `{issue.get('id')}` {issue.get('severity')} {issue.get('category')}/{issue.get('pattern')} at `{loc.get('file')}:{loc.get('start_line')}`: {issue.get('remediation', '')}")
+          print("## SkillSpector\n")
+          print("| Skill | Recommendation | Active findings | Suppressed | Coverage |\n| --- | --- | --- | --- | --- |")
+          print("\n".join(rows) or "| (no reports) | | | | |")
+          if details:
+              print("\n### Active findings\n")
+              print("\n".join(details))
+          PY
+      - name: Upload SkillSpector reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillspector-reports
+          path: ${{ runner.temp }}/skillspector-reports/
+          if-no-files-found: warn
+          retention-days: 14
+
+  tier1:
+    name: SkillEvaluator Tier 1
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
+    timeout-minutes: 60
+    env:
+      SCAN_MODE: ${{ github.event_name == 'pull_request' && 'changed' || inputs.scan-mode || 'all' }}
+      ENFORCE: ${{ vars.SKILL_TIER1_ENFORCE == 'true' }}
+      MIN_SCORE: ${{ vars.SKILL_MIN_SCORE || '70' }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+    steps:
+      # The runner context isn't available in job-level env, so set the path here.
+      - name: Set report directory
+        run: echo "REPORTS=$RUNNER_TEMP/skill-reports" >> "$GITHUB_ENV"
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          # Changed-skill mode needs history to find the merge base. Quoted
+          # because a bare 0 is falsy, so `&& 0 || 1` would always yield 1.
+          fetch-depth: ${{ github.event_name == 'pull_request' && '0' || '1' }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      # Not actions/setup-python: its Linux builds need LD_LIBRARY_PATH, which
+      # SkillEvaluator strips when it runs its pinned SkillSpector via
+      # `uv tool run`, so that interpreter fails to start (exit 127). uv's
+      # standalone Python needs no LD_LIBRARY_PATH.
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+      - name: Install SkillEvaluator
+        run: |
+          uv python install 3.13
+          uv venv --python 3.13 --python-preference only-managed "$RUNNER_TEMP/skillevaluator-venv"
+          uv pip install --quiet --python "$RUNNER_TEMP/skillevaluator-venv/bin/python" \
+            "skillevaluator==${SKILLEVALUATOR_VERSION}"
+          echo "$RUNNER_TEMP/skillevaluator-venv/bin" >> "$GITHUB_PATH"
+      - name: Select skills
+        id: select
+        run: |
+          set -euo pipefail
+          if [ "$SCAN_MODE" = changed ] && [ -n "$BASE_SHA" ] && base="$(git merge-base "$BASE_SHA" HEAD 2>/dev/null)"; then
+            names="$(git diff --name-only "$base" HEAD -- skills/ | cut -d/ -f2 | sort -u)"
+          else
+            if [ "$SCAN_MODE" = changed ]; then
+              echo "::warning::Could not find the PR merge base; scanning all skills."
+            fi
+            names="$(find skills -mindepth 2 -maxdepth 2 -name SKILL.md | cut -d/ -f2 | sort)"
+          fi
+          selected=""
+          for name in $names; do
+            [ -f "skills/$name/SKILL.md" ] && selected="$selected $name"
+          done
+          echo "skills=${selected# }" >> "$GITHUB_OUTPUT"
+          echo "Selected (${SCAN_MODE}):${selected:- none}"
+      - name: Evaluate skills
+        id: evaluate
+        if: steps.select.outputs.skills != ''
+        continue-on-error: ${{ vars.SKILL_TIER1_ENFORCE != 'true' }}
+        env:
+          SKILLS: ${{ steps.select.outputs.skills }}
+        run: |
+          set -uo pipefail
+          status=0
+          for name in $SKILLS; do
+            # Actions runs bash with -e; capture the code so every skill is evaluated.
+            rc=0
+            skillevaluator tier1 "skills/$name" --no-llm --min-score "$MIN_SCORE" \
+              --skillspector-baseline .skillspector-baseline.yaml \
+              -r json,markdown -o "$REPORTS/$name" || rc=$?
+            echo "$name exit=$rc"
+            [ "$rc" -eq 0 ] || { status=1; echo "::warning title=SkillEvaluator Tier 1::$name did not pass (exit $rc). See the job summary."; }
+          done
+          exit "$status"
+      - name: Note advisory result
+        if: steps.evaluate.outcome == 'failure' && env.ENFORCE != 'true'
+        run: echo "::warning title=SkillEvaluator Tier 1::Not all skills passed Tier 1. This job is advisory; set the repository variable SKILL_TIER1_ENFORCE=true to make it blocking."
+      - name: Add the result to the workflow summary
+        if: always()
+        run: |
+          python3 -I - "$REPORTS" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json, pathlib, sys
+          root = pathlib.Path(sys.argv[1])
+          print("## SkillEvaluator Tier 1\n")
+          reports = sorted(root.glob("*/skillevaluator-tier1.json")) if root.exists() else []
+          if not reports:
+              print("No skills selected, or Tier 1 did not run.")
+              raise SystemExit
+          print("| Skill | Status | Quality | Failed | Incomplete |\n| --- | --- | --- | --- | --- |")
+          for path in reports:
+              data = json.loads(path.read_text())
+              results = data.get("results") or []
+              failed = [r.get("validator") or r.get("name") or "?" for r in results if str(r.get("status", "")).lower() == "failed"]
+              incomplete = [r.get("validator") or r.get("name") or "?" for r in results if str(r.get("status", "")).lower() == "incomplete"]
+              score = next((q.get("overall_score") for q in data.get("quality_summary") or [] if isinstance(q, dict)), None)
+              print(f"| {path.parent.name} | {data.get('overall_status', '?')} | {score if score is not None else '?'} | {', '.join(map(str, failed)) or '-'} | {', '.join(map(str, incomplete)) or '-'} |")
+          print("\nFull reports: download the **skillevaluator-tier1** artifact (Markdown and JSON per skill).")
+          PY
+      - name: Upload Tier 1 reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillevaluator-tier1-attempt-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/skill-reports/
+          if-no-files-found: warn
+          retention-days: 14

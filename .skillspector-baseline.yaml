@@ -1,0 +1,30 @@
+# SkillSpector baseline for this library.
+#
+# CI scans every skill with `--fail-on-findings --baseline .skillspector-baseline.yaml`,
+# so any active finding that is not listed here fails the "Skill checks" workflow.
+# Add a rule only after reviewing the finding; `reason` is required and should say
+# why the finding is a false positive or an accepted risk.
+#
+# Rule paths are relative to each scanned skill folder (e.g. references/x.md).
+# Prefer narrow rules (id + path + message) over global ones, and remove a rule
+# when the underlying text changes. Reference: https://github.com/NVIDIA/SkillSpector/blob/main/docs/SUPPRESSION.md
+
+version: 2
+
+rules:
+  - id: "RA2"
+    path: "references/execution.md"
+    message: "*Read the saved state*"
+    reason: >-
+      False positive (reviewed 2026-11-23): "Read the saved state" is post-write
+      readback of the user's tracker items, not a persistence mechanism. The skill
+      creates no cron jobs, startup scripts, or cross-session state.
+
+  - id: "TM1"
+    path: "references/github.md"
+    message: "*DELETE*sub_issue*"
+    reason: >-
+      False positive (reviewed 2026-11-23, flagged by SkillSpector 2.13.4 inside
+      SkillEvaluator 1.0.1): the line documents GitHub's REST endpoint for removing
+      a sub-issue. The skill requires explicit authorization and readback before any
+      tracker mutation; it does not instruct unattended deletion.

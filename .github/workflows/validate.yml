@@ -13,42 +13,35 @@ concurrency:
   group: validate-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Linux runs on the self-hosted ARM64 Linux runners. Override the labels with the
+# repository variable SELF_HOSTED_RUNNER_LABELS (a JSON array) if yours differ.
+#
+# Self-hosted runners only run trusted code: pushes, manual runs, and pull
+# requests from branches in this repository. Pull requests from forks run the
+# Linux leg on a GitHub-hosted runner instead, so outside code never executes
+# on your machines.
 jobs:
-  validate:
+  linux-self-hosted:
+    name: Validate (linux, self-hosted)
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    uses: ./.github/workflows/node-checks.yml
+    with:
+      runs-on: ${{ vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]' }}
+      upload-artifact: ai-skills-validation
+
+  linux-fork:
+    name: Validate (linux, fork PR)
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+    uses: ./.github/workflows/node-checks.yml
+    with:
+      runs-on: '"ubuntu-latest"'
+
+  cross-platform:
     name: Validate (${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    env:
-      DISABLE_TELEMETRY: '1'
-      DO_NOT_TRACK: '1'
-    steps:
-      - name: Check out source
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.20.0'
-          cache: npm
-      - name: Install locked dependencies
-        run: npm ci
-      - name: Validate skills and registry
-        run: npm run validate
-      - name: Check generated catalog
-        run: npm run catalog:check
-      - name: Run tests
-        run: npm test
-      - name: Build upload packages
-        run: npm run build
-      - name: Upload validated packages
-        if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v4
-        with:
-          name: ai-skills-validation
-          path: dist/
-          if-no-files-found: error
-          retention-days: 14
+        os: [macos-latest, windows-latest]
+    uses: ./.github/workflows/node-checks.yml
+    with:
+      runs-on: ${{ format('"{0}"', matrix.os) }}
