@@ -33,6 +33,35 @@
       "contentSha256": "1a72c81bb5e10b4fccedd723671ae3cb9247ebe982e350ee8928a3462a63d72c"
     },
     {
+      "name": "deslop",
+      "version": "1.0.0",
+      "description": "Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries.",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "cursor-team-kit:deslop imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/deslop/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/deslop",
+      "fileCount": 5,
+      "uncompressedBytes": 10157,
+      "contentSha256": "1b86995355e8749a71af4ed020569ed3d4d9681554c9b395d7849940c2a51db7"
+    },
+    {
       "name": "enterprise-agent-architecture",
       "version": "1.0.0",
       "description": "Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph.",
@@ -114,6 +143,65 @@
       "fileCount": 3,
       "uncompressedBytes": 13095,
       "contentSha256": "ce4861f7fa682b3bf41b75e88a4c294a1ed752caea515cf09f79788eb3e55755"
+    },
+    {
+      "name": "interrogate",
+      "version": "1.0.0",
+      "description": "Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real.",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack:interrogate imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/interrogate/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/interrogate",
+      "fileCount": 9,
+      "uncompressedBytes": 29122,
+      "contentSha256": "ee6a00da3013b6a079b5f99a23f24afc5d61d01b0d01b2d92f8590375b5ed6e2"
+    },
+    {
+      "name": "maintain-verification-skill",
+      "version": "1.0.0",
+      "description": "Refresh an existing local verification skill and feature map against observed app behavior.",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack:maintain-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Refresh an existing local verification skill and feature map against observed app behavior.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/maintain-verification-skill",
+      "fileCount": 9,
+      "uncompressedBytes": 31543,
+      "contentSha256": "002c574788a5109ccfd6ae7ccc0607cc886ea64d11d865c6dd16d1ab62d184d6"
     },
     {
       "name": "principle-attack-the-premise",
@@ -810,6 +898,37 @@
       "fileCount": 5,
       "uncompressedBytes": 13111,
       "contentSha256": "40a577eaf5a6b367cacacd2611b5c35ba9ae5136d6a83615607ec90d35207fd9"
+    },
+    {
+      "name": "retro",
+      "version": "1.0.0",
+      "description": "Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "mattpocock:retro imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",
+        "revision": "49dd158d1076134a641b33efb035946536778336",
+        "urls": [
+          "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/retro/SKILL.md",
+          "https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336",
+          "https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336/skills/productivity/writing-for-agents",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/correct"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/retro",
+      "fileCount": 10,
+      "uncompressedBytes": 31618,
+      "contentSha256": "55f74782b2918d2e205ab617a94ba41346531c50693770438df95960c4099791"
     },
     {
       "name": "wayfinder",

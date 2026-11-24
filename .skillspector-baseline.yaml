@@ -28,3 +28,12 @@ rules:
       SkillEvaluator 1.0.1): the line documents GitHub's REST endpoint for removing
       a sub-issue. The skill requires explicit authorization and readback before any
       tracker mutation; it does not instruct unattended deletion.
+
+  - id: "MP3"
+    path: "references/upstream/related/create-verification-skill/references/feature-map-example/README.md"
+    message: "*clear state*"
+    reason: >-
+      False positive (reviewed 2026-11-24): pstack's example feature map says its
+      search feature "covers ... matching, empty, and clear states", meaning UI
+      states of a search box. Nothing in the example clears or rewrites agent
+      memory. Applies to the bundled copy in maintain-verification-skill.
