@@ -63,6 +63,29 @@ export function findVersionIssues(changed) {
 }
 
 /** Validate a registry entry's evaluation records against the skill's current version. */
+// The Tier 3 scores for one agent model. A score is a share between 0 and 1, or null when
+// that side of the run did not finish; lift is with-skill minus without-skill, or null.
+function findTier3Issues(at, tier3) {
+  if (!tier3 || typeof tier3 !== 'object' || Array.isArray(tier3)) return [`${at} must be an object`];
+  const issues = [];
+  const count = value => Number.isInteger(value) && value >= 0;
+  if (tier3.agent !== null && typeof tier3.agent !== 'string') issues.push(`${at}.agent must name the agent tool or be null`);
+  for (const key of ['cases', 'scoredWithSkill', 'scoredWithoutSkill']) {
+    if (tier3[key] !== null && !count(tier3[key])) issues.push(`${at}.${key} must be a count or null`);
+  }
+  for (const key of ['withSkill', 'withoutSkill']) {
+    if (tier3[key] !== null && !(typeof tier3[key] === 'number' && tier3[key] >= 0 && tier3[key] <= 1)) issues.push(`${at}.${key} must be between 0 and 1, or null`);
+  }
+  if (tier3.lift !== null && !(typeof tier3.lift === 'number' && tier3.lift >= -1 && tier3.lift <= 1)) issues.push(`${at}.lift must be between -1 and 1, or null`);
+  if (tier3.lift !== null && (tier3.withSkill === null || tier3.withoutSkill === null)) issues.push(`${at}.lift needs a score for both sides`);
+  if ('activated' in tier3 || 'activationTrials' in tier3) {
+    if (!count(tier3.activated) || !count(tier3.activationTrials) || tier3.activated > tier3.activationTrials) {
+      issues.push(`${at}: activated must be a count no greater than activationTrials`);
+    }
+  }
+  return issues;
+}
+
 export function findEvaluationIssues(name, evaluations, currentVersion) {
   if (evaluations === undefined) return [];
   if (!Array.isArray(evaluations)) return [`${name}: evaluations must be an array`];
@@ -86,6 +109,7 @@ export function findEvaluationIssues(name, evaluations, currentVersion) {
       }
     }
     if (!Array.isArray(record.tiers) || !record.tiers.length) issues.push(`${at}.tiers must list the tiers that ran`);
+    if (record.tier3 !== undefined) issues.push(...findTier3Issues(`${at}.tier3`, record.tier3));
     try { if (new URL(record.runUrl).protocol !== 'https:') throw new Error(); }
     catch { issues.push(`${at}.runUrl must be an https URL`); }
   });

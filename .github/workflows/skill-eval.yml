@@ -284,11 +284,15 @@ jobs:
               echo failed > "$REPORTS/status/$name.tier3"
               echo "::warning::Tier 3 did not complete for $name"
             fi
+            # The scores for the record, in SkillEvaluator's own summary format.
+            mkdir -p "$REPORTS/history"
+            skillevaluator tier3 history "$dir" --results-dir "$REPORTS/tier3/$name" --json > "$REPORTS/history/$name.json" \
+              || rm -f "$REPORTS/history/$name.json"
           done
           [ "$ran" = 1 ] || echo "::notice::No skill has an evals/<skill>/ dataset yet; Tier 3 skipped."
 
       # One record per skill that a model-backed tier ran for: the skill version
-      # tested, the models, and the outcome. The record job turns these into a
+      # tested, the models, the outcome, and the Tier 3 scores. The record job turns these into a
       # registry PR so each version carries the models that tested it.
       - name: Prepare evaluation records
         if: always()
@@ -296,43 +300,8 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           AGENT_DEFAULT: ${{ inputs.agents }}
         run: |
-          node --input-type=module - "$RUNNER_TEMP/eval-skills" "$REPORTS/status" "$REPORTS/records" <<'JS'
-          import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-          import { join } from 'node:path';
-          import { readSkillVersion } from './scripts/versioning.mjs';
-          const [skillsDir, statusDir, outDir] = process.argv.slice(2);
-          const env = process.env;
-          const local = env.PROVIDER === 'lmstudio';
-          const read = file => (existsSync(file) ? readFileSync(file, 'utf8').trim() : null);
-          mkdirSync(outDir, { recursive: true });
-          let written = 0;
-          for (const skill of existsSync(skillsDir) ? readdirSync(skillsDir) : []) {
-            const results = {};
-            for (const tier of ['tier2', 'tier3']) {
-              const status = read(join(statusDir, `${skill}.${tier}`));
-              if (status) results[tier] = status;
-            }
-            if (!Object.keys(results).length) continue; // No model-backed tier ran for this skill.
-            const record = {
-              skill,
-              version: readSkillVersion(readFileSync(join(skillsDir, skill, 'SKILL.md'), 'utf8')),
-              date: new Date().toISOString().slice(0, 10),
-              provider: env.PROVIDER,
-              models: {
-                judge: env.SKILL_EVAL_LLM_MODEL || 'provider-default',
-                agent: results.tier3 ? (local ? env.LOCAL_AGENT_MODEL : (env.AGENT_DEFAULT || 'provider-default')) : null,
-                embedding: results.tier2 ? (env.SKILL_EVAL_EMBEDDING_MODEL || 'provider-default') : null,
-              },
-              tiers: Object.keys(results).map(tier => tier.replace('tier', '')),
-              results,
-              tools: { skillevaluator: env.SKILLEVALUATOR_VERSION, skillspector: env.SKILLSPECTOR_REF.slice(0, 12) },
-              runUrl: env.RUN_URL,
-            };
-            writeFileSync(join(outDir, `${skill}.json`), `${JSON.stringify(record, null, 2)}\n`);
-            written += 1;
-          }
-          console.log(`${written} evaluation record(s).`);
-          JS
+          node scripts/evaluation-records.mjs --skills "$RUNNER_TEMP/eval-skills" --status "$REPORTS/status" \
+            --history "$REPORTS/history" --tier3 "$REPORTS/tier3" --out "$REPORTS/records"
       - name: Upload evaluation records
         if: always()
         uses: actions/upload-artifact@v7

@@ -21,6 +21,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -48,6 +49,7 @@
         "urls": []
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -83,6 +85,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -134,6 +137,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -173,6 +177,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -206,6 +211,7 @@
         "urls": []
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -233,6 +239,7 @@
         "urls": []
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -270,6 +277,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -301,6 +309,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -341,6 +350,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -378,6 +388,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -411,6 +422,7 @@
         "urls": []
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -452,6 +464,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -490,7 +503,47 @@
         "notes": "Original skill by the repository owner, from their private Notion Skills database (last edited 2026-11-11), contributed under Apache-2.0. One-word fix to the bundled TypeScript example at import.",
         "urls": []
       },
-      "testedWith": null,
+      "testedWith": {
+        "date": "2026-11-24",
+        "models": {
+          "agent": "qwen/qwen3.6-35b-a3b",
+          "embedding": null,
+          "judge": "nvidia/nemotron-3.5-super-vl"
+        },
+        "provider": "lmstudio",
+        "tiers": [
+          "3"
+        ]
+      },
+      "evaluations": [
+        {
+          "date": "2026-11-24",
+          "models": {
+            "agent": "qwen/qwen3.6-35b-a3b",
+            "embedding": null,
+            "judge": "nvidia/nemotron-3.5-super-vl"
+          },
+          "provider": "lmstudio",
+          "results": {
+            "tier3": "failed"
+          },
+          "runUrl": "https://github.com/Leotus-Richard/AI-SKILLS/actions/runs/45456749648",
+          "tier3": {
+            "activated": 1,
+            "activationTrials": 8,
+            "agent": "opencode",
+            "cases": 12,
+            "lift": null,
+            "scoredWithSkill": 10,
+            "scoredWithoutSkill": 12,
+            "withSkill": null,
+            "withoutSkill": 0.9338
+          },
+          "tiers": [
+            "3"
+          ]
+        }
+      ],
       "versions": [
         {
           "bump": "initial",
@@ -522,6 +575,7 @@
         "urls": []
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -564,6 +618,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -601,6 +656,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -642,6 +698,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -679,6 +736,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -716,6 +774,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -753,6 +812,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -792,6 +852,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -829,6 +890,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -866,6 +928,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -903,6 +966,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -940,6 +1004,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -977,6 +1042,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1014,6 +1080,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1053,6 +1120,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1090,6 +1158,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1127,6 +1196,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1164,6 +1234,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1203,6 +1274,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1240,6 +1312,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1277,6 +1350,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1317,6 +1391,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1354,6 +1429,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1391,6 +1467,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1431,6 +1508,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1470,6 +1548,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1515,6 +1594,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1555,6 +1635,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
@@ -1603,6 +1684,7 @@
         ]
       },
       "testedWith": null,
+      "evaluations": [],
       "versions": [
         {
           "bump": "initial",
