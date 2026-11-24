@@ -121,8 +121,10 @@ jobs:
       ENFORCE: ${{ vars.SKILL_TIER1_ENFORCE == 'true' }}
       MIN_SCORE: ${{ vars.SKILL_MIN_SCORE || '70' }}
       BASE_SHA: ${{ github.event.pull_request.base.sha }}
-      REPORTS: ${{ runner.temp }}/skill-reports
     steps:
+      # The runner context isn't available in job-level env, so set the path here.
+      - name: Set report directory
+        run: echo "REPORTS=$RUNNER_TEMP/skill-reports" >> "$GITHUB_ENV"
       - name: Check out source
         uses: actions/checkout@v4
         with:
