@@ -86,6 +86,7 @@ npx --yes github:Leotus-Richard/AI-SKILLS#<tag or commit> --skill wayfinder --ag
 
 - To take the skill text from a different revision than the command, add `--ref <tag, branch or commit>`.
 - If the command cannot tell which commit it was fetched at, it says so and installs from the default branch.
+- The project's `skills-lock.json` records the repository, the commit and a content hash for each installed skill, with no local paths, so it is safe to commit.
 - To move to a newer revision, run the command again with the new tag or commit.
 - Every other option works as it does from a checkout, including `--print` and `--with-related`.
 
