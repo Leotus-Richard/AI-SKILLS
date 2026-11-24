@@ -35,6 +35,33 @@
       "contentSha256": "1a72c81bb5e10b4fccedd723671ae3cb9247ebe982e350ee8928a3462a63d72c"
     },
     {
+      "name": "commit-workflow",
+      "version": "1.0.0",
+      "description": "Prepare small, tested Git commits with structured messages, confirmed requester identity and no agent credit or co-author trailers. Use for implementation checkpoints or commit policy; not permission to push, rewrite history or commit someone else's work.",
+      "category": "engineering-practice",
+      "license": "Apache-2.0",
+      "requires": [],
+      "related": [],
+      "provenance": {
+        "kind": "user-supplied",
+        "notes": "Written for Engineering Toolkit v1.3 as its commit policy (manifest source: authored-local-commit-policy) and contributed by the repository owner under Apache-2.0. It adapts no third-party skill. The toolkit's gate script is not bundled; SOURCE.md says why.",
+        "urls": []
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Prepares small, tested commits one slice at a time: a structured message with Why and the checks that actually passed, the identity the requester confirmed for both author and committer, and no co-author trailer or agent credit. Checks run on the exact staged tree before the commit and again on the commit itself. It grants no authority to commit, push or rewrite history, and it stops and asks when a repository convention conflicts with its rules.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/commit-workflow",
+      "fileCount": 6,
+      "uncompressedBytes": 24731,
+      "contentSha256": "ddf15669f7d9ac2d72cf2982cd1090126b749d669ecebe6b8d67f46996a4cc71"
+    },
+    {
       "name": "create-verification-skill",
       "version": "3.0.0",
       "description": "Generate and execute a project-local verification skill for a local app; not remote deployment or installation.",
@@ -94,7 +121,9 @@
       "category": "engineering-practice",
       "license": "MIT",
       "requires": [],
-      "related": [],
+      "related": [
+        "commit-workflow"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "cursor-team-kit:deslop imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
@@ -299,6 +328,7 @@
       "license": "Apache-2.0",
       "requires": [],
       "related": [
+        "commit-workflow",
         "create-verification-skill"
       ],
       "provenance": {
@@ -409,7 +439,9 @@
       "requires": [
         "create-verification-skill"
       ],
-      "related": [],
+      "related": [
+        "commit-workflow"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack:maintain-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Requires create-verification-skill from this library rather than bundling a copy.",
@@ -480,6 +512,7 @@
       "license": "Apache-2.0",
       "requires": [],
       "related": [
+        "commit-workflow",
         "graph-engineering",
         "show-me-your-work"
       ],
@@ -1424,7 +1457,9 @@
       "category": "engineering-practice",
       "license": "MIT",
       "requires": [],
-      "related": [],
+      "related": [
+        "commit-workflow"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "mattpocock:prototype imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
@@ -1506,7 +1541,9 @@
       "category": "engineering-practice",
       "license": "MIT",
       "requires": [],
-      "related": [],
+      "related": [
+        "commit-workflow"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "notes": "pstack:show-me-your-work imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",

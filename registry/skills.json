@@ -27,6 +27,25 @@
       "evaluations": []
     },
     {
+      "name": "commit-workflow",
+      "category": "engineering-practice",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "urls": [],
+        "notes": "Written for Engineering Toolkit v1.3 as its commit policy (manifest source: authored-local-commit-policy) and contributed by the repository owner under Apache-2.0. It adapts no third-party skill. The toolkit's gate script is not bundled; SOURCE.md says why."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Prepares small, tested commits one slice at a time: a structured message with Why and the checks that actually passed, the identity the requester confirmed for both author and committer, and no co-author trailer or agent credit. Checks run on the exact staged tree before the commit and again on the commit itself. It grants no authority to commit, push or rewrite history, and it stops and asks when a repository convention conflicts with its rules."
+        }
+      ],
+      "evaluations": []
+    },
+    {
       "name": "create-verification-skill",
       "category": "engineering-practice",
       "license": "MIT",
@@ -76,6 +95,9 @@
       "name": "deslop",
       "category": "engineering-practice",
       "license": "MIT",
+      "related": [
+        "commit-workflow"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "urls": [
@@ -235,6 +257,7 @@
       "category": "design-and-formatting",
       "license": "Apache-2.0",
       "related": [
+        "commit-workflow",
         "create-verification-skill"
       ],
       "provenance": {
@@ -323,6 +346,9 @@
       "requires": [
         "create-verification-skill"
       ],
+      "related": [
+        "commit-workflow"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "urls": [
@@ -378,6 +404,7 @@
       "category": "workflow",
       "license": "Apache-2.0",
       "related": [
+        "commit-workflow",
         "graph-engineering",
         "show-me-your-work"
       ],
@@ -1130,6 +1157,9 @@
       "name": "prototype",
       "category": "engineering-practice",
       "license": "MIT",
+      "related": [
+        "commit-workflow"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "urls": [
@@ -1196,6 +1226,9 @@
       "name": "show-me-your-work",
       "category": "engineering-practice",
       "license": "MIT",
+      "related": [
+        "commit-workflow"
+      ],
       "provenance": {
         "kind": "adapted-upstream",
         "urls": [
