@@ -29,6 +29,15 @@ jobs:
       runs-on: ${{ vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]' }}
       upload-artifact: ai-skills-validation
 
+  # Keeps the documented minimum (package.json engines) honest.
+  linux-min-node:
+    name: Validate (linux, minimum Node)
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    uses: ./.github/workflows/node-checks.yml
+    with:
+      runs-on: ${{ vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]' }}
+      node-version: '22.20.0'
+
   linux-fork:
     name: Validate (linux, fork PR)
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
