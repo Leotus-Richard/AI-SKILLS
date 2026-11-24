@@ -27,6 +27,29 @@
       "evaluations": []
     },
     {
+      "name": "deslop",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/deslop/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit"
+        ],
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "notes": "cursor-team-kit:deslop imported from Engineering Toolkit v1.3; upstream original preserved byte for byte."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries."
+        }
+      ],
+      "evaluations": []
+    },
+    {
       "name": "enterprise-agent-architecture",
       "category": "workflow",
       "license": "Apache-2.0",
@@ -87,6 +110,53 @@
           "date": "2026-11-24",
           "bump": "initial",
           "expectedBehavior": "Interviews the user in dependency-aware rounds with recommendations to settle a plan or design in one session, maintaining a domain glossary and qualifying ADRs. Points multi-session planning to Wayfinder and does not treat the interview as authorization to implement."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "interrogate",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/interrogate/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ],
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "notes": "pstack:interrogate imported from Engineering Toolkit v1.3; upstream original preserved byte for byte."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "maintain-verification-skill",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill"
+        ],
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "notes": "pstack:maintain-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Refresh an existing local verification skill and feature map against observed app behavior."
         }
       ],
       "evaluations": []
@@ -639,6 +709,31 @@
           "date": "2026-11-24",
           "bump": "initial",
           "expectedBehavior": "Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "retro",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/retro/SKILL.md",
+          "https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336",
+          "https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336/skills/productivity/writing-for-agents",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/correct"
+        ],
+        "revision": "49dd158d1076134a641b33efb035946536778336",
+        "notes": "mattpocock:retro imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes."
         }
       ],
       "evaluations": []

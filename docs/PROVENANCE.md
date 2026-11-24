@@ -71,3 +71,9 @@ The 24 `principle-*` skills come from pstack in [cursor/plugins](https://github.
 
 They were imported from Engineering Toolkit v1.3. The toolkit wraps each upstream skill in a task-scoped hub and keeps the original byte for byte at `references/upstream/ORIGINAL-SKILL.md`; each original's SHA-256 was checked against the pinned upstream file. The archive does not record who prepared the toolkit adaptation. At import, each description was restored from upstream and the toolkit-specific metadata was replaced. Four originals link to other pstack skills. Those skills' files were fetched from the same pinned commit into each skill's `references/upstream/related/`, and the links now point at the local copies, so every skill stays self-contained. Those four `SOURCE.md` files list each bundled file with its upstream SHA-256. Each skill's `SOURCE.md` has the details.
 
+## Engineering practice skills
+
+`retro` (Matt Pocock, [mattpocock/skills](https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336) at `49dd158d1076134a641b33efb035946536778336`), `deslop` (Cursor Team Kit) and `interrogate` and `maintain-verification-skill` (pstack, both in [cursor/plugins](https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8) at `1e5c90a4b6f249917bd21fe361b3a2a7deb741b8`) were imported from Engineering Toolkit v1.3 under MIT, with each upstream original preserved byte for byte and its license bundled.
+
+Skills the hubs tell the agent to read are bundled from the same pinned commits rather than assumed installed: `writing-for-agents` and pstack's `correct` (as `dry`) in `retro`, and `create-verification-skill` in `maintain-verification-skill`. Only link targets in those copies changed. The toolkit's own `commit-workflow` skill has no public source, so `deslop` and `maintain-verification-skill` use it only when it is installed. Each `SOURCE.md` lists bundled files with their upstream SHA-256.
+
