@@ -73,6 +73,19 @@ jobs:
       SKILLS: ${{ inputs.skills }}
       REPORTS: ${{ github.workspace }}/.tmp/skill-eval-reports
     steps:
+      # First, so the reporting steps that always run have the repository and Node
+      # even when a later check stops the job.
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26.13.1'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
       # Exports only the selected provider's settings and key to later steps,
       # so a local run never has cloud credentials in its environment.
       - name: Configure provider
@@ -173,23 +186,39 @@ jobs:
             grep -qxF "$want" <<<"$ids" || { echo "::error::LM Studio does not list model '$want'. Download it, or load it, or enable just-in-time loading."; exit 1; }
           done
           # Agent sandboxes are containers: localhost there is the container itself.
-          docker run --rm busybox:1.37 wget -q -T 15 -O /dev/null \
-            --header "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$SKILL_EVAL_LLM_BASE_URL/models" || {
-            echo "::error::Containers in the runner VM cannot reach $SKILL_EVAL_LLM_BASE_URL although the VM can. Containers must resolve and reach the host (host.docker.internal on Docker Desktop)."
-            exit 1
+          probe() {  # probe BASE_URL: can a container fetch the model list?
+            docker run --rm busybox:1.37 wget -q -T 15 -O /dev/null \
+              --header "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$1/models"
           }
-          echo "Containers can reach LM Studio."
-      - name: Check out source
-        uses: actions/checkout@v7
-        with:
-          persist-credentials: false
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: '26.13.1'
-          cache: npm
-      - name: Install locked dependencies
-        run: npm ci
+          if probe "$SKILL_EVAL_LLM_BASE_URL"; then
+            echo "Containers can reach LM Studio."
+            exit 0
+          fi
+          # The runner resolves the host name, but containers started inside it
+          # may not: host.docker.internal is only added to the outer container.
+          # Fall back to the address the runner resolves the name to.
+          scheme="${SKILL_EVAL_LLM_BASE_URL%%://*}"
+          rest="${SKILL_EVAL_LLM_BASE_URL#*://}"
+          host="${rest%%[:/]*}"
+          tail="${rest#"$host"}"
+          address="$(getent ahostsv4 "$host" | awk 'NR==1 {print $1}')" || address=""
+          echo "Containers cannot reach $SKILL_EVAL_LLM_BASE_URL. The runner resolves $host to ${address:-nothing}."
+          docker run --rm busybox:1.37 nslookup "$host" 2>&1 | sed 's/^/  in a container: /' || true
+          if [ -n "$address" ] && [ "$address" != "$host" ] && probe "$scheme://$address$tail"; then
+            url="$scheme://$address$tail"
+            echo "::notice::Containers cannot resolve $host, so this run uses $url, the address the runner resolves it to."
+            {
+              echo "SKILL_EVAL_LLM_BASE_URL=$url"
+              echo "SKILLSPECTOR_COMPAT_BASE_URL=$url"
+              echo "SKILL_EVAL_MODEL_CATALOG_ALLOW_HTTP_HOSTS=$SKILL_EVAL_MODEL_CATALOG_ALLOW_HTTP_HOSTS,$address"
+            } >> "$GITHUB_ENV"
+            exit 0
+          fi
+          if [ -n "$address" ]; then
+            docker run --rm busybox:1.37 wget -T 15 -O /dev/null "$scheme://$address$tail/models" 2>&1 | tail -3 | sed 's/^/  in a container: /' || true
+          fi
+          echo "::error::Containers in the runner cannot reach $SKILL_EVAL_LLM_BASE_URL, by name or by address, although the runner can. Tier 3 agents run in containers, so they need a route to LM Studio. Set the repository variable LOCAL_LLM_BASE_URL to an address containers can reach, such as the Mac's Tailscale IP."
+          exit 1
       - name: Stage skills with their eval datasets
         run: |
           # shellcheck disable=SC2086 # SKILLS is an intentional word list
@@ -255,11 +284,15 @@ jobs:
               echo failed > "$REPORTS/status/$name.tier3"
               echo "::warning::Tier 3 did not complete for $name"
             fi
+            # The scores for the record, in SkillEvaluator's own summary format.
+            mkdir -p "$REPORTS/history"
+            skillevaluator tier3 history "$dir" --results-dir "$REPORTS/tier3/$name" --json > "$REPORTS/history/$name.json" \
+              || rm -f "$REPORTS/history/$name.json"
           done
           [ "$ran" = 1 ] || echo "::notice::No skill has an evals/<skill>/ dataset yet; Tier 3 skipped."
 
       # One record per skill that a model-backed tier ran for: the skill version
-      # tested, the models, and the outcome. The record job turns these into a
+      # tested, the models, the outcome, and the Tier 3 scores. The record job turns these into a
       # registry PR so each version carries the models that tested it.
       - name: Prepare evaluation records
         if: always()
@@ -267,43 +300,8 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           AGENT_DEFAULT: ${{ inputs.agents }}
         run: |
-          node --input-type=module - "$RUNNER_TEMP/eval-skills" "$REPORTS/status" "$REPORTS/records" <<'JS'
-          import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-          import { join } from 'node:path';
-          import { readSkillVersion } from './scripts/versioning.mjs';
-          const [skillsDir, statusDir, outDir] = process.argv.slice(2);
-          const env = process.env;
-          const local = env.PROVIDER === 'lmstudio';
-          const read = file => (existsSync(file) ? readFileSync(file, 'utf8').trim() : null);
-          mkdirSync(outDir, { recursive: true });
-          let written = 0;
-          for (const skill of existsSync(skillsDir) ? readdirSync(skillsDir) : []) {
-            const results = {};
-            for (const tier of ['tier2', 'tier3']) {
-              const status = read(join(statusDir, `${skill}.${tier}`));
-              if (status) results[tier] = status;
-            }
-            if (!Object.keys(results).length) continue; // No model-backed tier ran for this skill.
-            const record = {
-              skill,
-              version: readSkillVersion(readFileSync(join(skillsDir, skill, 'SKILL.md'), 'utf8')),
-              date: new Date().toISOString().slice(0, 10),
-              provider: env.PROVIDER,
-              models: {
-                judge: env.SKILL_EVAL_LLM_MODEL || 'provider-default',
-                agent: results.tier3 ? (local ? env.LOCAL_AGENT_MODEL : (env.AGENT_DEFAULT || 'provider-default')) : null,
-                embedding: results.tier2 ? (env.SKILL_EVAL_EMBEDDING_MODEL || 'provider-default') : null,
-              },
-              tiers: Object.keys(results).map(tier => tier.replace('tier', '')),
-              results,
-              tools: { skillevaluator: env.SKILLEVALUATOR_VERSION, skillspector: env.SKILLSPECTOR_REF.slice(0, 12) },
-              runUrl: env.RUN_URL,
-            };
-            writeFileSync(join(outDir, `${skill}.json`), `${JSON.stringify(record, null, 2)}\n`);
-            written += 1;
-          }
-          console.log(`${written} evaluation record(s).`);
-          JS
+          node scripts/evaluation-records.mjs --skills "$RUNNER_TEMP/eval-skills" --status "$REPORTS/status" \
+            --history "$REPORTS/history" --tier3 "$REPORTS/tier3" --out "$REPORTS/records"
       - name: Upload evaluation records
         if: always()
         uses: actions/upload-artifact@v7

@@ -79,8 +79,10 @@ Add an entry for the new version at the end of the skill's `versions` list in `r
 
 ## Models used to test a version
 
-Each run of `skill-eval.yml` writes one record per skill it evaluated: the version tested, provider, judge, agent and embedding models, tiers run and their results, tool versions, and the run link. A `record` job adds them to `registry/skills.json`, regenerates the catalog on a branch, and opens a PR.
+Each run of `skill-eval.yml` writes one record per skill it evaluated: the version tested, provider, judge, agent and embedding models, tiers run and their results, tool versions, and the run link. For Tier 3 it also keeps the scores: the score with the skill, the score without it, the lift between them, how many cases each side scored, and how often the agent activated the skill. A `record` job adds them to `registry/skills.json`, regenerates the catalog on a branch, and opens a PR.
 
 GitHub only lets Actions open that PR if **Settings → Actions → General → Allow GitHub Actions to create and approve pull requests** is enabled. If it's off, the job pushes the branch and prints a link to open the PR yourself.
 
-Recording is informational. A version without a record shows as "not yet tested with a model". Scores from different models are not comparable, which is why the record names the models.
+Recording is informational. A version without a record shows as "not yet tested with a model". Scores from different models are not comparable, which is why the record names the models and the catalog lists every model that tested the current version, not only the latest.
+
+A run that loses an attempt, for example to a timeout, reports no lift. The record keeps what was measured and leaves the lift empty, and the catalog says why. It never works out a lift the evaluator did not report.

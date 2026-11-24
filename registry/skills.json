@@ -397,7 +397,40 @@
           "expectedBehavior": "Identifies the invariant a code path relies on and enforces it with a throwing assertion placed before mutation or side effects, with a message naming the value and the expected condition. Keeps expected user and network errors in normal error handling, and never substitutes a silent default for a violated invariant."
         }
       ],
-      "evaluations": []
+      "evaluations": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "provider": "lmstudio",
+          "models": {
+            "judge": "nvidia/nemotron-3.5-super-vl",
+            "agent": "qwen/qwen3.6-35b-a3b",
+            "embedding": null
+          },
+          "tiers": [
+            "3"
+          ],
+          "results": {
+            "tier3": "failed"
+          },
+          "tier3": {
+            "agent": "opencode",
+            "cases": 12,
+            "scoredWithSkill": 10,
+            "scoredWithoutSkill": 12,
+            "withSkill": null,
+            "withoutSkill": 0.9338,
+            "lift": null,
+            "activated": 1,
+            "activationTrials": 8
+          },
+          "tools": {
+            "skillevaluator": "1.0.1",
+            "skillspector": "e2674da339b0"
+          },
+          "runUrl": "https://github.com/Leotus-Richard/AI-SKILLS/actions/runs/45456749648"
+        }
+      ]
     },
     {
       "name": "orchestrate",

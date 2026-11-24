@@ -91,6 +91,8 @@ Mac (macOS)                          Docker on the Mac
 
 Inside a container, `localhost` is the container, not the Mac. Docker Desktop's `host.docker.internal` resolves to the Mac from every container, so the runner and the agent containers share one URL, and the traffic never leaves the Mac. That's the default: `http://host.docker.internal:8105/v1`. Because Docker Desktop forwards that name to the Mac's own interfaces, LM Studio doesn't need **Serve on Local Network**, which would expose it to your LAN.
 
+Containers started inside the runner may not resolve that name even though the runner does. The workflow checks this first. When a container cannot resolve the name, the run switches to the address the runner resolves it to and says so in a notice. When a container cannot reach LM Studio at all, the run stops there and prints what the container saw.
+
 If you later serve models from a different machine on your tailnet, set `LOCAL_LLM_BASE_URL=http://<its-100.x-IP>:<port>/v1`. Use the IP, not the MagicDNS name, since containers often can't resolve MagicDNS. Restrict the port in your Tailscale access controls.
 
 SkillEvaluator refuses plain HTTP to hosts other than localhost unless they are allow-listed. The workflow allow-lists the host in `LOCAL_LLM_BASE_URL`. That host is either local to the Mac or a WireGuard-encrypted tailnet peer, which SkillEvaluator's docs name as the intended exception.
@@ -105,9 +107,10 @@ Before running anything, the workflow lists LM Studio's models from the runner, 
 
 ### What to expect from local models
 
-- Scores depend on the judge and the agent. Compare Skill Lift only between runs that use the same models; the run summary records them. A skill that helps a small model may matter less to a frontier model, and the reverse.
+- Scores depend on the judge and the agent. Compare Skill Lift only between runs that use the same models; the run summary records them, and the [catalog](CATALOG.md#tested-with) lists each model's result for a skill's current version. A skill that helps a small model may matter less to a frontier model, and the reverse.
 - A weak judge gives noisy verdicts. Use the strongest model you can for `LOCAL_LLM_MODEL`, even if the agent model is smaller.
-- One Mac handles requests largely one at a time, so Tier 3 runs trials one by one (`LOCAL_N_CONCURRENT=1`). Ten cases × 3 attempts × 2 arms is 60 agent runs. Start with `n-attempts` 1 on one skill to check the setup works.
+- One Mac handles requests largely one at a time, so Tier 3 runs trials one by one (`LOCAL_N_CONCURRENT=1`). Ten cases × 3 attempts × 2 arms is 60 agent runs. Start with `n-attempts` 1 on one skill to check the setup works. The first run here took 1 hour 52 minutes for 12 cases at 1 attempt.
+- One lost attempt costs the whole comparison: the evaluator reports no lift for a run where either side is incomplete. If attempts time out, raise `LOCAL_TIMEOUT_MULTIPLIER` before running again.
 - Agent containers still need internet access to install OpenCode, but no model traffic leaves your network. Whether OpenCode's installer in Harbor's sandbox works on ARM64 Linux hasn't been checked yet. The first Tier 3 run will show it.
 
 ## How to improve a skill with these tools
