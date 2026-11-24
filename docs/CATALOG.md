@@ -2,7 +2,13 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **38 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+This repository contains **40 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+
+## design-and-formatting (1)
+
+| Skill | Version | License | Description |
+| --- | --- | --- | --- |
+| [latex](../skills/latex/SKILL.md) | 1.0.0 | Apache-2.0 | Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support. |
 
 ## engineering-practice (8)
 
@@ -46,7 +52,7 @@ This repository contains **38 skills**. Each Perplexity upload archive contains 
 | [principle-test-behavior-not-implementation](../skills/principle-test-behavior-not-implementation/SKILL.md) | 1.0.0 | MIT | Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined. |
 | [principle-type-system-discipline](../skills/principle-type-system-discipline/SKILL.md) | 1.0.0 | MIT | Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas. |
 
-## workflow (6)
+## workflow (7)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
@@ -55,6 +61,7 @@ This repository contains **38 skills**. Each Perplexity upload archive contains 
 | [enterprise-agent-architecture](../skills/enterprise-agent-architecture/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph. |
 | [graph-engineering](../skills/graph-engineering/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work. |
 | [grill-with-docs](../skills/grill-with-docs/SKILL.md) | 1.0.0 | MIT | Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder. |
+| [orchestrate](../skills/orchestrate/SKILL.md) | 1.0.0 | Apache-2.0 | Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion. |
 | [wayfinder](../skills/wayfinder/SKILL.md) | 1.0.0 | MIT | Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs. |
 
 ## Tested with
@@ -70,7 +77,9 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **grill-with-docs** 1.0.0: not yet tested with a model
 - **how-it-works** 1.0.0: not yet tested with a model
 - **interrogate** 1.0.0: not yet tested with a model
+- **latex** 1.0.0: not yet tested with a model
 - **maintain-verification-skill** 1.0.0: not yet tested with a model
+- **orchestrate** 1.0.0: not yet tested with a model
 - **principle-attack-the-premise** 1.0.0: not yet tested with a model
 - **principle-boundary-discipline** 1.0.0: not yet tested with a model
 - **principle-build-the-lever** 1.0.0: not yet tested with a model
@@ -141,9 +150,17 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real.
 
+### latex
+
+- **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support.
+
 ### maintain-verification-skill
 
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Refresh an existing local verification skill and feature map against observed app behavior.
+
+### orchestrate
+
+- **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion.
 
 ### principle-attack-the-premise
 
@@ -269,7 +286,9 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **grill-with-docs**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.
 - **how-it-works**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/how/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **interrogate**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/interrogate/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **latex**: user-supplied; user-supplied source with no independently verified URL.
 - **maintain-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill>.
+- **orchestrate**: user-supplied; user-supplied source with no independently verified URL.
 - **principle-attack-the-premise**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-attack-the-premise/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **principle-boundary-discipline**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-boundary-discipline/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **principle-build-the-lever**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-build-the-lever/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.

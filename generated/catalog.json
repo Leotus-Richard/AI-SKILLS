@@ -270,6 +270,31 @@
       "contentSha256": "ee6a00da3013b6a079b5f99a23f24afc5d61d01b0d01b2d92f8590375b5ed6e2"
     },
     {
+      "name": "latex",
+      "version": "1.0.0",
+      "description": "Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support.",
+      "category": "design-and-formatting",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "notes": "Toolkit-written hub from Engineering Toolkit v1.3, contributed by the repository owner under Apache-2.0. Adapted from a skill bundled with the GitHub Copilot app; that original is not redistributed.",
+        "urls": []
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/latex",
+      "fileCount": 4,
+      "uncompressedBytes": 19320,
+      "contentSha256": "325d8b3b3676f868e411d3ebc626433ea75410d3843b29218ddcf083a0129cac"
+    },
+    {
       "name": "maintain-verification-skill",
       "version": "1.0.0",
       "description": "Refresh an existing local verification skill and feature map against observed app behavior.",
@@ -298,6 +323,31 @@
       "fileCount": 9,
       "uncompressedBytes": 31543,
       "contentSha256": "002c574788a5109ccfd6ae7ccc0607cc886ea64d11d865c6dd16d1ab62d184d6"
+    },
+    {
+      "name": "orchestrate",
+      "version": "1.0.0",
+      "description": "Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion.",
+      "category": "workflow",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "notes": "Toolkit-written hub from Engineering Toolkit v1.3, contributed by the repository owner under Apache-2.0. Adapted from a skill bundled with the GitHub Copilot app; that original is not redistributed.",
+        "urls": []
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/orchestrate",
+      "fileCount": 6,
+      "uncompressedBytes": 26384,
+      "contentSha256": "dec8b35defc4530c7192d5095e0897cf4f28a7d547aa522d515880320cd27c22"
     },
     {
       "name": "principle-attack-the-premise",

@@ -81,3 +81,7 @@ Skills the hubs tell the agent to read are bundled from the same pinned commits 
 
 `show-me-your-work`, `create-verification-skill` and `how-it-works` (pstack, same commit) were imported after reviewing their SkillSpector findings. Two HIGH memory-poisoning findings are false positives: "Never edit or delete history" in show-me-your-work, and "clear states" of a search box in create-verification-skill's example. They are accepted in `.skillspector-baseline.yaml`, with reasons. `how-it-works` is the toolkit's rename of pstack `how`; its provenance link names the upstream folder. Dependencies are bundled from the pinned commit: `unslop` in show-me-your-work, and `control-ui`, `control-cli` (Cursor Team Kit) and `maintain-verification-skill` in create-verification-skill. The toolkit-only `work-tracking` and `commit-workflow` are used only when installed.
 
+## LaTeX and Orchestrate (toolkit hubs, Apache-2.0)
+
+`latex` (category `design-and-formatting`) and `orchestrate` (`workflow`) are hubs written for Engineering Toolkit v1.3 as portable adaptations of skills bundled with the GitHub Copilot app. The repository owner contributed the hubs, their contract file and `orchestrate`'s coordination and handoff resources under Apache-2.0. The toolkit kept the Copilot originals without a license; their ownership is not established, so they are **not redistributed** here. Checked at import: the kept files share no sentences with those originals. The hubs no longer point at them, and `orchestrate` uses its companion skills only when installed.
+

@@ -216,6 +216,25 @@
       "evaluations": []
     },
     {
+      "name": "latex",
+      "category": "design-and-formatting",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "urls": [],
+        "notes": "Toolkit-written hub from Engineering Toolkit v1.3, contributed by the repository owner under Apache-2.0. Adapted from a skill bundled with the GitHub Copilot app; that original is not redistributed."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support."
+        }
+      ],
+      "evaluations": []
+    },
+    {
       "name": "maintain-verification-skill",
       "category": "engineering-practice",
       "license": "MIT",
@@ -235,6 +254,25 @@
           "date": "2026-11-24",
           "bump": "initial",
           "expectedBehavior": "Task-scoped and local-only. Refresh an existing local verification skill and feature map against observed app behavior."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "orchestrate",
+      "category": "workflow",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "user-supplied",
+        "urls": [],
+        "notes": "Toolkit-written hub from Engineering Toolkit v1.3, contributed by the repository owner under Apache-2.0. Adapted from a skill bundled with the GitHub Copilot app; that original is not redistributed."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion."
         }
       ],
       "evaluations": []
