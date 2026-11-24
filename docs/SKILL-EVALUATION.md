@@ -48,10 +48,10 @@ The runners are ARM64 Linux VMs on Apple Silicon Macs. Each runner VM needs:
 | `SKILL_MIN_SCORE` | Variable | Tier 1 minimum quality score. Default `70` |
 | `SKILL_EVAL_PROVIDER` | Variable | Provider for scheduled live runs: `lmstudio` (default), `nv_build`, `anthropic` or `openai` |
 | `SKILL_EVAL_SCHEDULED` | Variable | `true` enables the weekly live evaluation |
-| `LOCAL_LLM_BASE_URL` | Variable | LM Studio on the Mac, by its Tailscale IP: `http://100.x.y.z:1234/v1`. Required for `lmstudio` |
-| `LOCAL_LLM_MODEL` | Variable | LM Studio model ID for the evaluator, judge and SkillSpector. Required for `lmstudio` |
-| `LOCAL_AGENT_MODEL` | Variable | LM Studio model ID for the Tier 3 agent. Defaults to `LOCAL_LLM_MODEL` |
-| `LOCAL_EMBEDDING_MODEL` | Variable | LM Studio embedding model ID. Required for Tier 2 |
+| `LOCAL_LLM_BASE_URL` | Variable | LM Studio's address as seen from Docker. Default `http://host.docker.internal:8105/v1` |
+| `LOCAL_LLM_MODEL` | Variable | LM Studio model ID for the evaluator, judge and SkillSpector. Required for `lmstudio`. Recommended: `nvidia/nemotron-3.5-super-vl` |
+| `LOCAL_AGENT_MODEL` | Variable | LM Studio model ID for the Tier 3 agent. Defaults to `LOCAL_LLM_MODEL`. Recommended: `qwen/qwen3.6-35b-a3b` |
+| `LOCAL_EMBEDDING_MODEL` | Variable | LM Studio embedding model ID. Required for Tier 2. Use `text-embedding-nomic-embed-text-v1.5` |
 | `LOCAL_LLM_ALLOW_HTTP_HOSTS` | Variable | Hosts SkillEvaluator may call over plain HTTP. Defaults to the host in `LOCAL_LLM_BASE_URL` |
 | `LOCAL_N_CONCURRENT` / `LOCAL_TIMEOUT_MULTIPLIER` | Variable | Tier 3 parallel trials (default `1`) and timeout scaling for slower local inference (default `3`) |
 | `LOCAL_LLM_API_KEY` | Secret | Only if you turned on authentication in LM Studio |
@@ -59,39 +59,47 @@ The runners are ARM64 Linux VMs on Apple Silicon Macs. Each runner VM needs:
 
 ## Local open-weight models with LM Studio
 
-Everything model-backed can run on LM Studio on the Mac that hosts the runner VM. Both tools treat LM Studio as an OpenAI-compatible server: SkillEvaluator uses its `openai-compatible` provider and SkillSpector its `openai_compatible` provider.
+Everything model-backed can run on LM Studio on the Mac that hosts the runners. Both tools treat LM Studio as an OpenAI-compatible server: SkillEvaluator uses its `openai-compatible` provider and SkillSpector its `openai_compatible` provider.
 
-| Role | What it needs from the model | Example open-weight choices |
-| --- | --- | --- |
-| Tier 3 agent (OpenCode) | Reliable tool calling over Chat Completions, long context | Qwen3-Coder-30B-A3B, gpt-oss-20b/120b, GLM-4.5-Air, Devstral |
-| Evaluator, judge, SkillSpector | Careful instruction following, structured output | gpt-oss-120b, Qwen3-30B-A3B-Instruct or larger |
-| Tier 2 embeddings | An embedding model | nomic-embed-text v1.5 (bundled with LM Studio), Qwen3-Embedding |
+### Which models to use
 
-Pick what fits the Mac's unified memory. MLX builds usually run fastest on Apple Silicon. Copy the exact IDs from `lms ls` or the `/v1/models` list into the variables above. The workflow checks they exist before it starts.
+Three roles need a model. Use different model families for the agent and the judge, so the judge isn't grading its own family's habits.
+
+| Role | Variable | Recommended | Why | Lighter pair if memory is tight |
+| --- | --- | --- | --- | --- |
+| Evaluator, judge, SkillSpector | `LOCAL_LLM_MODEL` | `nvidia/nemotron-3.5-super-vl` | Same family as SkillEvaluator's own defaults. It picks Nemotron 3.5 Super-VL 120B-A12B for its heavier agent and Nemotron 3 Super as its OpenAI-compatible judge. It's the strongest model in the library, and with 12B active parameters it's still usable on Apple Silicon | `openai/gpt-oss-20b` |
+| Tier 3 agent (OpenCode) | `LOCAL_AGENT_MODEL` | `qwen/qwen3.6-35b-a3b` | Reliable tool calling over Chat Completions and long context. With 3B active parameters it's fast, which matters at 60+ agent runs per skill. It's the same size class as NVIDIA's own default agent, Nemotron 3.5 Lightning 30B-A3B | `qwen/qwen3.6-35b-a3b` |
+| Tier 2 embeddings | `LOCAL_EMBEDDING_MODEL` | `text-embedding-nomic-embed-text-v1.5` | The only embedding model installed | same |
+
+Alternatives worth a comparison run: `zai-org/glm-4.7-flash` as the agent (also a fast mixture-of-experts model tuned for agents), and `bytedance/seed-oss-36b` or `google/gemma-4-31b` as the judge. Skip the small R1 distills, the 7–8B and micro models, and the vision, omni and language-specific variants. They are weak at tool use or judging. Also skip `phi-4`: its context is too short for an agent.
+
+**Memory.** The recommended pair needs roughly 70 GB (judge, 4-bit) plus 20 GB (agent) of unified memory, plus context cache, with both loaded. If that doesn't fit, LM Studio swaps models between every agent step and judgement, which is very slow. Use the lighter pair instead (about 35 GB).
 
 ### How the pieces connect
 
 ```text
-Mac (macOS)                         Linux VM on that Mac
-┌──────────────────────┐            ┌─────────────────────────────────┐
-│ LM Studio :1234      │◀── HTTP ───│ runner: evaluator, judge,       │
-│ (Serve on Local Net) │  Tailscale │         embeddings, SkillSpector│
-│ Tailscale 100.x.y.z  │◀── HTTP ───│ Docker: Tier 3 agent containers │
-└──────────────────────┘            └─────────────────────────────────┘
+Mac (macOS)                          Docker on the Mac
+┌───────────────────────┐            ┌──────────────────────────────────┐
+│ LM Studio :8105       │◀── HTTP ───│ runner: evaluator, judge,        │
+│                       │  host.     │         embeddings, SkillSpector │
+│                       │  docker.   │ Tier 3 agent containers          │
+│                       │◀─internal──│                                  │
+└───────────────────────┘            └──────────────────────────────────┘
 ```
 
-Inside the VM, `localhost` is the VM, and inside a container it's the container. Neither is the Mac. The VM's Docker bridge (`172.17.0.1`) is also inside the VM. Use the **Mac's Tailscale IP**. It stays the same as the VM's network changes, it works from containers, and it works whichever runner (`mac-1` or `mac-2`) takes the job. That's also how one Mac's LM Studio can serve both runners.
+Inside a container, `localhost` is the container, not the Mac. Docker Desktop's `host.docker.internal` resolves to the Mac from every container, so the runner and the agent containers share one URL, and the traffic never leaves the Mac. That's the default: `http://host.docker.internal:8105/v1`. Because Docker Desktop forwards that name to the Mac's own interfaces, LM Studio doesn't need **Serve on Local Network**, which would expose it to your LAN.
+
+If you later serve models from a different machine on your tailnet, set `LOCAL_LLM_BASE_URL=http://<its-100.x-IP>:<port>/v1`. Use the IP, not the MagicDNS name, since containers often can't resolve MagicDNS. Restrict the port in your Tailscale access controls.
+
+SkillEvaluator refuses plain HTTP to hosts other than localhost unless they are allow-listed. The workflow allow-lists the host in `LOCAL_LLM_BASE_URL`. That host is either local to the Mac or a WireGuard-encrypted tailnet peer, which SkillEvaluator's docs name as the intended exception.
 
 ### Setup on the Mac
 
-1. **Start the server with Serve on Local Network turned on**, so LM Studio listens beyond `127.0.0.1`. If macOS asks whether LM Studio may accept incoming connections, allow it.
-2. **Load models with enough context.** LM Studio loads models with a short default context, which is too small for an agent that reads a skill and tool output. Load the agent and judge models with at least 32k context, for example `lms load <model> --context-length 32768`. You can also set it in the model's load settings, or turn on just-in-time loading with that default.
-3. **Find the Mac's Tailscale IP** (`tailscale ip -4` or the menu bar app) and set `LOCAL_LLM_BASE_URL=http://<that-ip>:1234/v1`. Use the 100.x IP, not the MagicDNS name: containers often can't resolve MagicDNS names, because Docker doesn't pass the Tailscale resolver into them.
-4. **Limit who can reach port 1234.** Serve on Local Network listens on every interface, including your LAN. In your Tailscale access controls, allow port 1234 only from the runner machines. On the LAN side, use the macOS firewall or a `pf` rule. If your LM Studio version supports API-key authentication, turn it on and store the key as the `LOCAL_LLM_API_KEY` secret.
+1. **Load the models with enough context.** LM Studio loads models with a short default context, which is too small for an agent that reads a skill and tool output. Load the agent and judge with at least 32k context, for example `lms load qwen/qwen3.6-35b-a3b --context-length 32768`. You can also set it in each model's load settings, or turn on just-in-time loading with that default.
+2. **Set the three model variables** in the table above. Copy IDs exactly as `lms ls` prints them.
+3. If you turn on API-key authentication in LM Studio, store the key as the `LOCAL_LLM_API_KEY` secret.
 
-SkillEvaluator refuses plain HTTP to hosts other than localhost unless they are allow-listed, and its docs name a WireGuard peer as the intended exception. Tailscale is WireGuard, so the workflow allow-lists the Tailscale IP from `LOCAL_LLM_BASE_URL`.
-
-Before running anything, the workflow lists LM Studio's models from the runner VM, checks that the configured model IDs exist, and checks that a throwaway container in the VM can reach the server. It fails with a specific message when any check doesn't pass. Testing this setup on a Linux machine showed a host firewall that let the host reach the server but silently dropped container traffic. That's the failure the container check catches. In the VM, check that the firewall lets Docker containers reach the Mac's 100.x address.
+Before running anything, the workflow lists LM Studio's models from the runner, checks that the configured IDs exist, and checks that a throwaway container can reach the server. It fails with a specific message when any check doesn't pass.
 
 ### What to expect from local models
 

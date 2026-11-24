@@ -9,10 +9,10 @@ name: Skill evaluation (live)
 #
 # Providers:
 #   lmstudio   Open-weight models served by LM Studio on the Mac that hosts the
-#              runner VM, reached over Tailscale. No cloud calls for grading,
-#              embeddings or agents. Needs repository variables
-#              LOCAL_LLM_BASE_URL, LOCAL_LLM_MODEL and LOCAL_EMBEDDING_MODEL;
-#              see docs/SKILL-EVALUATION.md.
+#              runner, reached at host.docker.internal. No cloud calls for
+#              grading, embeddings or agents. Needs repository variables
+#              LOCAL_LLM_MODEL and LOCAL_EMBEDDING_MODEL; see
+#              docs/SKILL-EVALUATION.md.
 #   nv_build   NVIDIA_API_KEY secret.
 #   anthropic  ANTHROPIC_API_KEY secret (Tier 2 is unavailable: no embeddings API).
 #   openai     OPENAI_API_KEY secret.
@@ -81,12 +81,14 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LOCAL_LLM_API_KEY: ${{ secrets.LOCAL_LLM_API_KEY }}
-          # LM Studio runs on the macOS host while the runner and its Docker
-          # containers run in a Linux VM, so localhost and the Docker bridge
-          # cannot reach it. Use the Mac's Tailscale IP: http://100.x.y.z:1234/v1.
-          LOCAL_LLM_BASE_URL: ${{ vars.LOCAL_LLM_BASE_URL }}
+          # LM Studio runs on the macOS host; the runner and the Tier 3 agent
+          # containers run under Docker, where localhost is the container.
+          # Docker Desktop's host.docker.internal reaches the Mac from both,
+          # without leaving the machine. For LM Studio on another tailnet
+          # machine, use its Tailscale IP instead: http://100.x.y.z:<port>/v1.
+          LOCAL_LLM_BASE_URL: ${{ vars.LOCAL_LLM_BASE_URL || 'http://host.docker.internal:8105/v1' }}
           # Hosts SkillEvaluator may call over plain HTTP. Defaults to the base
-          # URL's host; tailnet traffic is already encrypted by WireGuard.
+          # URL's host (local to the Mac, or a WireGuard-encrypted tailnet peer).
           LOCAL_LLM_ALLOW_HTTP_HOSTS: ${{ vars.LOCAL_LLM_ALLOW_HTTP_HOSTS }}
           LOCAL_LLM_MODEL: ${{ vars.LOCAL_LLM_MODEL }}
           LOCAL_AGENT_MODEL: ${{ vars.LOCAL_AGENT_MODEL }}
@@ -96,7 +98,6 @@ jobs:
           fail() { echo "::error::$1"; exit 1; }
           case "$PROVIDER" in
             lmstudio)
-              [ -n "$LOCAL_LLM_BASE_URL" ] || fail "Set the repository variable LOCAL_LLM_BASE_URL to LM Studio's address, e.g. http://<mac-tailscale-ip>:1234/v1."
               [ -n "$LOCAL_LLM_MODEL" ] || fail "Set the repository variable LOCAL_LLM_MODEL to an LM Studio model id (see 'lms ls')."
               if [ -z "$LOCAL_LLM_ALLOW_HTTP_HOSTS" ]; then
                 LOCAL_LLM_ALLOW_HTTP_HOSTS="$(python3 -I -c 'import sys, urllib.parse as u; print(u.urlsplit(sys.argv[1]).hostname or "")' "$LOCAL_LLM_BASE_URL")"
@@ -149,7 +150,7 @@ jobs:
         run: |
           set -euo pipefail
           models="$(curl -fsS -m 15 -H "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$SKILL_EVAL_LLM_BASE_URL/models")" || {
-            echo "::error::Cannot reach LM Studio at $SKILL_EVAL_LLM_BASE_URL from the runner VM. On the Mac: start the server, enable 'Serve on Local Network', and allow LM Studio in the macOS firewall."
+            echo "::error::Cannot reach LM Studio at $SKILL_EVAL_LLM_BASE_URL from the runner VM. Check the LM Studio server is running on the Mac, the port matches, and the runner can resolve the host."
             exit 1
           }
           ids="$(printf '%s' "$models" | python3 -I -c 'import json,sys; print("\n".join(m["id"] for m in json.load(sys.stdin)["data"]))')"
@@ -160,7 +161,7 @@ jobs:
           # Agent sandboxes are containers: localhost there is the container itself.
           docker run --rm busybox:1.37 wget -q -T 15 -O /dev/null \
             --header "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$SKILL_EVAL_LLM_BASE_URL/models" || {
-            echo "::error::Containers in the runner VM cannot reach $SKILL_EVAL_LLM_BASE_URL although the VM can. Check the VM's firewall forwards Docker traffic, and that the Tailscale IP is routable from the VM's containers."
+            echo "::error::Containers in the runner VM cannot reach $SKILL_EVAL_LLM_BASE_URL although the VM can. Containers must resolve and reach the host (host.docker.internal on Docker Desktop)."
             exit 1
           }
           echo "Containers can reach LM Studio."
