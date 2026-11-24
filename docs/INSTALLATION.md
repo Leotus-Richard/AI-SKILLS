@@ -1,6 +1,6 @@
 # Installation and updates
 
-This repository distributes standalone skill directories and uploadable archives. It reuses Vercel's external [Skills CLI 1.7.4](https://github.com/vercel-labs/skills/tree/v1.7.4); it does not implement another installer or promise native plugin registration.
+This repository distributes skill directories you can install one at a time, and uploadable archives. It reuses Vercel's external [Skills CLI 1.7.4](https://github.com/vercel-labs/skills/tree/v1.7.4); it does not implement another installer or promise native plugin registration. The one addition is a small script that works out which skills a skill requires and passes them to that CLI.
 
 ## Requirements
 
@@ -41,10 +41,37 @@ npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill grill-with-docs --ag
 The CLI normally offers linked installation. Use `--copy` when independent files are preferred or symlink support is unavailable, including some Windows configurations:
 
 ```sh
-npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill wayfinder --agent cursor --copy
+npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill interrogate --agent cursor --copy
 ```
 
 Copies do not change when you edit the repository checkout; update installed skills deliberately. Avoid `--all` unless you intend to select every skill and every available agent. The external [CLI command reference](https://github.com/vercel-labs/skills/blob/v1.7.4/docs/commands.md#skills-add) defines source formats, flags, authentication, and installation methods.
+
+## Skills that require other skills
+
+You can install any one skill by itself, and most need nothing else. A few send the agent to another skill for part of their job. They list it under `requires` in `registry/skills.json`, and the [catalog](CATALOG.md#dependencies) shows each skill's requirements with a ready-made command.
+
+The Skills CLI installs exactly the skills you name and does not follow requirements, so name them too:
+
+```sh
+npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill wayfinder --skill grill-with-docs --agent codex
+```
+
+From a checkout, `npm run skills:install` works that out for you. It adds whatever the named skills require, at any depth, says what it added, and passes every other option to the CLI unchanged:
+
+```sh
+npm run skills:install -- --skill wayfinder --agent codex --copy
+# Also installing grill-with-docs (required by wayfinder).
+```
+
+| Option | Effect |
+| --- | --- |
+| `--print` | Prints the equivalent `npx` command for GitHub and installs nothing |
+| `--with-related` | Also installs the skills the named ones mention as optional |
+| `--source <path or owner/repo>` | Installs from somewhere other than this checkout |
+
+Skills listed under `related` are optional. The text names them as companions or alternatives, and the skill works without them, so they are not installed unless you ask. `--with-related` goes one level only: it adds the named skills' related skills, not those skills' own related skills.
+
+An upload ZIP cannot install anything, so each ZIP carries the skills it requires under `required-skills/`, and its `SKILL.md` ends with a list of where they are.
 
 ## Use a local checkout
 
@@ -65,7 +92,7 @@ npm run skills:check
 npm run skills:update -- graph-engineering --project
 ```
 
-These commands operate in the checkout's current project scope unless a scope option says otherwise. To install the checkout's skills into a different project, run the CLI from that target project and give the skill directory as a source:
+`skills:install` also adds the skills the named ones require. These commands operate in the checkout's current project scope unless a scope option says otherwise. To install the checkout's skills into a different project, run the CLI from that target project and give the skill directory as a source:
 
 ```sh
 npx --yes skills@1.7.4 add ../AI-SKILLS/skills --skill graph-engineering --agent codex --copy
@@ -91,7 +118,7 @@ Vercel documents `DISABLE_TELEMETRY=1` or `DO_NOT_TRACK=1` to disable telemetry 
 
 ## Perplexity Computer upload
 
-Use an individual skill ZIP from this repository's GitHub release assets, or build one locally with `npm run build`. Output is `dist/perplexity/<name>.zip`, with `SKILL.md` at the archive root alongside that skill's own references and notices.
+Use an individual skill ZIP from this repository's GitHub release assets, or build one locally with `npm run build`. Output is `dist/perplexity/<name>.zip`, with `SKILL.md` at the archive root alongside that skill's own references and notices. A skill that requires other skills carries them under `required-skills/`.
 
 The [official Perplexity instructions](https://www.perplexity.ai/help-center/en/articles/13914413-how-to-use-computer-skills), checked 29 October 2026, accept a Markdown file directly or a ZIP containing root `SKILL.md`. The manifest must have YAML `name` and `description`; uploads and extracted ZIP contents are capped at 20 MB, with at most 100 files. A name uses 1–64 lowercase letters, digits, or hyphens, with no leading, trailing, or consecutive hyphens; descriptions are capped at 1,024 characters.
 
@@ -104,7 +131,7 @@ To import:
 
 If Plugins is not shown yet, use **Customize → Skills → Create skill → Upload skill**. Keep the individual archive zipped. Do not rename a PDF or text attachment to `.zip`.
 
-The optional `ai-skills-perplexity-collection.zip` is an outer download bundle. **Extract it first**, then upload the individual ZIPs inside `perplexity/`. The outer archive has no root `SKILL.md` and is not a single importable skill. It also carries the catalog and manifest for browsing. Each individual skill is self-contained and does not require a sibling skill installation.
+The optional `ai-skills-perplexity-collection.zip` is an outer download bundle. **Extract it first**, then upload the individual ZIPs inside `perplexity/`. The outer archive has no root `SKILL.md` and is not a single importable skill. It also carries the catalog and manifest for browsing. Each individual ZIP is complete on its own: a skill that requires another carries it under `required-skills/`, so no sibling upload is needed.
 
 ## Verify release downloads
 

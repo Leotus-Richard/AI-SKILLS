@@ -2,7 +2,7 @@
 name: create-verification-skill
 description: "Generate and execute a project-local verification skill for a local app; not remote deployment or installation."
 metadata:
-  version: "1.0.1"
+  version: "2.0.0"
   author: "Lauren Tan (pstack)"
   tags: [engineering-practice]
 ---
@@ -34,7 +34,7 @@ Report the missing input or capability; do not fabricate evidence or broaden the
 
 - `control-ui`: when the workflow requires this discipline, read the installed skill of that name, or the bundled copy at `references/upstream/related/control-ui/control-ui.md`.
 - `control-cli`: when the workflow requires this discipline, read the installed skill of that name, or the bundled copy at `references/upstream/related/control-cli/control-cli.md`.
-- `maintain-verification-skill`: when the workflow requires this discipline, read the installed skill of that name, or the bundled copy at `references/upstream/related/maintain-verification-skill/maintain-verification-skill.md`.
+- `maintain-verification-skill` (optional, not bundled): point the user to it for keeping the generated skill current as the app changes.
 
 Use the host's actual skill loader for an installed skill. Do not guess host tool names. Bundled copies come from the same pinned upstream commit and need nothing else installed.
 

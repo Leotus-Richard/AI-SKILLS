@@ -13,12 +13,14 @@ Changes at import:
 - `LICENSE` is renamed `LICENSE.txt`, as this repository requires.
 - Bundled Cursor Team Kit's control-ui from <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui> into `references/upstream/related/control-ui/`. Its `SKILL.md` is stored as `control-ui.md`, because nested `SKILL.md` files are not allowed here. Only link targets changed: links to `SKILL.md` now name `control-ui.md`, and a link to a folder now names its `README.md`.
 - Bundled Cursor Team Kit's control-cli from <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli> into `references/upstream/related/control-cli/`. Its `SKILL.md` is stored as `control-cli.md`, because nested `SKILL.md` files are not allowed here. Only link targets changed: links to `SKILL.md` now name `control-cli.md`, and a link to a folder now names its `README.md`.
-- Bundled pstack's maintain-verification-skill from <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill> into `references/upstream/related/maintain-verification-skill/`. Its `SKILL.md` is stored as `maintain-verification-skill.md`, because nested `SKILL.md` files are not allowed here. Only link targets changed: links to `SKILL.md` now name `maintain-verification-skill.md`, and a link to a folder now names its `README.md`.
+
+Changes in 2.0.0 (24 November 2026):
+
+- Versions before 2.0.0 bundled a copy of pstack's maintain-verification-skill under `references/upstream/related/`. That skill is in this library and this skill only points the user to it, so the copy is removed and `registry/skills.json` lists it under `related`. control-ui and control-cli are not in this library and stay bundled.
 
 Bundled files:
 
   - `related/control-ui/control-ui.md`: upstream SHA-256 `410cae25bdb1e5d2323b126abc5047b0213be7fdb0195710213fa8de8a751871`
   - `related/control-cli/control-cli.md`: upstream SHA-256 `13ac93e595bbda2000849bdb815d5f2ca03f7c2ca63788c8335f9212b9b422a2`
-  - `related/maintain-verification-skill/maintain-verification-skill.md`: upstream SHA-256 `515c0eaa054b3f6be1b1fb06f2c2f173c80fddb58bbcac57576f89c479bc68e8`
 
 The license, MIT (Copyright (c) 2026 Lauren Tan), is bundled in `LICENSE.txt`.

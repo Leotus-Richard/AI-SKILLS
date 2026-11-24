@@ -108,3 +108,26 @@ test('rejects directory links that can leak files outside a skill', t => {
   symlinkSync(outside, join(skill, 'linked'), process.platform === 'win32' ? 'junction' : 'dir');
   assert.throws(() => validateRepository(root), /symlinks\/junctions/);
 });
+
+test('a skill that names another skill must declare it, and declarations must be real', t => {
+  const { root, skill, registry } = fixture(t);
+  const other = join(root, 'skills', 'side-note');
+  mkdirSync(other, { recursive: true });
+  writeFileSync(join(other, 'SKILL.md'), '---\nname: side-note\ndescription: Use this fixture as a dependency.\nmetadata:\n  version: "1.0.0"\n---\n\nKeeps notes.\n');
+  writeFileSync(join(other, 'LICENSE.txt'), 'Fixture license\n');
+  writeFileSync(join(other, 'SOURCE.md'), 'Fixture provenance\n');
+  registry.skills.push({ ...registry.skills[0], name: 'side-note' });
+  const save = () => writeFileSync(join(root, 'registry', 'skills.json'), JSON.stringify(registry));
+  save();
+  assert.equal(validateRepository(root).skills.length, 2);
+
+  const main = join(skill, 'SKILL.md');
+  writeFileSync(main, readFileSync(main, 'utf8') + '\nThen use the side-note skill.\n');
+  assert.throws(() => validateRepository(root), /sample: SKILL\.md names the skill "side-note"; list it under requires or related/);
+  registry.skills[0].requires = ['side-note'];
+  save();
+  assert.equal(validateRepository(root).skills.length, 2);
+  registry.skills[0].requires = ['side-note', 'ghost'];
+  save();
+  assert.throws(() => validateRepository(root), /sample: requires lists "ghost", which is not a skill in this library/);
+});

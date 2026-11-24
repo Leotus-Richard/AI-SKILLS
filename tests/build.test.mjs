@@ -136,6 +136,36 @@ test('individual archives preserve root entrypoint, support files, and determini
   }
 });
 
+test('an archive carries the skills it requires and says where they are', async t => {
+  const root = await fixture(t, ['alpha', 'beta', 'gamma']);
+  const registryPath = join(root, 'registry', 'skills.json');
+  const registry = JSON.parse(await readFile(registryPath, 'utf8'));
+  registry.skills.find(skill => skill.name === 'alpha').requires = ['beta'];
+  registry.skills.find(skill => skill.name === 'beta').requires = ['gamma'];
+  await writeFile(registryPath, JSON.stringify(registry));
+  const result = await buildPerplexity(root);
+  const receipt = result.manifest.artifacts.find(artifact => artifact.name === 'alpha');
+  assert.deepEqual(receipt.requires, ['beta', 'gamma'], 'a requirement of a requirement comes too');
+  assert.deepEqual(result.manifest.artifacts.find(artifact => artifact.name === 'gamma').requires, []);
+  const expanded = unzipSync(await readFile(join(root, 'dist', 'perplexity', 'alpha.zip')));
+  assert.deepEqual(Object.keys(expanded).filter(path => path.endsWith('SKILL.md')), ['SKILL.md'], 'one entrypoint per upload');
+  for (const name of ['beta', 'gamma']) {
+    const source = join(root, 'skills', name);
+    assert.deepEqual(Buffer.from(expanded[`required-skills/${name}/${name}.md`]), await readFile(join(source, 'SKILL.md')));
+    assert.deepEqual(Buffer.from(expanded[`required-skills/${name}/references/usage.md`]), await readFile(join(source, 'references', 'usage.md')));
+    assert.ok(expanded[`required-skills/${name}/LICENSE.txt`], 'the license travels with the bundled skill');
+  }
+  const main = Buffer.from(expanded['SKILL.md']).toString();
+  assert.ok(main.startsWith(await readFile(join(root, 'skills', 'alpha', 'SKILL.md'), 'utf8')), 'the source text is kept whole');
+  assert.match(main, /## Bundled required skills\n[\s\S]*- `beta`: `required-skills\/beta\/beta\.md`\n- `gamma`: `required-skills\/gamma\/gamma\.md`\n$/);
+  assert.equal(receipt.fileCount, Object.keys(expanded).length);
+  assert.equal(Object.keys(unzipSync(await readFile(join(root, 'dist', 'perplexity', 'gamma.zip')))).length, 4, 'a skill with no requirements is unchanged');
+
+  // A bundled skill's entrypoint is renamed, so a link to it would break inside the ZIP.
+  await writeFile(join(root, 'skills', 'beta', 'references', 'usage.md'), 'Back to [the skill](../SKILL.md).\n');
+  await assert.rejects(buildPerplexity(root), /Cannot bundle beta: references\/usage\.md links to SKILL\.md/);
+});
+
 test('archive limits reject file count, extracted bytes, and compressed bytes', async t => {
   const root = await fixture(t, ['alpha']);
   const skillDir = join(root, 'skills', 'alpha');

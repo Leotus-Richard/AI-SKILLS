@@ -7,6 +7,7 @@ import {
   collectSkillFiles, createCatalog, ensureSafeOutputDirectory, hashSkillFiles,
   outputMatches, parseToolArguments, readSkillFrontmatter, renderCatalogMarkdown, serializeCatalog,
 } from './catalog.mjs';
+import { BUNDLE_DIRECTORY, requiredClosure } from './dependencies.mjs';
 
 export const PERPLEXITY_LIMITS = Object.freeze({ maxFiles: 100, maxArchiveBytes: 20_000_000, maxUncompressedBytes: 20_000_000 });
 export const ZIP_EPOCH = new Date(1980, 0, 1, 0, 0, 0);
@@ -23,11 +24,37 @@ function deterministicZip(files) {
   return Buffer.from(zipSync(entries, { level: 9, mtime: ZIP_EPOCH }));
 }
 
-export async function createPerplexityArchive(skillDir, { limits = PERPLEXITY_LIMITS } = {}) {
-  const files = await collectSkillFiles(skillDir);
+// An uploaded skill cannot install another, so the skills it requires travel inside its ZIP:
+// each under required-skills/<name>/, with its SKILL.md renamed <name>.md so the archive keeps
+// one entrypoint, and a generated section in the root SKILL.md saying where they are.
+async function bundleRequiredSkills(files, main, requires) {
+  const lines = [
+    '', '## Bundled required skills', '',
+    'This upload includes the skills this one requires, because an uploaded skill cannot install another. ' +
+    'When the text names one of them and it is not installed, read its bundled copy:', '',
+  ];
+  for (const dependency of requires) {
+    const entrypoint = `${dependency.name}.md`;
+    for (const file of await collectSkillFiles(dependency.directory)) {
+      if (file.path === entrypoint) throw new Error(`Cannot bundle ${dependency.name}: it already has a root ${entrypoint}`);
+      if (file.path.endsWith('.md') && /\]\((?![a-z][a-z0-9+.-]*:)(?:[^)\s]*\/)?SKILL\.md(?:#[^)\s]*)?\)/iu.test(file.bytes.toString('utf8'))) {
+        throw new Error(`Cannot bundle ${dependency.name}: ${file.path} links to SKILL.md, which is renamed in an upload ZIP`);
+      }
+      const path = file.path === 'SKILL.md' ? entrypoint : file.path;
+      files.push({ path: `${BUNDLE_DIRECTORY}/${dependency.name}/${path}`, bytes: file.bytes });
+    }
+    lines.push(`- \`${dependency.name}\`: \`${BUNDLE_DIRECTORY}/${dependency.name}/${entrypoint}\``);
+  }
+  main.bytes = Buffer.from(`${main.bytes.toString('utf8').trimEnd()}\n${lines.join('\n')}\n`);
+}
+
+// `requires` lists { name, directory } for every skill this one needs, directly or not.
+export async function createPerplexityArchive(skillDir, { limits = PERPLEXITY_LIMITS, requires = [] } = {}) {
+  const files = (await collectSkillFiles(skillDir)).map(file => ({ path: file.path, bytes: file.bytes }));
   const main = files.find(file => file.path === 'SKILL.md');
   if (!main) throw new Error(`Missing root SKILL.md: ${skillDir}`);
   const metadata = readSkillFrontmatter(main.bytes.toString('utf8'), `${skillDir}/SKILL.md`);
+  if (requires.length) await bundleRequiredSkills(files, main, requires);
   const uncompressedBytes = files.reduce((total, file) => total + file.bytes.length, 0);
   if (files.length > limits.maxFiles) throw new Error(`Perplexity file limit exceeded for ${metadata.name}: ${files.length} > ${limits.maxFiles}`);
   if (uncompressedBytes > limits.maxUncompressedBytes) throw new Error(`Perplexity extracted size limit exceeded for ${metadata.name}`);
@@ -43,6 +70,7 @@ export async function createPerplexityArchive(skillDir, { limits = PERPLEXITY_LI
       archiveBytes: archive.length,
       uncompressedBytes,
       fileCount: files.length,
+      requires: requires.map(dependency => dependency.name),
       contentSha256: hashSkillFiles(files),
       files: files.map(file => ({ path: file.path, bytes: file.bytes.length, sha256: digest(file.bytes) })),
     },
@@ -54,7 +82,7 @@ export function renderCollectionReadme(count) {
     '# Perplexity skill collection', '',
     `This download contains ${count} separate skill ZIP files in perplexity/.`, '',
     'Extract this collection first, then upload each desired ZIP separately through Perplexity Computer: Plugins > Add custom > Upload plugin or skill.', '',
-    'This collection ZIP is a transport bundle, not a single uploadable skill: it intentionally has no root SKILL.md. Each nested skill ZIP has its own root SKILL.md and local support files.', '',
+    'This collection ZIP is a transport bundle, not a single uploadable skill: it intentionally has no root SKILL.md. Each nested skill ZIP has its own root SKILL.md and local support files. A skill that requires other skills carries them under required-skills/, so no sibling ZIP needs uploading with it.', '',
     'manifest.json records SHA-256 checksums for the individual ZIP files and every source file. catalog.json and CATALOG.md describe the skills. The source repository is the canonical editable copy.', '',
   ].join('\n');
 }
@@ -103,14 +131,15 @@ export async function buildPerplexity(repoRoot, { check = false, collection = tr
   const artifacts = [];
   const outputs = [];
   for (const skill of catalog.skills) {
-    const built = await createPerplexityArchive(join(root, skill.path));
+    const requires = requiredClosure(catalog.skills, skill.name).map(name => ({ name, directory: join(root, 'skills', name) }));
+    const built = await createPerplexityArchive(join(root, skill.path), { requires });
     artifacts.push(built.receipt);
     outputs.push({ path: `dist/perplexity/${built.receipt.file}`, bytes: built.archive });
   }
   const manifest = {
     schemaVersion: 1,
     format: 'perplexity-skill-zip',
-    packagingVersion: 1,
+    packagingVersion: 2,
     zipTimestamp: '1980-01-01T00:00:00-local',
     limits: PERPLEXITY_LIMITS,
     artifacts,

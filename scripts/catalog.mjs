@@ -3,6 +3,7 @@ import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseDocument } from 'yaml';
+import { installCommand, requiredClosure } from './dependencies.mjs';
 
 export const CATALOG_SCHEMA_VERSION = 1;
 export const GENERATED_CATALOG_PATHS = ['generated/catalog.json', 'docs/CATALOG.md'];
@@ -145,6 +146,8 @@ export async function createCatalog(repoRoot) {
       description: metadata.description,
       category: entry.category,
       license: entry.license,
+      requires: sortedNames(entry.requires),
+      related: sortedNames(entry.related),
       provenance: stableObject(entry.provenance),
       testedWith: latestEvaluationFor(entry.evaluations, version),
       versions: Array.isArray(entry.versions) ? entry.versions.map(stableObject) : [],
@@ -155,6 +158,10 @@ export async function createCatalog(repoRoot) {
     });
   }
   return { schemaVersion: CATALOG_SCHEMA_VERSION, skills };
+}
+
+function sortedNames(value) {
+  return Array.isArray(value) ? value.filter(name => typeof name === 'string').sort(compareText) : [];
 }
 
 // Newest evaluation record for the current version (kept here rather than in
@@ -185,7 +192,7 @@ export function renderCatalogMarkdown(catalog, { linkMode = 'source' } = {}) {
     '',
     'Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.',
     '',
-    `This repository contains **${catalog.skills.length} skills**. Each Perplexity upload archive contains one skill with \`SKILL.md\` at its root.`,
+    `This repository contains **${catalog.skills.length} skills**. Each Perplexity upload archive contains one skill with \`SKILL.md\` at its root, plus any skills it requires.`,
     '',
   ];
   const categories = [...new Set(catalog.skills.map(skill => skill.category))].sort(compareText);
@@ -199,6 +206,7 @@ export function renderCatalogMarkdown(catalog, { linkMode = 'source' } = {}) {
     lines.push('');
   }
   lines.pop();
+  lines.push('', ...renderDependencies(catalog, linkMode));
   lines.push('', '## Tested with', '', 'Models used by the latest live evaluation (`skill-eval.yml`) of each skill\'s current version, from `registry/skills.json`.', '');
   for (const skill of catalog.skills) {
     lines.push(`- **${skill.name}** ${markdownCell(skill.version ?? 'unversioned')}: ${markdownCell(testedWithText(skill.testedWith))}`);
@@ -218,6 +226,35 @@ export function renderCatalogMarkdown(catalog, { linkMode = 'source' } = {}) {
     lines.push(`- **${skill.name}**: ${markdownCell(skill.provenance.kind)}${urls.length ? `; ${urls.map(url => `<${url}>`).join(', ')}` : '; user-supplied source with no independently verified URL'}.`);
   }
   return `${lines.join('\n')}\n`;
+}
+
+function renderDependencies(catalog, linkMode) {
+  const code = names => names.map(name => `\`${name}\``).join(', ');
+  const lines = [
+    '## Dependencies',
+    '',
+    'A skill lists the skills it needs under `requires` in `registry/skills.json`, and the ones its text names as optional under `related`. ' +
+    (linkMode === 'archive'
+      ? 'Each upload ZIP includes the skills it requires under `required-skills/`.'
+      : '`npm run skills:install` adds required skills automatically; see [installation](INSTALLATION.md#skills-that-require-other-skills).') +
+    ' A skill not listed here names no other skill.',
+    '',
+  ];
+  for (const skill of catalog.skills) {
+    const requires = skill.requires ?? [];
+    const related = skill.related ?? [];
+    if (!requires.length && !related.length) continue;
+    const parts = [];
+    if (requires.length) parts.push(`requires ${code(requires)}`);
+    if (related.length) parts.push(`${requires.length ? 'optional' : 'optionally works with'} ${code(related)}`);
+    let line = `- **${skill.name}** ${parts.join('; ')}.`;
+    if (requires.length && linkMode !== 'archive') {
+      line += ` Install with what it requires: \`${installCommand([skill.name, ...requiredClosure(catalog.skills, skill.name)])}\``;
+    }
+    lines.push(line);
+  }
+  if (lines.length === 4) lines.push('No skill names another skill.');
+  return lines;
 }
 
 export function serializeCatalog(catalog) {

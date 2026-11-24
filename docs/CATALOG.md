@@ -2,7 +2,7 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **42 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+This repository contains **42 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root, plus any skills it requires.
 
 ## design-and-formatting (2)
 
@@ -15,11 +15,11 @@ This repository contains **42 skills**. Each Perplexity upload archive contains 
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
-| [create-verification-skill](../skills/create-verification-skill/SKILL.md) | 1.0.1 | MIT | Generate and execute a project-local verification skill for a local app; not remote deployment or installation. |
+| [create-verification-skill](../skills/create-verification-skill/SKILL.md) | 2.0.0 | MIT | Generate and execute a project-local verification skill for a local app; not remote deployment or installation. |
 | [deslop](../skills/deslop/SKILL.md) | 1.0.0 | MIT | Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries. |
 | [how-it-works](../skills/how-it-works/SKILL.md) | 1.0.0 | MIT | Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation. |
 | [interrogate](../skills/interrogate/SKILL.md) | 1.0.0 | MIT | Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real. |
-| [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 1.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
+| [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 2.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
 | [negative-space-programming](../skills/negative-space-programming/SKILL.md) | 1.0.0 | Apache-2.0 | Use when code relies on optional values, loose data, state transitions, or implicit assumptions: enforce internal invariants with assertions that fail fast. Not for expected user or network errors. |
 | [prototype](../skills/prototype/SKILL.md) | 1.0.1 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
 | [retro](../skills/retro/SKILL.md) | 1.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
@@ -64,14 +64,33 @@ This repository contains **42 skills**. Each Perplexity upload archive contains 
 | [graph-engineering](../skills/graph-engineering/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work. |
 | [grill-with-docs](../skills/grill-with-docs/SKILL.md) | 1.0.0 | MIT | Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder. |
 | [orchestrate](../skills/orchestrate/SKILL.md) | 1.0.0 | Apache-2.0 | Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion. |
-| [wayfinder](../skills/wayfinder/SKILL.md) | 1.0.0 | MIT | Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs. |
+| [wayfinder](../skills/wayfinder/SKILL.md) | 2.0.0 | MIT | Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs. |
+
+## Dependencies
+
+A skill lists the skills it needs under `requires` in `registry/skills.json`, and the ones its text names as optional under `related`. `npm run skills:install` adds required skills automatically; see [installation](INSTALLATION.md#skills-that-require-other-skills). A skill not listed here names no other skill.
+
+- **create-verification-skill** optionally works with `maintain-verification-skill`.
+- **domain-modeling** optionally works with `grill-with-docs`.
+- **grill-with-docs** optionally works with `domain-modeling`.
+- **impeccable** optionally works with `create-verification-skill`.
+- **maintain-verification-skill** requires `create-verification-skill`. Install with what it requires: `npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill maintain-verification-skill --skill create-verification-skill`
+- **orchestrate** optionally works with `graph-engineering`, `show-me-your-work`.
+- **principle-attack-the-premise** optionally works with `principle-build-the-lever`, `principle-fix-root-causes`, `principle-laziness-protocol`, `principle-redesign-from-first-principles`.
+- **principle-build-the-lever** optionally works with `principle-encode-lessons-in-structure`, `principle-laziness-protocol`, `principle-prove-it-works`.
+- **principle-explain-the-number** optionally works with `principle-prove-it-works`.
+- **principle-minimize-reader-load** optionally works with `principle-guard-the-context-window`.
+- **principle-prove-it-works** optionally works with `show-me-your-work`.
+- **principle-sequence-verifiable-units** optionally works with `principle-build-the-lever`, `principle-prove-it-works`.
+- **principle-type-system-discipline** optionally works with `principle-boundary-discipline`, `principle-encode-lessons-in-structure`.
+- **wayfinder** requires `grill-with-docs`; optional `domain-modeling`. Install with what it requires: `npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill wayfinder --skill grill-with-docs`
 
 ## Tested with
 
 Models used by the latest live evaluation (`skill-eval.yml`) of each skill's current version, from `registry/skills.json`.
 
 - **agile-work-hierarchy** 1.0.0: not yet tested with a model
-- **create-verification-skill** 1.0.1: not yet tested with a model
+- **create-verification-skill** 2.0.0: not yet tested with a model
 - **deslop** 1.0.0: not yet tested with a model
 - **domain-modeling** 1.0.0: not yet tested with a model
 - **enterprise-agent-architecture** 1.0.0: not yet tested with a model
@@ -81,7 +100,7 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **impeccable** 1.0.0: not yet tested with a model
 - **interrogate** 1.0.0: not yet tested with a model
 - **latex** 1.0.0: not yet tested with a model
-- **maintain-verification-skill** 1.0.0: not yet tested with a model
+- **maintain-verification-skill** 2.0.0: not yet tested with a model
 - **negative-space-programming** 1.0.0: not yet tested with a model
 - **orchestrate** 1.0.0: not yet tested with a model
 - **principle-attack-the-premise** 2.0.0: not yet tested with a model
@@ -111,7 +130,7 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **prototype** 1.0.1: not yet tested with a model
 - **retro** 1.0.0: not yet tested with a model
 - **show-me-your-work** 1.0.0: not yet tested with a model
-- **wayfinder** 1.0.0: not yet tested with a model
+- **wayfinder** 2.0.0: not yet tested with a model
 
 ## Version history
 
@@ -123,6 +142,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### create-verification-skill
 
+- **2.0.0** (2026-11-24, major): No longer carries a copy of maintain-verification-skill under references/upstream/related/; it names that skill as an optional follow-up for upkeep. Existing users who read the bundled copy should install maintain-verification-skill. control-ui and control-cli stay bundled, and generating and proving a verification skill is unchanged.
 - **1.0.1** (2026-11-24, patch): Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Generate and execute a project-local verification skill for a local app; not remote deployment or installation.
 
@@ -164,6 +184,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### maintain-verification-skill
 
+- **2.0.0** (2026-11-24, major): Uses the create-verification-skill skill when the project does not have a verification skill yet, and no longer carries a copy of it under references/upstream/related/. Existing users: create-verification-skill must be installed too; the installer adds it and the upload ZIP includes it. The maintenance pass itself is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Refresh an existing local verification skill and feature map against observed app behavior.
 
 ### negative-space-programming
@@ -309,12 +330,13 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### wayfinder
 
+- **2.0.0** (2026-11-24, major): Uses the grill-with-docs skill for its interviews and glossary and ADR formats, and no longer carries a copy at references/grill-with-docs.md. Existing users: grill-with-docs must be installed too; the installer adds it and the upload ZIP includes it. The decision map, tickets, frontier, fog and resume packet are unchanged.
 - **1.0.0** (2026-11-24, initial): Charts and maintains a multi-session decision map: destination, separate decision tickets, frontier, fog, and a resume packet. Plans only, never implements, and points decisions that fit one session to grill-with-docs.
 
 ## Provenance
 
 - **agile-work-hierarchy**: original; <https://github.com/Leotus-Richard/AI-SKILLS/tree/881f8a1e46a3f8b64f22ac9d6d95824f137e26ea/skills/graph-engineering>, <https://docs.github.com/en/rest/issues/sub-issues>, <https://linear.app/docs/parent-and-sub-issues>, <https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops>, <https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/>.
-- **create-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill>.
+- **create-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli>.
 - **deslop**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/deslop/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit>.
 - **domain-modeling**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>.
 - **enterprise-agent-architecture**: user-supplied; user-supplied source with no independently verified URL.
@@ -324,7 +346,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **impeccable**: adapted-upstream; <https://github.com/pbakaus/impeccable/tree/68b1129634a1cdd9a0ba50b27376c71b4b083ae8/.github/skills/impeccable>, <https://impeccable.style>.
 - **interrogate**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/interrogate/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **latex**: user-supplied; user-supplied source with no independently verified URL.
-- **maintain-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill>.
+- **maintain-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **negative-space-programming**: original; user-supplied source with no independently verified URL.
 - **orchestrate**: user-supplied; user-supplied source with no independently verified URL.
 - **principle-attack-the-premise**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-attack-the-premise/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.

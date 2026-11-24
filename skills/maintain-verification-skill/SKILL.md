@@ -2,7 +2,7 @@
 name: maintain-verification-skill
 description: "Refresh an existing local verification skill and feature map against observed app behavior."
 metadata:
-  version: "1.0.0"
+  version: "2.0.0"
   author: "Lauren Tan (pstack)"
   tags: [engineering-practice]
 ---
@@ -15,7 +15,7 @@ Read `references/local-execution-contract.md` at task start. This skill is task-
 
 ## Workflow
 
-1. Find the selected verification skill; if absent, use the generator rather than inventing a target.
+1. Find the selected verification skill; if absent, use the `create-verification-skill` skill rather than inventing a target.
 2. Inspect source feature surfaces and existing proof instructions.
 3. Run one owned local launch/doctor/drive/capture/cleanup pass.
 4. Make only evidence-backed corrections when authorized and preserve proof after cleanup.
@@ -32,11 +32,11 @@ Corrected local feature map, proof and unresolved drift.
 
 Report the missing input or capability; do not fabricate evidence or broaden the task.
 
-## Conditional skill dependencies
+## Required skill
 
-- `create-verification-skill`: when the workflow requires this discipline, read the installed skill of that name, or the bundled copy at `references/upstream/related/create-verification-skill/create-verification-skill.md`.
+- `create-verification-skill`: installed with this skill. Use it when the project does not have a verification skill yet, and for the feature-map format a generated skill follows.
 
-Use the host's actual skill loader for an installed skill. Do not guess host tool names. Bundled copies come from the same pinned upstream commit and need nothing else installed.
+Use the host's actual skill loader. Do not guess host tool names. If the skill is missing, tell the user rather than inventing a target.
 
 ## Upstream resources
 
