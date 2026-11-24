@@ -100,7 +100,8 @@ jobs:
             lmstudio)
               [ -n "$LOCAL_LLM_MODEL" ] || fail "Set the repository variable LOCAL_LLM_MODEL to an LM Studio model id (see 'lms ls')."
               if [ -z "$LOCAL_LLM_ALLOW_HTTP_HOSTS" ]; then
-                LOCAL_LLM_ALLOW_HTTP_HOSTS="$(python3 -I -c 'import sys, urllib.parse as u; print(u.urlsplit(sys.argv[1]).hostname or "")' "$LOCAL_LLM_BASE_URL")"
+                host="${LOCAL_LLM_BASE_URL#*://}"; host="${host%%[:/]*}"
+                LOCAL_LLM_ALLOW_HTTP_HOSTS="$host"
               fi
               key="${LOCAL_LLM_API_KEY:-lm-studio}"   # LM Studio accepts any key unless auth is enabled
               echo "::add-mask::$key"
@@ -145,6 +146,19 @@ jobs:
             echo '::error::Docker is not usable by the runner user. Tier 3 runs agents in Docker sandboxes.'
             exit 1
           }
+      # uv's standalone Python, not actions/setup-python: SkillEvaluator runs
+      # helper tools with an environment that drops LD_LIBRARY_PATH, which
+      # setup-python's Linux interpreter needs (see skill-checks.yml).
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+      - name: Install SkillEvaluator and SkillSpector
+        run: |
+          uv python install 3.13
+          uv venv --python 3.13 --python-preference only-managed "$RUNNER_TEMP/eval-venv"
+          uv pip install --quiet --python "$RUNNER_TEMP/eval-venv/bin/python" \
+            "skillevaluator[all]==${SKILLEVALUATOR_VERSION}" \
+            "skillspector @ git+https://github.com/NVIDIA/SkillSpector.git@${SKILLSPECTOR_REF}"
+          echo "$RUNNER_TEMP/eval-venv/bin" >> "$GITHUB_PATH"
       - name: Check LM Studio from the host and from a container
         if: env.PROVIDER == 'lmstudio'
         run: |
@@ -173,17 +187,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.20.0'
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-      - name: Install SkillEvaluator and SkillSpector
-        run: |
-          python -m venv "$RUNNER_TEMP/eval-venv"
-          "$RUNNER_TEMP/eval-venv/bin/pip" install --quiet --disable-pip-version-check \
-            "skillevaluator[all]==${SKILLEVALUATOR_VERSION}" \
-            "skillspector @ git+https://github.com/NVIDIA/SkillSpector.git@${SKILLSPECTOR_REF}"
-          echo "$RUNNER_TEMP/eval-venv/bin" >> "$GITHUB_PATH"
       - name: Stage skills with their eval datasets
         run: |
           # shellcheck disable=SC2086 # SKILLS is an intentional word list
