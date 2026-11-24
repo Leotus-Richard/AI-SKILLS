@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -174,6 +174,17 @@ test('a copy fetched by npx has what it needs and pins skills to the commit it c
   assert.equal(pinned.stdout.trim(),
     `npx --yes skills@${SKILLS_CLI_VERSION} add ${INSTALL_SOURCE}#${sha} --skill wayfinder --skill grill-with-docs --agent codex`);
   assert.match(pinned.stderr, /Also installing grill-with-docs \(required by wayfinder\)\./);
+
+  // npm starts a package command through a link in node_modules/.bin, not by its real path.
+  const link = join(copy.cache, 'node_modules', '.bin', 'ai-skills');
+  mkdirSync(dirname(link), { recursive: true });
+  let linked = true;
+  try { symlinkSync(copy.command, link); }
+  catch (error) { if (error.code !== 'EPERM') throw error; linked = false; } // Windows without the symlink privilege
+  if (linked) {
+    const viaLink = spawnSync(process.execPath, [link, '--skill', 'wayfinder', '--agent', 'codex', '--print'], { cwd: copy.cache, encoding: 'utf8' });
+    assert.equal(viaLink.stdout, pinned.stdout, 'the command must run when started through the link');
+  }
 
   const chosen = run(['--skill', 'retro', '--ref', 'v9.9.9', '--print']);
   assert.equal(chosen.stdout.trim(), `npx --yes skills@${SKILLS_CLI_VERSION} add ${INSTALL_SOURCE}#v9.9.9 --skill retro`);

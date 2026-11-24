@@ -14,7 +14,7 @@
 // npx has no skills/ folder: it installs from GitHub at the commit npx fetched, so one
 // revision decides both the requirements and the skill text.
 import { spawnSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -60,7 +60,14 @@ export function detectRevision(packageRoot) {
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+// npm runs a package command through a link in node_modules/.bin, so compare real paths.
+function isMainModule() {
+  if (!process.argv[1]) return false;
+  try { return realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); }
+  catch { return false; }
+}
+
+if (isMainModule()) {
   try {
     const registry = JSON.parse(readFileSync(join(root, 'registry', 'skills.json'), 'utf8'));
     const { options, skills, added } = planInstall(process.argv.slice(2), registry);
