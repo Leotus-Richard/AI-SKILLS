@@ -21,7 +21,7 @@
           "version": "1.0.0",
           "date": "2026-11-24",
           "bump": "initial",
-          "expectedBehavior": "Plans, reviews, or reconciles Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error)."
+          "expectedBehavior": "Plans, reviews, or reconciles Agile work as an Epic or Milestone \u2192 Feature \u2192 User Story \u2192 Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error)."
         }
       ],
       "evaluations": []
@@ -1220,6 +1220,28 @@
           "date": "2026-11-24",
           "bump": "major",
           "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "pull-request",
+      "category": "engineering-practice",
+      "license": "Apache-2.0",
+      "related": [
+        "commit-workflow"
+      ],
+      "provenance": {
+        "kind": "original",
+        "urls": [],
+        "notes": "Original skill for this repository, contributed by the repository owner under Apache-2.0. The pull request template is the owner's; the workflow around it was drafted at their request on 2026-11-24."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, a checklist ticked only for what was done, with a reason beside each unticked box, and notes on what is left for a future change. Flags a diff that mixes unrelated changes. Opens a pull request only when asked."
         }
       ],
       "evaluations": []

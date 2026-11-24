@@ -2,7 +2,7 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **43 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root, plus any skills it requires.
+This repository contains **44 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root, plus any skills it requires.
 
 ## design-and-formatting (2)
 
@@ -11,7 +11,7 @@ This repository contains **43 skills**. Each Perplexity upload archive contains 
 | [impeccable](../skills/impeccable/SKILL.md) | 2.0.0 | Apache-2.0 | Design, review or refine frontend interfaces using Impeccable's product-specific UX and visual craft playbooks. Use for UI hierarchy, accessibility, responsive states, typography, copy or design systems; not backend-only tasks or automatic browser overlays, hooks or publishing. |
 | [latex](../skills/latex/SKILL.md) | 2.0.0 | Apache-2.0 | Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support. |
 
-## engineering-practice (10)
+## engineering-practice (11)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
@@ -23,6 +23,7 @@ This repository contains **43 skills**. Each Perplexity upload archive contains 
 | [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 3.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
 | [negative-space-programming](../skills/negative-space-programming/SKILL.md) | 1.0.0 | Apache-2.0 | Use when code relies on optional values, loose data, state transitions, or implicit assumptions: enforce internal invariants with assertions that fail fast. Not for expected user or network errors. |
 | [prototype](../skills/prototype/SKILL.md) | 2.0.0 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
+| [pull-request](../skills/pull-request/SKILL.md) | 1.0.0 | Apache-2.0 | Use when opening, drafting or updating a pull request (PR) or merge request: write its title and description from the actual change, with what changed and why, the type of change, how to test it, how to validate the outcome, a checklist ticked only for what was done, and what is left for a future change. |
 | [retro](../skills/retro/SKILL.md) | 2.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
 | [show-me-your-work](../skills/show-me-your-work/SKILL.md) | 2.0.0 | MIT | Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review. |
 
@@ -86,6 +87,7 @@ A skill lists the skills it needs under `requires` in `registry/skills.json`, an
 - **principle-sequence-verifiable-units** optionally works with `principle-build-the-lever`, `principle-prove-it-works`.
 - **principle-type-system-discipline** optionally works with `principle-boundary-discipline`, `principle-encode-lessons-in-structure`.
 - **prototype** optionally works with `commit-workflow`.
+- **pull-request** optionally works with `commit-workflow`.
 - **show-me-your-work** optionally works with `commit-workflow`.
 - **wayfinder** requires `grill-with-docs`; optional `domain-modeling`. Install with what it requires: `npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill wayfinder --skill grill-with-docs`
 
@@ -134,6 +136,7 @@ Every live evaluation (`skill-eval.yml`) of each skill's current version, newest
 - **principle-test-behavior-not-implementation** 2.0.0: not yet tested with a model
 - **principle-type-system-discipline** 2.0.0: not yet tested with a model
 - **prototype** 2.0.0: not yet tested with a model
+- **pull-request** 1.0.0: not yet tested with a model
 - **retro** 2.0.0: not yet tested with a model
 - **show-me-your-work** 2.0.0: not yet tested with a model
 - **wayfinder** 2.0.0: not yet tested with a model
@@ -340,6 +343,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **1.0.1** (2026-11-24, patch): Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Create a disposable local logic or UI prototype to settle a named design question; not production implementation.
 
+### pull-request
+
+- **1.0.0** (2026-11-24, initial): Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, a checklist ticked only for what was done, with a reason beside each unticked box, and notes on what is left for a future change. Flags a diff that mixes unrelated changes. Opens a pull request only when asked.
+
 ### retro
 
 - **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.
@@ -397,6 +404,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **principle-test-behavior-not-implementation**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-test-behavior-not-implementation/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **principle-type-system-discipline**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-type-system-discipline/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **prototype**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/prototype/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>.
+- **pull-request**: original; user-supplied source with no independently verified URL.
 - **retro**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/retro/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336/skills/productivity/writing-for-agents>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/correct>.
 - **show-me-your-work**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/show-me-your-work/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/unslop>.
 - **wayfinder**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/wayfinder/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/research/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/prototype/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.

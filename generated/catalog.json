@@ -1575,6 +1575,36 @@
       "contentSha256": "04f740dd8be32577be6ce1fecbed287253f24a2559a744376b713ffde55507f0"
     },
     {
+      "name": "pull-request",
+      "version": "1.0.0",
+      "description": "Use when opening, drafting or updating a pull request (PR) or merge request: write its title and description from the actual change, with what changed and why, the type of change, how to test it, how to validate the outcome, a checklist ticked only for what was done, and what is left for a future change.",
+      "category": "engineering-practice",
+      "license": "Apache-2.0",
+      "requires": [],
+      "related": [
+        "commit-workflow"
+      ],
+      "provenance": {
+        "kind": "original",
+        "notes": "Original skill for this repository, contributed by the repository owner under Apache-2.0. The pull request template is the owner's; the workflow around it was drafted at their request on 2026-11-24.",
+        "urls": []
+      },
+      "testedWith": null,
+      "evaluations": [],
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, a checklist ticked only for what was done, with a reason beside each unticked box, and notes on what is left for a future change. Flags a diff that mixes unrelated changes. Opens a pull request only when asked.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/pull-request",
+      "fileCount": 4,
+      "uncompressedBytes": 21074,
+      "contentSha256": "706fe6d16bdf624fcc96b0f39b59125886111dff57f2d2b3789f3533e1883e42"
+    },
+    {
       "name": "retro",
       "version": "2.0.0",
       "description": "Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.",
