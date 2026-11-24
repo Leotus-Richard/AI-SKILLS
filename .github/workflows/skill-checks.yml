@@ -139,7 +139,7 @@ jobs:
       # `uv tool run`, so that interpreter fails to start (exit 127). uv's
       # standalone Python needs no LD_LIBRARY_PATH.
       - name: Set up uv
-        uses: astral-sh/setup-uv@v10
+        uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d  # v10.4.0; setup-uv publishes no moving major tags
       - name: Install SkillEvaluator
         run: |
           uv python install 3.13
