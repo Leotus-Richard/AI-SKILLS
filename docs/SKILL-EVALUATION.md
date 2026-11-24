@@ -14,6 +14,7 @@ Tier 1 and the PR scan need no model at all. Tier 2, Tier 3 and SkillSpector's L
 | `validate.yml` | PR, push to `main`, manual | Linux: self-hosted ARM64. macOS and Windows: GitHub-hosted. Fork PRs: GitHub-hosted Linux | Blocking |
 | `skill-checks.yml` → SkillSpector | PR, push, manual | Self-hosted | **Blocking** on any active finding not in `.skillspector-baseline.yaml` |
 | `skill-checks.yml` → SkillEvaluator Tier 1 | PR (changed skills), push and manual (all) | Self-hosted, native install | Advisory until `SKILL_TIER1_ENFORCE=true` |
+| `skill-checks.yml` → PR comment | PRs from this repository | Self-hosted | Posts both results as one PR comment, updated on each push. The job that writes it never runs PR code |
 | `skill-eval.yml` | Manual; weekly if `SKILL_EVAL_SCHEDULED=true` | Self-hosted, Docker sandboxes, LM Studio or a cloud provider | Advisory. Produces reports |
 | `release.yml` | `v*` tag, manual | Self-hosted | Blocking |
 
