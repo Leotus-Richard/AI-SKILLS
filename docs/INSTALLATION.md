@@ -137,7 +137,7 @@ Vercel documents `DISABLE_TELEMETRY=1` or `DO_NOT_TRACK=1` to disable telemetry 
 
 ## Perplexity Computer upload
 
-Use an individual skill ZIP from this repository's GitHub release assets, or build one locally with `npm run build`. Output is `dist/perplexity/<name>.zip`, with `SKILL.md` at the archive root alongside that skill's own references and notices. A skill that requires other skills carries them under `required-skills/`.
+Build the ZIPs from a checkout with `npm run build`; releases do not attach them. Output is `dist/perplexity/<name>.zip`, with `SKILL.md` at the archive root alongside that skill's own references and notices. A skill that requires other skills carries them under `required-skills/`.
 
 The [official Perplexity instructions](https://www.perplexity.ai/help-center/en/articles/13914413-how-to-use-computer-skills), checked 29 October 2026, accept a Markdown file directly or a ZIP containing root `SKILL.md`. The manifest must have YAML `name` and `description`; uploads and extracted ZIP contents are capped at 20 MB, with at most 100 files. A name uses 1–64 lowercase letters, digits, or hyphens, with no leading, trailing, or consecutive hyphens; descriptions are capped at 1,024 characters.
 
@@ -150,11 +150,11 @@ To import:
 
 If Plugins is not shown yet, use **Customize → Skills → Create skill → Upload skill**. Keep the individual archive zipped. Do not rename a PDF or text attachment to `.zip`.
 
-The optional `ai-skills-perplexity-collection.zip` is an outer download bundle. **Extract it first**, then upload the individual ZIPs inside `perplexity/`. The outer archive has no root `SKILL.md` and is not a single importable skill. It also carries the catalog and manifest for browsing. Each individual ZIP is complete on its own: a skill that requires another carries it under `required-skills/`, so no sibling upload is needed.
+The build also writes `dist/ai-skills-perplexity-collection.zip`, an outer bundle of every skill ZIP. **Extract it first**, then upload the individual ZIPs inside `perplexity/`. The outer archive has no root `SKILL.md` and is not a single importable skill. It also carries the catalog and manifest for browsing. Each individual ZIP is complete on its own: a skill that requires another carries it under `required-skills/`, so no sibling upload is needed.
 
-## Verify release downloads
+## Verify built packages
 
-Release assets include `manifest.json` and `SHA256SUMS`. Checksums use **asset basenames**, so place the downloaded files listed by the checksum file in one directory before checking the complete set:
+The build writes `dist/perplexity/manifest.json` and `dist/SHA256SUMS`. Checksums use **file basenames**, so place the files listed by the checksum file in one directory before checking the complete set:
 
 ```sh
 # Linux
@@ -171,10 +171,17 @@ Get-FileHash -LiteralPath '.\wayfinder.zip' -Algorithm SHA256
 Get-Content -LiteralPath '.\SHA256SUMS'
 ```
 
-The source build layout nests individual ZIPs under `dist/perplexity/`, while the checksum names intentionally match flattened release downloads. Do not run a basename-based full check from `dist/` and interpret missing nested files as corrupt downloads. A passing checksum verifies the downloaded bytes, not the workflow's behavior in an agent.
+The build layout nests individual ZIPs under `dist/perplexity/`, while the checksum file lists basenames. Do not run a basename-based full check from `dist/` and interpret missing nested files as corrupt. A passing checksum verifies the bytes, not the workflow's behavior in an agent.
 
 ## Packaging and releases
 
 Run `npm run validate`, `npm run catalog:check`, `npm test`, and `npm run build` before distributing packages. `generated/catalog.json` and `docs/CATALOG.md` are generated source artifacts; `dist/` is disposable build output.
 
-A manual release-workflow run produces an Actions artifact for review. A pushed `v*` tag also creates a GitHub release from the existing tag and uploads the built assets. This automation does not install skills for consumers or certify host-specific behavior.
+A release is source only. Pushing a `v*` tag runs the checks and then creates a GitHub release from that tag with generated notes. GitHub attaches its source code archives; no built ZIP, manifest or checksum file is attached. A manual run of the release workflow keeps the built packages as an Actions artifact for review.
+
+To cut a release:
+
+1. Set `version` in `package.json` and `package-lock.json` to the new version in a pull request, and merge it.
+2. Tag that commit `v<version>` and push the tag. The workflow stops if the tag and the version in `package.json` differ.
+
+Consumers install by tag, for example `npx --yes github:Leotus-Richard/AI-SKILLS#v0.2.0 --skill <name>`. This automation does not install skills for consumers or certify host-specific behavior.

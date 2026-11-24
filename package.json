@@ -1,6 +1,6 @@
 {
   "name": "@leotus-richard/ai-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Portable skills with a pinned multi-harness installer and reproducible upload packages.",
   "license": "Apache-2.0",

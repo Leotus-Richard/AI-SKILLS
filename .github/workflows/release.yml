@@ -1,4 +1,4 @@
-name: Release packages
+name: Release
 
 on:
   push:
@@ -32,6 +32,14 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
+      - name: Check the tag matches package.json
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match the version in package.json ($version). Bump the version in a pull request, then tag that commit."
+            exit 1
+          fi
       - name: Validate skills and registry
         run: npm run validate
       - name: Check generated catalog
@@ -40,7 +48,10 @@ jobs:
         run: npm test
       - name: Build upload packages
         run: npm run build
-      - name: Upload release packages
+      # A manual run keeps the built packages as a workflow artifact for review.
+      # A tagged release attaches nothing: GitHub adds the source archives itself.
+      - name: Upload built packages for review
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v7
         with:
           name: ai-skills-release
@@ -56,15 +67,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download validated packages
-        uses: actions/download-artifact@v8
-        with:
-          name: ai-skills-release
-          path: dist/
       - name: Check GitHub CLI on the runner
         run: |
           command -v gh >/dev/null || { echo '::error::Install the GitHub CLI (gh) on the self-hosted runner to publish releases.'; exit 1; }
-      - name: Publish existing tag and generated assets
+      # Source only: the release is the tag, its notes, and the source archives
+      # GitHub attaches to every release. No built file is uploaded.
+      - name: Publish the tagged release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -72,14 +80,8 @@ jobs:
           RELEASE_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
-          mapfile -d '' release_assets < <(find dist -type f -print0)
-          if (( ${#release_assets[@]} == 0 )); then
-            echo 'No release assets were produced.' >&2
-            exit 1
-          fi
           gh release create "$RELEASE_TAG" \
             --repo "$RELEASE_REPOSITORY" \
             --verify-tag \
             --title "$RELEASE_TAG" \
-            --generate-notes \
-            "${release_assets[@]}"
+            --generate-notes
