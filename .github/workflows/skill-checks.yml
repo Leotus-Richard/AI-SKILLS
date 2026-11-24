@@ -107,7 +107,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: skillspector-reports
+          name: skillspector-reports-attempt-${{ github.run_attempt }}
           path: ${{ runner.temp }}/skillspector-reports/
           if-no-files-found: warn
           retention-days: 14
@@ -240,7 +240,7 @@ jobs:
         continue-on-error: true
         uses: actions/download-artifact@v8
         with:
-          name: skillspector-reports
+          name: skillspector-reports-attempt-${{ github.run_attempt }}
           path: ${{ runner.temp }}/spector
       - name: Download Tier 1 reports
         continue-on-error: true
@@ -263,7 +263,7 @@ jobs:
       - name: Upload the comment
         uses: actions/upload-artifact@v7
         with:
-          name: skill-checks-comment
+          name: skill-checks-comment-attempt-${{ github.run_attempt }}
           path: ${{ runner.temp }}/comment/skill-checks-comment.md
           if-no-files-found: error
           retention-days: 7
@@ -282,7 +282,7 @@ jobs:
       - name: Download the comment
         uses: actions/download-artifact@v8
         with:
-          name: skill-checks-comment
+          name: skill-checks-comment-attempt-${{ github.run_attempt }}
           path: ${{ runner.temp }}/comment
       - name: Create or update the comment
         uses: actions/github-script@v9
