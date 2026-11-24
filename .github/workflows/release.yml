@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
 
-# Runs on the self-hosted Ubuntu runners; see validate.yml for the label override.
+# Runs on the self-hosted ARM64 Linux runners; see validate.yml for the label override.
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
@@ -16,7 +16,7 @@ concurrency:
 jobs:
   package:
     name: Validate and package
-    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","x64"]') }}
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
     env:
       DISABLE_TELEMETRY: '1'
       DO_NOT_TRACK: '1'
@@ -52,7 +52,7 @@ jobs:
     name: Publish tagged release
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     needs: package
-    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","x64"]') }}
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
     permissions:
       contents: write
     steps:

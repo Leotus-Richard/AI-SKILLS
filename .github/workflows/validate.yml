@@ -13,7 +13,7 @@ concurrency:
   group: validate-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# Linux runs on the self-hosted Ubuntu runners. Override the labels with the
+# Linux runs on the self-hosted ARM64 Linux runners. Override the labels with the
 # repository variable SELF_HOSTED_RUNNER_LABELS (a JSON array) if yours differ.
 #
 # Self-hosted runners only run trusted code: pushes, manual runs, and pull
@@ -26,7 +26,7 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     uses: ./.github/workflows/node-checks.yml
     with:
-      runs-on: ${{ vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","x64"]' }}
+      runs-on: ${{ vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]' }}
       upload-artifact: ai-skills-validation
 
   linux-fork:

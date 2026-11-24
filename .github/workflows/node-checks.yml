@@ -1,12 +1,12 @@
 name: Node checks (reusable)
 
 # Shared validate/catalog/test/build steps. Callers pick the runner so the same
-# steps run on self-hosted Ubuntu and on GitHub-hosted macOS/Windows.
+# steps run on self-hosted ARM64 Linux and on GitHub-hosted macOS/Windows.
 on:
   workflow_call:
     inputs:
       runs-on:
-        description: JSON runner spec, e.g. '["self-hosted","linux","x64"]' or '"windows-latest"'
+        description: JSON runner spec, e.g. '["self-hosted","linux","ARM64","ai-skills"]' or '"windows-latest"'
         type: string
         required: true
       upload-artifact:

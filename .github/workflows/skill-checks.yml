@@ -1,10 +1,11 @@
 name: Skill checks
 
-# Keyless static gates for every skill change, on the self-hosted Ubuntu runners:
+# Keyless static gates for every skill change, on the self-hosted ARM64 runners:
 #   - SkillSpector: security scan of each skill. Blocks on any active finding
 #     not accepted in .skillspector-baseline.yaml.
 #   - SkillEvaluator Tier 1: quality score, schema, harness compatibility, PII,
-#     license, Unicode, secrets and code checks from NVIDIA's pinned image.
+#     license, Unicode, secrets and code checks. Installed natively from PyPI
+#     because NVIDIA's Tier 1 image is amd64-only and the runners are ARM64.
 #     Advisory until the repository variable SKILL_TIER1_ENFORCE is 'true'.
 #
 # Live agent evaluation (Tier 2/3) needs a model key and lives in skill-eval.yml.
@@ -30,8 +31,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # Pins from SkillEvaluator's reviewed CI bundle 1.2.0 (ci/bundles/1.2.0/release.json).
-  TIER1_IMAGE: ghcr.io/nvidia/skillevaluator-tier1@sha256:39c381bc9559be4fe30ede2b937d1a8577fcfedc66230a8e52b6fe5e79c23c94
+  # SkillEvaluator 1.0.1 pins its own scanners: SkillSpector 2.13.4, Gitleaks 8.30.0.
+  SKILLEVALUATOR_VERSION: 1.0.1
   # SkillSpector v2.13.6.
   SKILLSPECTOR_REF: e2674da339b0bddc6e565d059c0577c6d9cd25da
   DO_NOT_TRACK: '1'
@@ -42,7 +43,7 @@ jobs:
     # Self-hosted runners run trusted code only. Fork PRs need a maintainer to
     # review the change and run this workflow manually from a branch.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","x64"]') }}
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
     timeout-minutes: 30
     steps:
       - name: Check out source
@@ -113,11 +114,14 @@ jobs:
   tier1:
     name: SkillEvaluator Tier 1
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","x64"]') }}
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
     timeout-minutes: 60
     env:
       SCAN_MODE: ${{ github.event_name == 'pull_request' && 'changed' || inputs.scan-mode || 'all' }}
       ENFORCE: ${{ vars.SKILL_TIER1_ENFORCE == 'true' }}
+      MIN_SCORE: ${{ vars.SKILL_MIN_SCORE || '70' }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      REPORTS: ${{ runner.temp }}/skill-reports
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -126,58 +130,74 @@ jobs:
           # Changed-skill mode needs history to find the merge base.
           fetch-depth: ${{ github.event_name == 'pull_request' && 0 || 1 }}
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
-      - name: Check Docker on the runner
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install SkillEvaluator
         run: |
-          docker info --format 'Docker {{.ServerVersion}}' || {
-            echo '::error::Docker is not usable by the runner user. Install Docker and add the runner user to the docker group.'
-            exit 1
-          }
-      - name: Pull the pinned image without registry credentials
+          python -m venv "$RUNNER_TEMP/skillevaluator-venv"
+          "$RUNNER_TEMP/skillevaluator-venv/bin/pip" install --quiet --disable-pip-version-check \
+            "skillevaluator==${SKILLEVALUATOR_VERSION}"
+          echo "$RUNNER_TEMP/skillevaluator-venv/bin" >> "$GITHUB_PATH"
+      - name: Select skills
+        id: select
         run: |
-          mkdir -p "$RUNNER_TEMP/anonymous-docker-config"
-          docker --config "$RUNNER_TEMP/anonymous-docker-config" pull "$TIER1_IMAGE"
+          set -euo pipefail
+          if [ "$SCAN_MODE" = changed ] && [ -n "$BASE_SHA" ]; then
+            base="$(git merge-base "$BASE_SHA" HEAD)"
+            names="$(git diff --name-only "$base" HEAD -- skills/ | cut -d/ -f2 | sort -u)"
+          else
+            names="$(find skills -mindepth 2 -maxdepth 2 -name SKILL.md | cut -d/ -f2 | sort)"
+          fi
+          selected=""
+          for name in $names; do
+            [ -f "skills/$name/SKILL.md" ] && selected="$selected $name"
+          done
+          echo "skills=${selected# }" >> "$GITHUB_OUTPUT"
+          echo "Selected (${SCAN_MODE}):${selected:- none}"
       - name: Evaluate skills
         id: evaluate
+        if: steps.select.outputs.skills != ''
         continue-on-error: ${{ vars.SKILL_TIER1_ENFORCE != 'true' }}
         env:
-          SKILL_PATHS: skills
-          MIN_SCORE: ${{ vars.SKILL_MIN_SCORE || '70' }}
-          LLM_ENABLED: 'false'
-          SCAN_WORKERS: '4'
-          SECURITY_BASELINES: 'false'
-          DIFF_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          DIFF_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-          POLICY_SOURCE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
-          CALLER_WORKFLOW_SHA: ${{ github.workflow_sha }}
-          REPORT_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          REPORT_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+          SKILLS: ${{ steps.select.outputs.skills }}
         run: |
-          mkdir -p "$RUNNER_TEMP/skill-reports"
-          export REPORT_IMAGE="$TIER1_IMAGE" REPORT_URL=""
-          # Same hardened invocation as NVIDIA's reusable evaluate-skills.yml:
-          # read-only workspace, no capabilities, no privilege escalation.
-          docker run --rm --user "$(id -u):$(id -g)" \
-            --read-only --tmpfs /tmp:rw,nosuid,noexec,size=1g \
-            --tmpfs /audit-tmp:rw,nosuid,noexec,mode=1777,size=1g --env TMPDIR=/audit-tmp \
-            --cap-drop ALL --security-opt no-new-privileges \
-            --mount "type=bind,src=$GITHUB_WORKSPACE,dst=/workspace,readonly" \
-            --mount "type=bind,src=$RUNNER_TEMP/skill-reports,dst=/reports" \
-            --env SKILL_PATHS --env MIN_SCORE --env LLM_ENABLED \
-            --env SCAN_MODE --env DIFF_BASE_SHA --env DIFF_HEAD_SHA --env SCAN_WORKERS \
-            --env SECURITY_BASELINES --env POLICY_SOURCE_SHA --env CALLER_WORKFLOW_SHA \
-            --env GITHUB_ACTIONS --env REPORT_IMAGE --env REPORT_URL --env REPORT_RUN_URL --env REPORT_COMMIT \
-            "$TIER1_IMAGE"
+          set -uo pipefail
+          status=0
+          for name in $SKILLS; do
+            skillevaluator tier1 "skills/$name" --no-llm --min-score "$MIN_SCORE" \
+              --skillspector-baseline .skillspector-baseline.yaml \
+              -r json,markdown -o "$REPORTS/$name"
+            rc=$?
+            echo "$name exit=$rc"
+            [ "$rc" -eq 0 ] || { status=1; echo "::warning title=SkillEvaluator Tier 1::$name did not pass (exit $rc). See the job summary."; }
+          done
+          exit "$status"
       - name: Note advisory result
         if: steps.evaluate.outcome == 'failure' && env.ENFORCE != 'true'
         run: echo "::warning title=SkillEvaluator Tier 1::Not all skills passed Tier 1. This job is advisory; set the repository variable SKILL_TIER1_ENFORCE=true to make it blocking."
       - name: Add the result to the workflow summary
         if: always()
         run: |
-          if [ -f "$RUNNER_TEMP/skill-reports/summary.md" ]; then
-            cat "$RUNNER_TEMP/skill-reports/summary.md" >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo 'Tier 1 did not complete. Inspect the failed step above.' >> "$GITHUB_STEP_SUMMARY"
-          fi
+          python3 -I - "$REPORTS" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json, pathlib, sys
+          root = pathlib.Path(sys.argv[1])
+          print("## SkillEvaluator Tier 1\n")
+          reports = sorted(root.glob("*/skillevaluator-tier1.json")) if root.exists() else []
+          if not reports:
+              print("No skills selected, or Tier 1 did not run.")
+              raise SystemExit
+          print("| Skill | Status | Quality | Failed | Incomplete |\n| --- | --- | --- | --- | --- |")
+          for path in reports:
+              data = json.loads(path.read_text())
+              results = data.get("results") or []
+              failed = [r.get("validator") or r.get("name") or "?" for r in results if str(r.get("status", "")).lower() == "failed"]
+              incomplete = [r.get("validator") or r.get("name") or "?" for r in results if str(r.get("status", "")).lower() == "incomplete"]
+              score = next((q.get("overall_score") for q in data.get("quality_summary") or [] if isinstance(q, dict)), None)
+              print(f"| {path.parent.name} | {data.get('overall_status', '?')} | {score if score is not None else '?'} | {', '.join(map(str, failed)) or '-'} | {', '.join(map(str, incomplete)) or '-'} |")
+          print("\nFull reports: download the **skillevaluator-tier1** artifact (Markdown and JSON per skill).")
+          PY
       - name: Upload Tier 1 reports
         if: always()
         uses: actions/upload-artifact@v4

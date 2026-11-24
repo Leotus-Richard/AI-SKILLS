@@ -19,3 +19,12 @@ rules:
       False positive (reviewed 2026-11-23): "Read the saved state" is post-write
       readback of the user's tracker items, not a persistence mechanism. The skill
       creates no cron jobs, startup scripts, or cross-session state.
+
+  - id: "TM1"
+    path: "references/github.md"
+    message: "*DELETE*sub_issue*"
+    reason: >-
+      False positive (reviewed 2026-11-23, flagged by SkillSpector 2.13.4 inside
+      SkillEvaluator 1.0.1): the line documents GitHub's REST endpoint for removing
+      a sub-issue. The skill requires explicit authorization and readback before any
+      tracker mutation; it does not instruct unattended deletion.

@@ -1,6 +1,6 @@
 name: Skill evaluation (live)
 
-# Model-backed evaluation on the self-hosted Ubuntu runners. Advisory: it
+# Model-backed evaluation on the self-hosted ARM64 Linux runners. Advisory: it
 # produces reports to act on and never gates merges.
 #   - Tier 2: repeated guidance inside each skill and overlap across the library.
 #   - SkillSpector with LLM semantic analysis (deeper than the keyless PR scan).
@@ -8,10 +8,11 @@ name: Skill evaluation (live)
 #     the difference is Skill Lift. Only skills with evals/<skill>/ are run.
 #
 # Providers:
-#   lmstudio   Open-weight models served by LM Studio on the runner host (or a
-#              tailnet peer). No cloud calls for grading, embeddings or agents.
-#              Needs repository variables LOCAL_LLM_MODEL and
-#              LOCAL_EMBEDDING_MODEL; see docs/SKILL-EVALUATION.md.
+#   lmstudio   Open-weight models served by LM Studio on the Mac that hosts the
+#              runner VM, reached over Tailscale. No cloud calls for grading,
+#              embeddings or agents. Needs repository variables
+#              LOCAL_LLM_BASE_URL, LOCAL_LLM_MODEL and LOCAL_EMBEDDING_MODEL;
+#              see docs/SKILL-EVALUATION.md.
 #   nv_build   NVIDIA_API_KEY secret.
 #   anthropic  ANTHROPIC_API_KEY secret (Tier 2 is unavailable: no embeddings API).
 #   openai     OPENAI_API_KEY secret.
@@ -62,7 +63,7 @@ jobs:
   evaluate:
     name: Tier 2/3 evaluation
     if: github.event_name != 'schedule' || vars.SKILL_EVAL_SCHEDULED == 'true'
-    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","x64"]') }}
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
     timeout-minutes: 360
     env:
       PROVIDER: ${{ inputs.provider || vars.SKILL_EVAL_PROVIDER || 'lmstudio' }}
@@ -80,12 +81,13 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LOCAL_LLM_API_KEY: ${{ secrets.LOCAL_LLM_API_KEY }}
-          # Default: LM Studio on this host, reached through the Docker bridge so
-          # agent containers can use the same URL. Traffic never leaves the host.
-          # For a Tailscale address use http://100.x.y.z:1234/v1 and list that IP
-          # in LOCAL_LLM_ALLOW_HTTP_HOSTS (WireGuard already encrypts it).
-          LOCAL_LLM_BASE_URL: ${{ vars.LOCAL_LLM_BASE_URL || 'http://172.17.0.1:1234/v1' }}
-          LOCAL_LLM_ALLOW_HTTP_HOSTS: ${{ vars.LOCAL_LLM_ALLOW_HTTP_HOSTS || '172.17.0.1' }}
+          # LM Studio runs on the macOS host while the runner and its Docker
+          # containers run in a Linux VM, so localhost and the Docker bridge
+          # cannot reach it. Use the Mac's Tailscale IP: http://100.x.y.z:1234/v1.
+          LOCAL_LLM_BASE_URL: ${{ vars.LOCAL_LLM_BASE_URL }}
+          # Hosts SkillEvaluator may call over plain HTTP. Defaults to the base
+          # URL's host; tailnet traffic is already encrypted by WireGuard.
+          LOCAL_LLM_ALLOW_HTTP_HOSTS: ${{ vars.LOCAL_LLM_ALLOW_HTTP_HOSTS }}
           LOCAL_LLM_MODEL: ${{ vars.LOCAL_LLM_MODEL }}
           LOCAL_AGENT_MODEL: ${{ vars.LOCAL_AGENT_MODEL }}
           LOCAL_EMBEDDING_MODEL: ${{ vars.LOCAL_EMBEDDING_MODEL }}
@@ -94,7 +96,11 @@ jobs:
           fail() { echo "::error::$1"; exit 1; }
           case "$PROVIDER" in
             lmstudio)
+              [ -n "$LOCAL_LLM_BASE_URL" ] || fail "Set the repository variable LOCAL_LLM_BASE_URL to LM Studio's address, e.g. http://<mac-tailscale-ip>:1234/v1."
               [ -n "$LOCAL_LLM_MODEL" ] || fail "Set the repository variable LOCAL_LLM_MODEL to an LM Studio model id (see 'lms ls')."
+              if [ -z "$LOCAL_LLM_ALLOW_HTTP_HOSTS" ]; then
+                LOCAL_LLM_ALLOW_HTTP_HOSTS="$(python3 -I -c 'import sys, urllib.parse as u; print(u.urlsplit(sys.argv[1]).hostname or "")' "$LOCAL_LLM_BASE_URL")"
+              fi
               key="${LOCAL_LLM_API_KEY:-lm-studio}"   # LM Studio accepts any key unless auth is enabled
               echo "::add-mask::$key"
               {
@@ -143,7 +149,7 @@ jobs:
         run: |
           set -euo pipefail
           models="$(curl -fsS -m 15 -H "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$SKILL_EVAL_LLM_BASE_URL/models")" || {
-            echo "::error::Cannot reach LM Studio at $SKILL_EVAL_LLM_BASE_URL from the runner. Start the server and enable 'Serve on Local Network'."
+            echo "::error::Cannot reach LM Studio at $SKILL_EVAL_LLM_BASE_URL from the runner VM. On the Mac: start the server, enable 'Serve on Local Network', and allow LM Studio in the macOS firewall."
             exit 1
           }
           ids="$(printf '%s' "$models" | python3 -I -c 'import json,sys; print("\n".join(m["id"] for m in json.load(sys.stdin)["data"]))')"
@@ -154,7 +160,7 @@ jobs:
           # Agent sandboxes are containers: localhost there is the container itself.
           docker run --rm busybox:1.37 wget -q -T 15 -O /dev/null \
             --header "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$SKILL_EVAL_LLM_BASE_URL/models" || {
-            echo "::error::Containers cannot reach $SKILL_EVAL_LLM_BASE_URL. Check LM Studio listens beyond 127.0.0.1 and the host firewall allows Docker networks to port 1234."
+            echo "::error::Containers in the runner VM cannot reach $SKILL_EVAL_LLM_BASE_URL although the VM can. Check the VM's firewall forwards Docker traffic, and that the Tailscale IP is routable from the VM's containers."
             exit 1
           }
           echo "Containers can reach LM Studio."
