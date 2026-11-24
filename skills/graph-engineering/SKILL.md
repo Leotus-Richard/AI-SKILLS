@@ -2,6 +2,7 @@
 name: graph-engineering
 description: "Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work."
 metadata:
+  version: "1.0.0"
   author: Leotus-Richard
   tags: [ai-agents, workflows, orchestration, execution-graphs, design-review]
 ---

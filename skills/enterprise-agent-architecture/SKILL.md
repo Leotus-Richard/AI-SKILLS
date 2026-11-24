@@ -2,6 +2,7 @@
 name: enterprise-agent-architecture
 description: "Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph."
 metadata:
+  version: "1.0.0"
   author: Leotus-Richard
   tags: [ai-agents, architecture, governance, retrieval, evaluation, design-review]
 ---

@@ -138,12 +138,16 @@ export async function createCatalog(repoRoot) {
     if (!main) throw new Error(`Missing root SKILL.md: ${entry.name}`);
     const metadata = readSkillFrontmatter(main.bytes.toString('utf8'), `${path}/SKILL.md`);
     if (metadata.name !== entry.name) throw new Error(`Registry/frontmatter name mismatch: ${entry.name} / ${metadata.name}`);
+    const version = typeof metadata.metadata?.version === 'string' ? metadata.metadata.version : null;
     skills.push({
       name: metadata.name,
+      version,
       description: metadata.description,
       category: entry.category,
       license: entry.license,
       provenance: stableObject(entry.provenance),
+      testedWith: latestEvaluationFor(entry.evaluations, version),
+      versions: Array.isArray(entry.versions) ? entry.versions.map(stableObject) : [],
       path,
       fileCount: files.length,
       uncompressedBytes: files.reduce((total, file) => total + file.bytes.length, 0),
@@ -151,6 +155,23 @@ export async function createCatalog(repoRoot) {
     });
   }
   return { schemaVersion: CATALOG_SCHEMA_VERSION, skills };
+}
+
+// Newest evaluation record for the current version (kept here rather than in
+// versioning.mjs, which imports this module).
+function latestEvaluationFor(evaluations, version) {
+  if (!Array.isArray(evaluations) || !version) return null;
+  const records = evaluations.filter(record => record && record.version === version);
+  records.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  const record = records[0];
+  return record ? stableObject({ date: record.date, provider: record.provider, models: record.models, tiers: record.tiers }) : null;
+}
+
+function testedWithText(testedWith) {
+  if (!testedWith) return 'not yet tested with a model';
+  const { judge, agent, embedding } = testedWith.models;
+  const parts = [judge && `judge ${judge}`, agent && `agent ${agent}`, embedding && `embeddings ${embedding}`].filter(Boolean);
+  return `${parts.join(', ')} (${testedWith.provider}, ${testedWith.date})`;
 }
 
 function markdownCell(value) {
@@ -166,14 +187,27 @@ export function renderCatalogMarkdown(catalog, { linkMode = 'source' } = {}) {
     '',
     `This repository contains **${catalog.skills.length} skills**. Each Perplexity upload archive contains one skill with \`SKILL.md\` at its root.`,
     '',
-    '| Skill | Category | License | Description |',
-    '| --- | --- | --- | --- |',
+    '| Skill | Version | Category | License | Description |',
+    '| --- | --- | --- | --- | --- |',
   ];
   for (const skill of catalog.skills) {
     const href = linkMode === 'archive' ? `perplexity/${skill.name}.zip` : `../${skill.path}/SKILL.md`;
-    lines.push(`| [${skill.name}](${href}) | ${markdownCell(skill.category)} | ${markdownCell(skill.license)} | ${markdownCell(skill.description)} |`);
+    lines.push(`| [${skill.name}](${href}) | ${markdownCell(skill.version ?? 'unversioned')} | ${markdownCell(skill.category)} | ${markdownCell(skill.license)} | ${markdownCell(skill.description)} |`);
   }
-  lines.push('', '## Provenance', '');
+  lines.push('', '## Tested with', '', 'Models used by the latest live evaluation (`skill-eval.yml`) of each skill\'s current version, from `registry/skills.json`.', '');
+  for (const skill of catalog.skills) {
+    lines.push(`- **${skill.name}** ${markdownCell(skill.version ?? 'unversioned')}: ${markdownCell(testedWithText(skill.testedWith))}`);
+  }
+  lines.push('', '## Version history', '', 'Newest first. Each entry states the expected behavior of that version; see [versioning](VERSIONING.md).', '');
+  for (const skill of catalog.skills) {
+    lines.push(`### ${skill.name}`, '');
+    for (const entry of [...skill.versions].reverse()) {
+      lines.push(`- **${markdownCell(entry.version)}** (${markdownCell(entry.date)}, ${markdownCell(entry.bump)}): ${markdownCell(entry.expectedBehavior)}`);
+    }
+    if (!skill.versions.length) lines.push('- No recorded versions.');
+    lines.push('');
+  }
+  lines.push('## Provenance', '');
   for (const skill of catalog.skills) {
     const urls = skill.provenance.urls;
     lines.push(`- **${skill.name}**: ${markdownCell(skill.provenance.kind)}${urls.length ? `; ${urls.map(url => `<${url}>`).join(', ')}` : '; user-supplied source with no independently verified URL'}.`);

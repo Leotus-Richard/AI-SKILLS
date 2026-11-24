@@ -14,11 +14,12 @@ function fixture(t) {
   const skill = join(root, 'skills', 'sample');
   mkdirSync(join(skill, 'references'), { recursive: true });
   mkdirSync(join(root, 'registry'));
-  writeFileSync(join(skill, 'SKILL.md'), '---\nname: sample\ndescription: Use this fixture for validation.\n---\n\nRead [guide](references/guide.md).\n');
+  writeFileSync(join(skill, 'SKILL.md'), '---\nname: sample\ndescription: Use this fixture for validation.\nmetadata:\n  version: "1.0.0"\n---\n\nRead [guide](references/guide.md).\n');
   writeFileSync(join(skill, 'references', 'guide.md'), '# Guide\n');
   writeFileSync(join(skill, 'LICENSE.txt'), 'Fixture license\n');
   writeFileSync(join(skill, 'SOURCE.md'), 'Fixture provenance\n');
-  const registry = { schemaVersion: 1, skills: [{ name: 'sample', category: 'workflow', license: 'Apache-2.0', provenance: { kind: 'original', urls: [] } }] };
+  const registry = { schemaVersion: 1, skills: [{ name: 'sample', category: 'workflow', license: 'Apache-2.0', provenance: { kind: 'original', urls: [] },
+    versions: [{ version: '1.0.0', date: '2026-11-24', bump: 'initial', expectedBehavior: 'Validates a self-contained sample skill.' }] }] };
   writeFileSync(join(root, 'registry', 'skills.json'), JSON.stringify(registry));
   return { root, skill, registry };
 }

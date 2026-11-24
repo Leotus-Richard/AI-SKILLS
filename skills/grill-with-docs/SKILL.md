@@ -2,6 +2,7 @@
 name: "grill-with-docs"
 description: "Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder."
 metadata:
+  version: "1.0.0"
   author: "Matt Pocock (adapted by Leotus-Richard)"
   tags: [planning, design-review, interviewing, domain-modeling, adr, glossary]
 ---
