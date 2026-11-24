@@ -15,7 +15,16 @@
           "https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/"
         ],
         "notes": "Original user-defined Agile work hierarchy based on Graph Engineering, with independent Bugs, portable provider projections, and a local plan validator. Official provider documentation checked on 2026-10-29; native mappings require target-specific capability discovery."
-      }
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Plans, reviews, or reconciles Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error)."
+        }
+      ],
+      "evaluations": []
     },
     {
       "name": "enterprise-agent-architecture",
@@ -25,7 +34,16 @@
         "kind": "user-supplied",
         "urls": [],
         "notes": "User-supplied Enterprise Agent Architecture guide contributed under Apache-2.0; unavailable long-form reference pointers removed for a self-contained import. Framework-specific claims require current primary-source verification."
-      }
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Guides design and review of governed enterprise AI agents through the eight pillars, source authority tiers, hybrid retrieval and risk-tiered governance. Produces design documents or ranked reviews that separate proposed controls from implemented ones, and checks framework claims against current documentation."
+        }
+      ],
+      "evaluations": []
     },
     {
       "name": "graph-engineering",
@@ -35,7 +53,16 @@
         "kind": "user-supplied",
         "urls": [],
         "notes": "User-supplied Graph Engineering runbook contributed under Apache-2.0; the unverified publication-attribution caveat is preserved in SKILL.md."
-      }
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Turns agent workflows into explicit execution graphs (node contracts, routers, gates, bounded loops, checkpoints) or reviews existing ones, leading with ranked findings. Recommends a plain script when a graph is not needed and stays framework-neutral unless one is chosen."
+        }
+      ],
+      "evaluations": []
     },
     {
       "name": "grill-with-docs",
@@ -53,7 +80,16 @@
         ],
         "revision": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa",
         "notes": "Portable adaptation of Matt Pocock skills with required interview/domain-modeling guidance included locally; upstream MIT notice retained."
-      }
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Interviews the user in dependency-aware rounds with recommendations to settle a plan or design in one session, maintaining a domain glossary and qualifying ADRs. Points multi-session planning to Wayfinder and does not treat the interview as authorization to implement."
+        }
+      ],
+      "evaluations": []
     },
     {
       "name": "wayfinder",
@@ -74,7 +110,16 @@
         ],
         "revision": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa",
         "notes": "Portable adaptation of Matt Pocock skills with required interview/domain-modeling guidance included locally; upstream MIT notice retained."
-      }
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Charts and maintains a multi-session decision map: destination, separate decision tickets, frontier, fog, and a resume packet. Plans only, never implements, and points decisions that fit one session to grill-with-docs."
+        }
+      ],
+      "evaluations": []
     }
   ]
 }

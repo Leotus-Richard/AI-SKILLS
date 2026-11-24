@@ -2,6 +2,7 @@
 name: agile-work-hierarchy
 description: "Use when planning, creating, reviewing, or reconciling Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies, in Linear, GitHub Issues, Azure DevOps, or Jira."
 metadata:
+  version: "1.0.0"
   author: Leotus-Richard
   tags: [agile, backlog, planning, work-items, linear, github-issues, azure-devops, jira]
 ---

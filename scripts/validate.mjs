@@ -3,6 +3,7 @@ import { resolve, join, dirname, relative, sep, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseDocument } from 'yaml';
 import { assertPortableRelativePaths } from './catalog.mjs';
+import { findEvaluationIssues, findVersionHistoryIssues, parseSemver } from './versioning.mjs';
 
 const NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const LIMIT_BYTES = 20_000_000;
@@ -145,6 +146,17 @@ export function validateRepository(repoRoot) {
     const parsed = readMetadata(main, issues);
     if (parsed && parsed.metadata.name !== item.name) issues.push(`${folder}: folder and frontmatter name must match`);
     if (!entries.has(item.name)) issues.push(`${folder}: missing registry entry`);
+    if (parsed) {
+      const version = parsed.metadata.metadata?.version;
+      if (!parseSemver(version)) {
+        issues.push(`${folder}: metadata.version must be a quoted "MAJOR.MINOR.PATCH" string`);
+      }
+      if (entries.has(item.name)) {
+        const entry = entries.get(item.name);
+        issues.push(...findVersionHistoryIssues(item.name, entry.versions, version));
+        issues.push(...findEvaluationIssues(item.name, entry.evaluations, version));
+      }
+    }
     if (!existsSync(join(folder, 'LICENSE.txt'))) issues.push(`${folder}: missing bundled LICENSE.txt`);
     if (!existsSync(join(folder, 'SOURCE.md'))) issues.push(`${folder}: missing SOURCE.md provenance`);
     if (files.length > LIMIT_FILES) issues.push(`${folder}: exceeds ${LIMIT_FILES} upload files`);

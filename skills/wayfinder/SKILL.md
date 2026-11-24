@@ -2,6 +2,7 @@
 name: "wayfinder"
 description: "Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs."
 metadata:
+  version: "1.0.0"
   author: "Matt Pocock (adapted by Leotus-Richard)"
 ---
 

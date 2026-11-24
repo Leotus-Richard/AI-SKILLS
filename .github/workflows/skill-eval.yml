@@ -187,11 +187,14 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: '26.13.1'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
       - name: Stage skills with their eval datasets
         run: |
           # shellcheck disable=SC2086 # SKILLS is an intentional word list
           node scripts/stage-evals.mjs --out "$RUNNER_TEMP/eval-skills" $SKILLS
-          mkdir -p "$REPORTS"
+          mkdir -p "$REPORTS/status"
 
       - name: Tier 2 - repeated guidance within each skill
         if: contains(env.TIERS, '2') && env.PROVIDER != 'anthropic'
@@ -199,7 +202,12 @@ jobs:
         run: |
           for dir in "$RUNNER_TEMP"/eval-skills/*/; do
             name="$(basename "$dir")"
-            skillevaluator tier2 "$dir" -r json,html,markdown -o "$REPORTS/tier2/$name" || echo "::warning::Tier 2 reported issues for $name"
+            if skillevaluator tier2 "$dir" -r json,html,markdown -o "$REPORTS/tier2/$name"; then
+              echo completed > "$REPORTS/status/$name.tier2"
+            else
+              echo failed > "$REPORTS/status/$name.tier2"
+              echo "::warning::Tier 2 reported issues for $name"
+            fi
           done
       - name: Tier 2 - overlap across the library
         if: contains(env.TIERS, '2') && env.PROVIDER != 'anthropic'
@@ -235,12 +243,75 @@ jobs:
             name="$(basename "$dir")"
             [ -d "$dir/evals" ] || continue
             ran=1
-            skillevaluator tier3 validate "$dir" --strict || { echo "::error::$name eval dataset is invalid"; continue; }
-            skillevaluator tier3 evaluate "$dir" --env-mode docker --n-attempts "$N_ATTEMPTS" \
-              "${agent_args[@]}" --results-dir "$REPORTS/tier3/$name" \
-              || echo "::warning::Tier 3 did not complete for $name"
+            if ! skillevaluator tier3 validate "$dir" --strict; then
+              echo invalid-dataset > "$REPORTS/status/$name.tier3"
+              echo "::error::$name eval dataset is invalid"
+              continue
+            fi
+            if skillevaluator tier3 evaluate "$dir" --env-mode docker --n-attempts "$N_ATTEMPTS" \
+              "${agent_args[@]}" --results-dir "$REPORTS/tier3/$name"; then
+              echo completed > "$REPORTS/status/$name.tier3"
+            else
+              echo failed > "$REPORTS/status/$name.tier3"
+              echo "::warning::Tier 3 did not complete for $name"
+            fi
           done
           [ "$ran" = 1 ] || echo "::notice::No skill has an evals/<skill>/ dataset yet; Tier 3 skipped."
+
+      # One record per skill that a model-backed tier ran for: the skill version
+      # tested, the models, and the outcome. The record job turns these into a
+      # registry PR so each version carries the models that tested it.
+      - name: Prepare evaluation records
+        if: always()
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          AGENT_DEFAULT: ${{ inputs.agents }}
+        run: |
+          node --input-type=module - "$RUNNER_TEMP/eval-skills" "$REPORTS/status" "$REPORTS/records" <<'JS'
+          import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+          import { join } from 'node:path';
+          import { readSkillVersion } from './scripts/versioning.mjs';
+          const [skillsDir, statusDir, outDir] = process.argv.slice(2);
+          const env = process.env;
+          const local = env.PROVIDER === 'lmstudio';
+          const read = file => (existsSync(file) ? readFileSync(file, 'utf8').trim() : null);
+          mkdirSync(outDir, { recursive: true });
+          let written = 0;
+          for (const skill of existsSync(skillsDir) ? readdirSync(skillsDir) : []) {
+            const results = {};
+            for (const tier of ['tier2', 'tier3']) {
+              const status = read(join(statusDir, `${skill}.${tier}`));
+              if (status) results[tier] = status;
+            }
+            if (!Object.keys(results).length) continue; // No model-backed tier ran for this skill.
+            const record = {
+              skill,
+              version: readSkillVersion(readFileSync(join(skillsDir, skill, 'SKILL.md'), 'utf8')),
+              date: new Date().toISOString().slice(0, 10),
+              provider: env.PROVIDER,
+              models: {
+                judge: env.SKILL_EVAL_LLM_MODEL || 'provider-default',
+                agent: results.tier3 ? (local ? env.LOCAL_AGENT_MODEL : (env.AGENT_DEFAULT || 'provider-default')) : null,
+                embedding: results.tier2 ? (env.SKILL_EVAL_EMBEDDING_MODEL || 'provider-default') : null,
+              },
+              tiers: Object.keys(results).map(tier => tier.replace('tier', '')),
+              results,
+              tools: { skillevaluator: env.SKILLEVALUATOR_VERSION, skillspector: env.SKILLSPECTOR_REF.slice(0, 12) },
+              runUrl: env.RUN_URL,
+            };
+            writeFileSync(join(outDir, `${skill}.json`), `${JSON.stringify(record, null, 2)}\n`);
+            written += 1;
+          }
+          console.log(`${written} evaluation record(s).`);
+          JS
+      - name: Upload evaluation records
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: evaluation-records-attempt-${{ github.run_attempt }}
+          path: ${{ env.REPORTS }}/records/
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Summarize
         if: always()
@@ -264,3 +335,79 @@ jobs:
           path: ${{ env.REPORTS }}
           if-no-files-found: warn
           retention-days: 30
+
+  # Adds the records to registry/skills.json on a branch and opens a PR, so the
+  # catalog shows which models tested each skill version. Runs repository
+  # scripts from the default branch only; the records are data.
+  record:
+    name: Record tested models
+    needs: evaluate
+    if: always() && needs.evaluate.result != 'skipped'
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Download evaluation records
+        id: records
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          name: evaluation-records-attempt-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/records
+      - name: Check out the default branch
+        if: steps.records.outcome == 'success'
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - name: Set up Node.js
+        if: steps.records.outcome == 'success'
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26.13.1'
+          cache: npm
+      - name: Update the registry and catalog
+        id: update
+        if: steps.records.outcome == 'success'
+        env:
+          BRANCH: eval-records/run-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          npm ci
+          node scripts/record-evaluation.mjs "$RUNNER_TEMP"/records/*.json
+          npm run catalog
+          npm run validate
+          if git diff --quiet; then
+            echo "No new records."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "$BRANCH"
+          git add registry/skills.json generated/catalog.json docs/CATALOG.md
+          git commit -m "Record models used to evaluate skills (run ${{ github.run_id }})"
+          git push origin "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+      - name: Open the registry PR
+        if: steps.update.outputs.branch != ''
+        uses: actions/github-script@v9
+        env:
+          BRANCH: ${{ steps.update.outputs.branch }}
+          BASE: ${{ github.event.repository.default_branch }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const body = `Adds the models and outcomes from [skill evaluation run](${process.env.RUN_URL}) to \`registry/skills.json\` and regenerates the catalog. Data only; review the run's reports before merging.`;
+            try {
+              const { data } = await github.rest.pulls.create({
+                owner, repo, head: process.env.BRANCH, base: process.env.BASE,
+                title: 'Record models used to evaluate skills', body,
+              });
+              core.notice(`Opened ${data.html_url}`);
+            } catch (error) {
+              // Blocked unless "Allow GitHub Actions to create and approve pull requests" is enabled.
+              const url = `https://github.com/${owner}/${repo}/compare/${process.env.BASE}...${process.env.BRANCH}?expand=1`;
+              core.notice(`Could not open the PR (${error.status}). Open it here: ${url}`);
+              await core.summary.addRaw(`Open the registry PR: ${url}\n`).write();
+            }

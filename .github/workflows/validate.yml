@@ -54,3 +54,31 @@ jobs:
     uses: ./.github/workflows/node-checks.yml
     with:
       runs-on: ${{ format('"{0}"', matrix.os) }}
+
+  # Blocks a PR that changes a skill without bumping metadata.version and
+  # recording its expected behavior. Rules: docs/VERSIONING.md.
+  versions:
+    name: Skill versions
+    if: github.event_name == 'pull_request'
+    runs-on: ${{ fromJSON(github.event.pull_request.head.repo.full_name == github.repository && (vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') || '"ubuntu-latest"') }}
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26.13.1'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Require a version bump for each changed skill
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        # Default `bash -e` has no pipefail; without it tee would hide a failure.
+        run: |
+          set -o pipefail
+          node scripts/check-versions.mjs --base "$BASE_SHA" 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
