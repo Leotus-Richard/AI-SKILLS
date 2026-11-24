@@ -24,3 +24,7 @@ Bundled files:
   - `related/control-cli/control-cli.md`: upstream SHA-256 `13ac93e595bbda2000849bdb815d5f2ca03f7c2ca63788c8335f9212b9b422a2`
 
 The license, MIT (Copyright (c) 2026 Lauren Tan), is bundled in `LICENSE.txt`.
+
+## Changes in 3.0.0 (24 November 2026)
+
+The toolkit's shared `references/local-execution-contract.md` is removed. It was the same 4.7 KB file in every toolkit skill, and it named skills and a manifest that are not in this library. The limits that govern this skill are now a short list under Scope in `SKILL.md`. Left out as general practice rather than limits: its alias table, its dependency-reading and failure-handling vocabulary, and its reminders to keep output formats and build the smallest correct solution. Its commit rules are not copied here. They belong to the separate `commit-workflow` skill.

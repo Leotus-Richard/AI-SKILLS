@@ -2,28 +2,29 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **42 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root, plus any skills it requires.
+This repository contains **43 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root, plus any skills it requires.
 
 ## design-and-formatting (2)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
-| [impeccable](../skills/impeccable/SKILL.md) | 1.0.0 | Apache-2.0 | Design, review or refine frontend interfaces using Impeccable's product-specific UX and visual craft playbooks. Use for UI hierarchy, accessibility, responsive states, typography, copy or design systems; not backend-only tasks or automatic browser overlays, hooks or publishing. |
-| [latex](../skills/latex/SKILL.md) | 1.0.0 | Apache-2.0 | Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support. |
+| [impeccable](../skills/impeccable/SKILL.md) | 2.0.0 | Apache-2.0 | Design, review or refine frontend interfaces using Impeccable's product-specific UX and visual craft playbooks. Use for UI hierarchy, accessibility, responsive states, typography, copy or design systems; not backend-only tasks or automatic browser overlays, hooks or publishing. |
+| [latex](../skills/latex/SKILL.md) | 2.0.0 | Apache-2.0 | Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support. |
 
-## engineering-practice (9)
+## engineering-practice (10)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
-| [create-verification-skill](../skills/create-verification-skill/SKILL.md) | 2.0.0 | MIT | Generate and execute a project-local verification skill for a local app; not remote deployment or installation. |
-| [deslop](../skills/deslop/SKILL.md) | 1.0.0 | MIT | Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries. |
-| [how-it-works](../skills/how-it-works/SKILL.md) | 1.0.0 | MIT | Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation. |
-| [interrogate](../skills/interrogate/SKILL.md) | 1.0.0 | MIT | Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real. |
-| [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 2.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
+| [commit-workflow](../skills/commit-workflow/SKILL.md) | 1.0.0 | Apache-2.0 | Prepare small, tested Git commits with structured messages, confirmed requester identity and no agent credit or co-author trailers. Use for implementation checkpoints or commit policy; not permission to push, rewrite history or commit someone else's work. |
+| [create-verification-skill](../skills/create-verification-skill/SKILL.md) | 3.0.0 | MIT | Generate and execute a project-local verification skill for a local app; not remote deployment or installation. |
+| [deslop](../skills/deslop/SKILL.md) | 2.0.0 | MIT | Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries. |
+| [how-it-works](../skills/how-it-works/SKILL.md) | 2.0.0 | MIT | Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation. |
+| [interrogate](../skills/interrogate/SKILL.md) | 2.0.0 | MIT | Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real. |
+| [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 3.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
 | [negative-space-programming](../skills/negative-space-programming/SKILL.md) | 1.0.0 | Apache-2.0 | Use when code relies on optional values, loose data, state transitions, or implicit assumptions: enforce internal invariants with assertions that fail fast. Not for expected user or network errors. |
-| [prototype](../skills/prototype/SKILL.md) | 1.0.1 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
-| [retro](../skills/retro/SKILL.md) | 1.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
-| [show-me-your-work](../skills/show-me-your-work/SKILL.md) | 1.0.0 | MIT | Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review. |
+| [prototype](../skills/prototype/SKILL.md) | 2.0.0 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
+| [retro](../skills/retro/SKILL.md) | 2.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
+| [show-me-your-work](../skills/show-me-your-work/SKILL.md) | 2.0.0 | MIT | Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review. |
 
 ## engineering-principles (24)
 
@@ -59,11 +60,11 @@ This repository contains **42 skills**. Each Perplexity upload archive contains 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
 | [agile-work-hierarchy](../skills/agile-work-hierarchy/SKILL.md) | 1.0.0 | Apache-2.0 | Use when planning, creating, reviewing, or reconciling Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies, in Linear, GitHub Issues, Azure DevOps, or Jira. |
-| [domain-modeling](../skills/domain-modeling/SKILL.md) | 1.0.0 | MIT | Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs. |
+| [domain-modeling](../skills/domain-modeling/SKILL.md) | 2.0.0 | MIT | Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs. |
 | [enterprise-agent-architecture](../skills/enterprise-agent-architecture/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph. |
 | [graph-engineering](../skills/graph-engineering/SKILL.md) | 1.0.0 | Apache-2.0 | Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work. |
 | [grill-with-docs](../skills/grill-with-docs/SKILL.md) | 1.0.0 | MIT | Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder. |
-| [orchestrate](../skills/orchestrate/SKILL.md) | 1.0.0 | Apache-2.0 | Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion. |
+| [orchestrate](../skills/orchestrate/SKILL.md) | 2.0.0 | Apache-2.0 | Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion. |
 | [wayfinder](../skills/wayfinder/SKILL.md) | 2.0.0 | MIT | Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs. |
 
 ## Dependencies
@@ -71,11 +72,12 @@ This repository contains **42 skills**. Each Perplexity upload archive contains 
 A skill lists the skills it needs under `requires` in `registry/skills.json`, and the ones its text names as optional under `related`. `npm run skills:install` from a checkout, or `npx --yes github:Leotus-Richard/AI-SKILLS --skill <name>` from any project, adds required skills automatically; see [installation](INSTALLATION.md#skills-that-require-other-skills). A skill not listed here names no other skill.
 
 - **create-verification-skill** optionally works with `maintain-verification-skill`.
+- **deslop** optionally works with `commit-workflow`.
 - **domain-modeling** optionally works with `grill-with-docs`.
 - **grill-with-docs** optionally works with `domain-modeling`.
-- **impeccable** optionally works with `create-verification-skill`.
-- **maintain-verification-skill** requires `create-verification-skill`. Install with what it requires: `npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill maintain-verification-skill --skill create-verification-skill`
-- **orchestrate** optionally works with `graph-engineering`, `show-me-your-work`.
+- **impeccable** optionally works with `commit-workflow`, `create-verification-skill`.
+- **maintain-verification-skill** requires `create-verification-skill`; optional `commit-workflow`. Install with what it requires: `npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill maintain-verification-skill --skill create-verification-skill`
+- **orchestrate** optionally works with `commit-workflow`, `graph-engineering`, `show-me-your-work`.
 - **principle-attack-the-premise** optionally works with `principle-build-the-lever`, `principle-fix-root-causes`, `principle-laziness-protocol`, `principle-redesign-from-first-principles`.
 - **principle-build-the-lever** optionally works with `principle-encode-lessons-in-structure`, `principle-laziness-protocol`, `principle-prove-it-works`.
 - **principle-explain-the-number** optionally works with `principle-prove-it-works`.
@@ -83,6 +85,8 @@ A skill lists the skills it needs under `requires` in `registry/skills.json`, an
 - **principle-prove-it-works** optionally works with `show-me-your-work`.
 - **principle-sequence-verifiable-units** optionally works with `principle-build-the-lever`, `principle-prove-it-works`.
 - **principle-type-system-discipline** optionally works with `principle-boundary-discipline`, `principle-encode-lessons-in-structure`.
+- **prototype** optionally works with `commit-workflow`.
+- **show-me-your-work** optionally works with `commit-workflow`.
 - **wayfinder** requires `grill-with-docs`; optional `domain-modeling`. Install with what it requires: `npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill wayfinder --skill grill-with-docs`
 
 ## Tested with
@@ -90,19 +94,20 @@ A skill lists the skills it needs under `requires` in `registry/skills.json`, an
 Models used by the latest live evaluation (`skill-eval.yml`) of each skill's current version, from `registry/skills.json`.
 
 - **agile-work-hierarchy** 1.0.0: not yet tested with a model
-- **create-verification-skill** 2.0.0: not yet tested with a model
-- **deslop** 1.0.0: not yet tested with a model
-- **domain-modeling** 1.0.0: not yet tested with a model
+- **commit-workflow** 1.0.0: not yet tested with a model
+- **create-verification-skill** 3.0.0: not yet tested with a model
+- **deslop** 2.0.0: not yet tested with a model
+- **domain-modeling** 2.0.0: not yet tested with a model
 - **enterprise-agent-architecture** 1.0.0: not yet tested with a model
 - **graph-engineering** 1.0.0: not yet tested with a model
 - **grill-with-docs** 1.0.0: not yet tested with a model
-- **how-it-works** 1.0.0: not yet tested with a model
-- **impeccable** 1.0.0: not yet tested with a model
-- **interrogate** 1.0.0: not yet tested with a model
-- **latex** 1.0.0: not yet tested with a model
-- **maintain-verification-skill** 2.0.0: not yet tested with a model
+- **how-it-works** 2.0.0: not yet tested with a model
+- **impeccable** 2.0.0: not yet tested with a model
+- **interrogate** 2.0.0: not yet tested with a model
+- **latex** 2.0.0: not yet tested with a model
+- **maintain-verification-skill** 3.0.0: not yet tested with a model
 - **negative-space-programming** 1.0.0: not yet tested with a model
-- **orchestrate** 1.0.0: not yet tested with a model
+- **orchestrate** 2.0.0: not yet tested with a model
 - **principle-attack-the-premise** 2.0.0: not yet tested with a model
 - **principle-boundary-discipline** 2.0.0: not yet tested with a model
 - **principle-build-the-lever** 2.0.0: not yet tested with a model
@@ -127,9 +132,9 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **principle-subtract-before-you-add** 2.0.0: not yet tested with a model
 - **principle-test-behavior-not-implementation** 2.0.0: not yet tested with a model
 - **principle-type-system-discipline** 2.0.0: not yet tested with a model
-- **prototype** 1.0.1: not yet tested with a model
-- **retro** 1.0.0: not yet tested with a model
-- **show-me-your-work** 1.0.0: not yet tested with a model
+- **prototype** 2.0.0: not yet tested with a model
+- **retro** 2.0.0: not yet tested with a model
+- **show-me-your-work** 2.0.0: not yet tested with a model
 - **wayfinder** 2.0.0: not yet tested with a model
 
 ## Version history
@@ -140,18 +145,25 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 - **1.0.0** (2026-11-24, initial): Plans, reviews, or reconciles Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error).
 
+### commit-workflow
+
+- **1.0.0** (2026-11-24, initial): Prepares small, tested commits one slice at a time: a structured message with Why and the checks that actually passed, the identity the requester confirmed for both author and committer, and no co-author trailer or agent credit. Checks run on the exact staged tree before the commit and again on the commit itself. It grants no authority to commit, push or rewrite history, and it stops and asks when a repository convention conflicts with its rules.
+
 ### create-verification-skill
 
+- **3.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.
 - **2.0.0** (2026-11-24, major): No longer carries a copy of maintain-verification-skill under references/upstream/related/; it names that skill as an optional follow-up for upkeep. Existing users who read the bundled copy should install maintain-verification-skill. control-ui and control-cli stay bundled, and generating and proving a verification skill is unchanged.
 - **1.0.1** (2026-11-24, patch): Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Generate and execute a project-local verification skill for a local app; not remote deployment or installation.
 
 ### deslop
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries.
 
 ### domain-modeling
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs.
 
 ### enterprise-agent-architecture
@@ -168,22 +180,27 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### how-it-works
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation.
 
 ### impeccable
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.
 - **1.0.0** (2026-11-24, initial): Designs, reviews or refines frontend interfaces with Impeccable 4.0.3 playbooks, routed by the bundled command table. Uses local evidence and reference files only; never runs Impeccable's native detector, live mode or hooks, and reports those as capability gaps.
 
 ### interrogate
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real.
 
 ### latex
 
+- **2.0.0** (2026-11-24, major): No longer reads references/local-execution-contract.md, which is removed. The skill only formats math, and its own steps already cover what applied from that file. Existing users: nothing to change. The formatting rules and delimiters are unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support.
 
 ### maintain-verification-skill
 
+- **3.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.
 - **2.0.0** (2026-11-24, major): Uses the create-verification-skill skill when the project does not have a verification skill yet, and no longer carries a copy of it under references/upstream/related/. Existing users: create-verification-skill must be installed too; the installer adds it and the upload ZIP includes it. The maintenance pass itself is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Refresh an existing local verification skill and feature map against observed app behavior.
 
@@ -193,6 +210,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### orchestrate
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion.
 
 ### principle-attack-the-premise
@@ -317,15 +335,18 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### prototype
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.
 - **1.0.1** (2026-11-24, patch): Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Create a disposable local logic or UI prototype to settle a named design question; not production implementation.
 
 ### retro
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.
 
 ### show-me-your-work
 
+- **2.0.0** (2026-11-24, major): The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review.
 
 ### wayfinder
@@ -336,6 +357,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ## Provenance
 
 - **agile-work-hierarchy**: original; <https://github.com/Leotus-Richard/AI-SKILLS/tree/881f8a1e46a3f8b64f22ac9d6d95824f137e26ea/skills/graph-engineering>, <https://docs.github.com/en/rest/issues/sub-issues>, <https://linear.app/docs/parent-and-sub-issues>, <https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops>, <https://support.atlassian.com/jira-cloud-administration/docs/configure-the-issue-type-hierarchy/>.
+- **commit-workflow**: user-supplied; user-supplied source with no independently verified URL.
 - **create-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli>.
 - **deslop**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/deslop/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit>.
 - **domain-modeling**: adapted-upstream; <https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/tree/49dd158d1076134a641b33efb035946536778336>.

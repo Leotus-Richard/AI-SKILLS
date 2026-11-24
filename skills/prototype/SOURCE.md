@@ -15,3 +15,7 @@ Changes at import:
 - The commit handoff now applies only when a `commit-workflow` skill is installed. That skill was written for the toolkit and has no public source, so it is not bundled.
 
 The license, MIT (Copyright (c) 2026 Matt Pocock), is bundled in `LICENSE.txt`.
+
+## Changes in 2.0.0 (24 November 2026)
+
+The toolkit's shared `references/local-execution-contract.md` is removed. It was the same 4.7 KB file in every toolkit skill, and it named skills and a manifest that are not in this library. The limits that govern this skill are now a short list under Scope in `SKILL.md`. Left out as general practice rather than limits: its alias table, its dependency-reading and failure-handling vocabulary, and its reminders to keep output formats and build the smallest correct solution. Its commit rules are not copied here. They belong to the separate `commit-workflow` skill, which this skill uses when it is installed.

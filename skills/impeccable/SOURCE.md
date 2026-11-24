@@ -17,3 +17,7 @@ Other changes at import:
 - Not included: `native-resources.zip` (the complete native snapshot, 88 scripts, with detector, live-mode, hook and helper code that scanners can only partly inspect) and the Codex sub-agent definitions. The hub never runs them, and it reports a capability gap where a playbook names a native script.
 - The hub's companion skills (`work-tracking`, `commit-workflow`, `create-verification-skill`) are used only when installed, and its zip and toolkit "no-credit policy" references are removed. `portability.md` and `commands.json` now name the pinned upstream tag.
 - This repository starts the skill at 1.0.0; the upstream version is 4.0.3.
+
+## Changes in 2.0.0 (24 November 2026)
+
+The toolkit's shared `references/local-execution-contract.md` is removed. It was the same 4.7 KB file in every toolkit skill, and it named skills and a manifest that are not in this library. The limits that govern this skill are now a short list under Scope in `SKILL.md`. Left out as general practice rather than limits: its alias table, its dependency-reading and failure-handling vocabulary, and its reminders to keep output formats and build the smallest correct solution. Its commit rules are not copied here. They belong to the separate `commit-workflow` skill, which this skill uses when it is installed.
