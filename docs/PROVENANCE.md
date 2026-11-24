@@ -69,7 +69,14 @@ Generated catalogs and ZIPs preserve provenance rather than creating a new upstr
 
 The 24 `principle-*` skills come from pstack in [cursor/plugins](https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack), pinned to commit `1e5c90a4b6f249917bd21fe361b3a2a7deb741b8`, under the MIT license (Copyright (c) 2026 Lauren Tan) bundled in each skill.
 
-They were imported from Engineering Toolkit v1.3. The toolkit wraps each upstream skill in a task-scoped hub and keeps the original byte for byte at `references/upstream/ORIGINAL-SKILL.md`; each original's SHA-256 was checked against the pinned upstream file. The archive does not record who prepared the toolkit adaptation. At import, each description was restored from upstream and the toolkit-specific metadata was replaced. Four originals link to other pstack skills. Those skills' files were fetched from the same pinned commit into each skill's `references/upstream/related/`, and the links now point at the local copies, so every skill stays self-contained. Those four `SOURCE.md` files list each bundled file with its upstream SHA-256. Each skill's `SOURCE.md` has the details.
+They were first imported from Engineering Toolkit v1.3, which wraps each upstream skill in a task-scoped hub with a shared contract file and keeps the original at `references/upstream/ORIGINAL-SKILL.md`. The archive does not record who prepared that adaptation. Version 2.0.0 of each principle removes the wrapper: `SKILL.md` is the upstream text, checked against the pinned upstream file's SHA-256 before conversion.
+
+The changes from upstream are small and listed in each `SOURCE.md`:
+
+- Upstream's `disable-model-invocation` flag is dropped, so a principle can trigger on its own description.
+- Links to other pstack principles become name references to the matching skill in this library. Those skills are optional, and no principle bundles a copy of another.
+- Four terse originals lean on their description for the rule, so they repeat it as the opening paragraph.
+- `principle-explain-the-number` bundles pstack's `benchmark-checklist`, which is not in this library, at `references/benchmark-checklist.md`.
 
 ## Engineering practice skills
 
