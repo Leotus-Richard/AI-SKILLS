@@ -23,7 +23,7 @@ This repository contains **44 skills**. Each Perplexity upload archive contains 
 | [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 3.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
 | [negative-space-programming](../skills/negative-space-programming/SKILL.md) | 1.0.0 | Apache-2.0 | Use when code relies on optional values, loose data, state transitions, or implicit assumptions: enforce internal invariants with assertions that fail fast. Not for expected user or network errors. |
 | [prototype](../skills/prototype/SKILL.md) | 2.0.0 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
-| [pull-request](../skills/pull-request/SKILL.md) | 1.0.0 | Apache-2.0 | Use when opening, drafting or updating a pull request (PR) or merge request: write its title and description from the actual change, with what changed and why, the type of change, how to test it, how to validate the outcome, and a checklist ticked only for what was done. |
+| [pull-request](../skills/pull-request/SKILL.md) | 1.0.0 | Apache-2.0 | Use when opening, drafting or updating a pull request (PR) or merge request: write its title and description from the actual change, with what changed and why, the type of change, how to test it, how to validate the outcome, a checklist ticked only for what was done, and what is left for a future change. |
 | [retro](../skills/retro/SKILL.md) | 2.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
 | [show-me-your-work](../skills/show-me-your-work/SKILL.md) | 2.0.0 | MIT | Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review. |
 
@@ -344,7 +344,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### pull-request
 
-- **1.0.0** (2026-11-24, initial): Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, and a checklist ticked only for what was done, with a reason beside each unticked box. Flags a diff that mixes unrelated changes. Opens a pull request only when asked.
+- **1.0.0** (2026-11-24, initial): Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, a checklist ticked only for what was done, with a reason beside each unticked box, and notes on what is left for a future change. Flags a diff that mixes unrelated changes. Opens a pull request only when asked.
 
 ### retro
 

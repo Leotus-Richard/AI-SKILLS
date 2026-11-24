@@ -21,7 +21,7 @@
           "version": "1.0.0",
           "date": "2026-11-24",
           "bump": "initial",
-          "expectedBehavior": "Plans, reviews, or reconciles Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error)."
+          "expectedBehavior": "Plans, reviews, or reconciles Agile work as an Epic or Milestone \u2192 Feature \u2192 User Story \u2192 Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error)."
         }
       ],
       "evaluations": []
@@ -1208,7 +1208,7 @@
           "version": "1.0.0",
           "date": "2026-11-24",
           "bump": "initial",
-          "expectedBehavior": "Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, and a checklist ticked only for what was done, with a reason beside each unticked box. Flags a diff that mixes unrelated changes. Opens a pull request only when asked."
+          "expectedBehavior": "Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, a checklist ticked only for what was done, with a reason beside each unticked box, and notes on what is left for a future change. Flags a diff that mixes unrelated changes. Opens a pull request only when asked."
         }
       ],
       "evaluations": []

@@ -1,6 +1,6 @@
 ---
 name: pull-request
-description: "Use when opening, drafting or updating a pull request (PR) or merge request: write its title and description from the actual change, with what changed and why, the type of change, how to test it, how to validate the outcome, and a checklist ticked only for what was done."
+description: "Use when opening, drafting or updating a pull request (PR) or merge request: write its title and description from the actual change, with what changed and why, the type of change, how to test it, how to validate the outcome, a checklist ticked only for what was done, and what is left for a future change."
 metadata:
   version: "1.0.0"
   author: "Leotus-Richard"
@@ -9,7 +9,7 @@ metadata:
 
 # Pull Request
 
-Write a pull request a reviewer can understand, run and trust: what changed and why, how to test it, how to confirm it did its job, and a checklist that is true.
+Write a pull request a reviewer can understand, run and trust: what changed and why, how to test it, how to confirm it did its job, a checklist that is true, and what it leaves for later.
 
 ## When to use
 
@@ -31,7 +31,8 @@ Not for writing commit messages, reviewing someone else's pull request, or decid
 8. **How to Validate.** Numbered steps that confirm the outcome the change was for. Each step ends with what the reviewer should see: a screen, a response, a log line, a value in the data. Testing shows the code runs; validating shows it does the job. For a change with nothing new to observe, such as a refactor, say what must stay the same and how to check that.
 9. **Checklist.** Tick an item only when it is true and you saw it. Leave the others unticked and give the reason after each, for example `- [ ] Tests pass locally (not run: this package has no test suite)`.
    "Documentation updated" is only about documentation kept outside the repository, such as a wiki, a runbook or an external docs site. Tick it when that was updated, and name the page. Documentation inside the repository is part of the diff: it belongs in the Description and under Type of Change, and does not tick this box.
-10. **Open it or hand it over.** Open or update the pull request only when the user asked for that. Otherwise return the title and description as text. After opening one, give its link.
+10. **Other Notes.** Say what these changes did not address but a future change should: a known gap, a case left unhandled, a follow-up found along the way, a clean-up put off. For each, say why it is not in this change, and link the issue when one exists. When nothing is left, write "None".
+11. **Open it or hand it over.** Open or update the pull request only when the user asked for that. Otherwise return the title and description as text. After opening one, give its link.
 
 ## Examples
 
@@ -60,13 +61,16 @@ Checkout accepted an empty discount code and charged full price without telling 
 - [x] I have performed a self-review of my code
 - [x] Tests pass locally
 - [ ] Documentation updated (not needed: no wiki page or outside documentation covers discount codes)
+
+## Other Notes
+- An expired code is still accepted here and fails later, at payment. Checking expiry needs a change to the discount service, so it is left for a separate pull request.
 ```
 
 ### Example request and expected result
 
 Request: "Write the PR for this branch. I haven't run the tests yet."
 
-Expected result: a specific title and a description with every template heading. "Tests pass locally" is left unticked with the reason "not run", and How to Test still names the command a reviewer should run.
+Expected result: a specific title and a description with every template heading. "Tests pass locally" is left unticked with the reason "not run", How to Test still names the command a reviewer should run, and Other Notes lists what is left for later or says "None".
 
 ## Gotchas
 
@@ -74,6 +78,7 @@ Expected result: a specific title and a description with every template heading.
 - A README or `docs/` change does not tick "Documentation updated". That box is for the wiki and other documentation outside the repository, which a reviewer cannot see in the diff.
 - "Run the tests" is not a step. Name the command and the result.
 - The commit log is not a description. Write for someone who has not seen the commits.
+- Other Notes is for what comes next. A known problem with what is being merged now belongs in the Description, where the reviewer reads it first.
 - A pull request is widely readable. Keep credentials, internal hostnames and customer data out of it.
 - When the repository's template has more sections than you can fill, write "Not applicable" and why. Do not delete a heading.
 
@@ -97,6 +102,7 @@ Expected result: a specific title and a description with every template heading.
 | How to Test and How to Validate say the same thing | Validation was treated as more testing | Keep commands and tests under How to Test; under How to Validate, say what to look at and what should be seen |
 | Reviewers ask what the change is for | The description lists files or commits | Lead with the effect on a user or caller, then the reason |
 | A box is ticked for something that did not happen | The checklist was filled in from habit | Untick it and give the reason, or do the step and then tick it |
+| Other Notes is blank or the heading is gone | Nothing was put off, so the section was skipped | Write "None" under it, so the reviewer knows it was considered |
 | One pull request needs two descriptions | It holds unrelated changes | Split it, or name each part and say why they travel together |
 | "Documentation updated" is ticked for a README change | In-repository docs were taken for outside documentation | Untick it unless a wiki or other outside page was updated, and name that page when it was |
 | The template in use is not the repository's | The repository's template was not looked for | Check `.github/`, the repository root and `docs/` for a pull request template first |

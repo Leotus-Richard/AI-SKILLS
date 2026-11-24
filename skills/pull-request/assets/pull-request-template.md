@@ -19,3 +19,6 @@ Briefly describe the changes made and the motivation behind them.
 - [ ] I have performed a self-review of my code
 - [ ] Tests pass locally
 - [ ] Documentation updated (wiki or other documentation kept outside this repository)
+
+## Other Notes
+What, if anything, hasn't been addressed in these code changes but should be in future changes?

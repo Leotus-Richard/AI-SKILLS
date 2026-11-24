@@ -1498,7 +1498,7 @@
     {
       "name": "pull-request",
       "version": "1.0.0",
-      "description": "Use when opening, drafting or updating a pull request (PR) or merge request: write its title and description from the actual change, with what changed and why, the type of change, how to test it, how to validate the outcome, and a checklist ticked only for what was done.",
+      "description": "Use when opening, drafting or updating a pull request (PR) or merge request: write its title and description from the actual change, with what changed and why, the type of change, how to test it, how to validate the outcome, a checklist ticked only for what was done, and what is left for a future change.",
       "category": "engineering-practice",
       "license": "Apache-2.0",
       "requires": [],
@@ -1515,14 +1515,14 @@
         {
           "bump": "initial",
           "date": "2026-11-24",
-          "expectedBehavior": "Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, and a checklist ticked only for what was done, with a reason beside each unticked box. Flags a diff that mixes unrelated changes. Opens a pull request only when asked.",
+          "expectedBehavior": "Writes a pull request title and description from the actual diff, using the repository's own template when it has one and the bundled one otherwise: what changed and why, the type of change, runnable steps to test it, steps to validate the outcome with what the reviewer should see, a checklist ticked only for what was done, with a reason beside each unticked box, and notes on what is left for a future change. Flags a diff that mixes unrelated changes. Opens a pull request only when asked.",
           "version": "1.0.0"
         }
       ],
       "path": "skills/pull-request",
       "fileCount": 4,
-      "uncompressedBytes": 20018,
-      "contentSha256": "1e31eeab31984a143b73294476bf0441e1a7439964244a639f23f419ca4fb0b3"
+      "uncompressedBytes": 21074,
+      "contentSha256": "706fe6d16bdf624fcc96b0f39b59125886111dff57f2d2b3789f3533e1883e42"
     },
     {
       "name": "retro",
