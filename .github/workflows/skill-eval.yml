@@ -73,6 +73,19 @@ jobs:
       SKILLS: ${{ inputs.skills }}
       REPORTS: ${{ github.workspace }}/.tmp/skill-eval-reports
     steps:
+      # First, so the reporting steps that always run have the repository and Node
+      # even when a later check stops the job.
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26.13.1'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
       # Exports only the selected provider's settings and key to later steps,
       # so a local run never has cloud credentials in its environment.
       - name: Configure provider
@@ -173,23 +186,39 @@ jobs:
             grep -qxF "$want" <<<"$ids" || { echo "::error::LM Studio does not list model '$want'. Download it, or load it, or enable just-in-time loading."; exit 1; }
           done
           # Agent sandboxes are containers: localhost there is the container itself.
-          docker run --rm busybox:1.37 wget -q -T 15 -O /dev/null \
-            --header "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$SKILL_EVAL_LLM_BASE_URL/models" || {
-            echo "::error::Containers in the runner VM cannot reach $SKILL_EVAL_LLM_BASE_URL although the VM can. Containers must resolve and reach the host (host.docker.internal on Docker Desktop)."
-            exit 1
+          probe() {  # probe BASE_URL: can a container fetch the model list?
+            docker run --rm busybox:1.37 wget -q -T 15 -O /dev/null \
+              --header "Authorization: Bearer $SKILL_EVAL_LLM_API_KEY" "$1/models"
           }
-          echo "Containers can reach LM Studio."
-      - name: Check out source
-        uses: actions/checkout@v7
-        with:
-          persist-credentials: false
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: '26.13.1'
-          cache: npm
-      - name: Install locked dependencies
-        run: npm ci
+          if probe "$SKILL_EVAL_LLM_BASE_URL"; then
+            echo "Containers can reach LM Studio."
+            exit 0
+          fi
+          # The runner resolves the host name, but containers started inside it
+          # may not: host.docker.internal is only added to the outer container.
+          # Fall back to the address the runner resolves the name to.
+          scheme="${SKILL_EVAL_LLM_BASE_URL%%://*}"
+          rest="${SKILL_EVAL_LLM_BASE_URL#*://}"
+          host="${rest%%[:/]*}"
+          tail="${rest#"$host"}"
+          address="$(getent ahostsv4 "$host" | awk 'NR==1 {print $1}')" || address=""
+          echo "Containers cannot reach $SKILL_EVAL_LLM_BASE_URL. The runner resolves $host to ${address:-nothing}."
+          docker run --rm busybox:1.37 nslookup "$host" 2>&1 | sed 's/^/  in a container: /' || true
+          if [ -n "$address" ] && [ "$address" != "$host" ] && probe "$scheme://$address$tail"; then
+            url="$scheme://$address$tail"
+            echo "::notice::Containers cannot resolve $host, so this run uses $url, the address the runner resolves it to."
+            {
+              echo "SKILL_EVAL_LLM_BASE_URL=$url"
+              echo "SKILLSPECTOR_COMPAT_BASE_URL=$url"
+              echo "SKILL_EVAL_MODEL_CATALOG_ALLOW_HTTP_HOSTS=$SKILL_EVAL_MODEL_CATALOG_ALLOW_HTTP_HOSTS,$address"
+            } >> "$GITHUB_ENV"
+            exit 0
+          fi
+          if [ -n "$address" ]; then
+            docker run --rm busybox:1.37 wget -T 15 -O /dev/null "$scheme://$address$tail/models" 2>&1 | tail -3 | sed 's/^/  in a container: /' || true
+          fi
+          echo "::error::Containers in the runner cannot reach $SKILL_EVAL_LLM_BASE_URL, by name or by address, although the runner can. Tier 3 agents run in containers, so they need a route to LM Studio. Set the repository variable LOCAL_LLM_BASE_URL to an address containers can reach, such as the Mac's Tailscale IP."
+          exit 1
       - name: Stage skills with their eval datasets
         run: |
           # shellcheck disable=SC2086 # SKILLS is an intentional word list
