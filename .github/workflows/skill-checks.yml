@@ -69,10 +69,11 @@ jobs:
           for dir in skills/*/; do
             name="$(basename "$dir")"
             [ -f "$dir/SKILL.md" ] || continue
+            # Actions runs bash with -e; capture the code so every skill is scanned.
+            rc=0
             skillspector scan "$dir" --no-llm --fail-on-findings \
               --baseline .skillspector-baseline.yaml \
-              --format json --output "$out/$name.json"
-            rc=$?
+              --format json --output "$out/$name.json" || rc=$?
             echo "$name exit=$rc"
             if [ "$rc" -ne 0 ]; then
               status=1
@@ -171,10 +172,11 @@ jobs:
           set -uo pipefail
           status=0
           for name in $SKILLS; do
+            # Actions runs bash with -e; capture the code so every skill is evaluated.
+            rc=0
             skillevaluator tier1 "skills/$name" --no-llm --min-score "$MIN_SCORE" \
               --skillspector-baseline .skillspector-baseline.yaml \
-              -r json,markdown -o "$REPORTS/$name"
-            rc=$?
+              -r json,markdown -o "$REPORTS/$name" || rc=$?
             echo "$name exit=$rc"
             [ "$rc" -eq 0 ] || { status=1; echo "::warning title=SkillEvaluator Tier 1::$name did not pass (exit $rc). See the job summary."; }
           done
