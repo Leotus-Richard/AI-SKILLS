@@ -38,7 +38,7 @@ npm run build
 
 Run `npm run catalog` after changing skill metadata or the registry. It regenerates `generated/catalog.json` and `docs/CATALOG.md`. Build output goes to `dist/`; source skills remain the canonical files.
 
-CI runs validation, catalog checks, tests, and packaging with Node `22.20.0` on self-hosted ARM64 Linux runners plus GitHub-hosted macOS and Windows. Every skill change is also scanned by NVIDIA SkillSpector and graded by SkillEvaluator; see [skill evaluation](docs/SKILL-EVALUATION.md) for the pipeline, runner setup, and how to measure whether a skill actually helps. Tests include isolated installer checks; routine validation must not change the contributor's global skills. A manually dispatched release workflow builds downloadable Actions artifacts. A pushed `v*` tag additionally publishes the built files as a GitHub release.
+CI runs validation, catalog checks, tests, and packaging with Node `26.13.1` (the current LTS) on self-hosted ARM64 Linux runners plus GitHub-hosted macOS and Windows, and repeats them on Linux with Node `22.20.0`, the minimum supported version. Every skill change is also scanned by NVIDIA SkillSpector and graded by SkillEvaluator; see [skill evaluation](docs/SKILL-EVALUATION.md) for the pipeline, runner setup, and how to measure whether a skill actually helps. Tests include isolated installer checks; routine validation must not change the contributor's global skills. A manually dispatched release workflow builds downloadable Actions artifacts. A pushed `v*` tag additionally publishes the built files as a GitHub release.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before adding or adapting a skill.
 

@@ -22,13 +22,13 @@ jobs:
       DO_NOT_TRACK: '1'
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '22.20.0'
+          node-version: '26.13.1'
           cache: npm
       - name: Install locked dependencies
         run: npm ci
@@ -41,7 +41,7 @@ jobs:
       - name: Build upload packages
         run: npm run build
       - name: Upload release packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ai-skills-release
           path: dist/
@@ -57,7 +57,7 @@ jobs:
       contents: write
     steps:
       - name: Download validated packages
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ai-skills-release
           path: dist/

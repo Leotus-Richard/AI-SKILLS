@@ -13,13 +13,17 @@ on:
         description: Upload dist/ as an artifact with this name; empty skips the upload
         type: string
         default: ''
+      node-version:
+        description: Node.js version to test with (default is the current LTS)
+        type: string
+        default: '26.13.1'
 
 permissions:
   contents: read
 
 jobs:
   checks:
-    name: Validate, test, build
+    name: Validate, test, build (Node ${{ inputs.node-version }})
     runs-on: ${{ fromJSON(inputs.runs-on) }}
     timeout-minutes: 30
     env:
@@ -27,13 +31,13 @@ jobs:
       DO_NOT_TRACK: '1'
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '22.20.0'
+          node-version: ${{ inputs.node-version }}
           cache: npm
       - name: Install locked dependencies
         run: npm ci
@@ -47,7 +51,7 @@ jobs:
         run: npm run build
       - name: Upload validated packages
         if: inputs.upload-artifact != ''
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs.upload-artifact }}
           path: dist/
