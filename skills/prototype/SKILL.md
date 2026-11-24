@@ -2,7 +2,7 @@
 name: prototype
 description: "Create a disposable local logic or UI prototype to settle a named design question; not production implementation."
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   author: "Matt Pocock"
   tags: [engineering-practice]
 ---

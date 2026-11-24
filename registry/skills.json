@@ -48,6 +48,12 @@
           "date": "2026-11-24",
           "bump": "initial",
           "expectedBehavior": "Task-scoped and local-only. Generate and execute a project-local verification skill for a local app; not remote deployment or installation."
+        },
+        {
+          "version": "1.0.1",
+          "date": "2026-11-24",
+          "bump": "patch",
+          "expectedBehavior": "Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified."
         }
       ],
       "evaluations": []
@@ -804,6 +810,12 @@
           "date": "2026-11-24",
           "bump": "initial",
           "expectedBehavior": "Task-scoped and local-only. Create a disposable local logic or UI prototype to settle a named design question; not production implementation."
+        },
+        {
+          "version": "1.0.1",
+          "date": "2026-11-24",
+          "bump": "patch",
+          "expectedBehavior": "Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified."
         }
       ],
       "evaluations": []

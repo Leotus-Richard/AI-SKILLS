@@ -34,7 +34,7 @@
     },
     {
       "name": "create-verification-skill",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Generate and execute a project-local verification skill for a local app; not remote deployment or installation.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -57,12 +57,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Generate and execute a project-local verification skill for a local app; not remote deployment or installation.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "patch",
+          "date": "2026-11-24",
+          "expectedBehavior": "Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.",
+          "version": "1.0.1"
         }
       ],
       "path": "skills/create-verification-skill",
       "fileCount": 11,
-      "uncompressedBytes": 41607,
-      "contentSha256": "bee40a08bfd7f2eca27b8dbc1697b6273a4e0d43f401cb133033fa9e28be1e8d"
+      "uncompressedBytes": 41705,
+      "contentSha256": "435e22ba9294f08aa90c4eeec96652052a8ee0a5bbc01db914d0a28bce073023"
     },
     {
       "name": "deslop",
@@ -991,7 +997,7 @@
     },
     {
       "name": "prototype",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Create a disposable local logic or UI prototype to settle a named design question; not production implementation.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -1011,12 +1017,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Create a disposable local logic or UI prototype to settle a named design question; not production implementation.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "patch",
+          "date": "2026-11-24",
+          "expectedBehavior": "Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.",
+          "version": "1.0.1"
         }
       ],
       "path": "skills/prototype",
       "fileCount": 8,
-      "uncompressedBytes": 25847,
-      "contentSha256": "06d9ee975fe47a17d1c707b9d340a47eb79c16cc3fd0419cd6cc8b82d6f0576a"
+      "uncompressedBytes": 26025,
+      "contentSha256": "421329c414dc443dc286dcb0b6c9d13ad8c856b761d950977128649b27a51f67"
     },
     {
       "name": "retro",

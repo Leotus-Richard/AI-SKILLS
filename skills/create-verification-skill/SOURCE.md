@@ -3,7 +3,7 @@
 Adapted from the `create-verification-skill` skill in pstack in cursor/plugins (https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack), pinned to commit `1e5c90a4b6f249917bd21fe361b3a2a7deb741b8`.
 
 - Upstream file: <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md>
-- Upstream SHA-256: `d353973547bf8ad8977eca645f4cd4feaed0d32f4b43d1448f906b0a76c4d694`. It is preserved at `references/upstream/ORIGINAL-SKILL.md`, with the other upstream resources beside it. One link target changed: the link to the `references/feature-map-example/` folder now names its `README.md`, because the repository validator accepts links to files only.
+- Upstream SHA-256: `d353973547bf8ad8977eca645f4cd4feaed0d32f4b43d1448f906b0a76c4d694`. It is preserved at `references/upstream/ORIGINAL-SKILL.md`, with the other upstream resources beside it. One link target changed: the link to the `references/feature-map-example/` folder now names its `README.md`, because the repository validator accepts links to files only. The current file's SHA-256 is `b5a1f6fdea50a30e868f869c0d09184e901c6a0cd833a12a45ca1296fce81bde`.
 
 Imported on 24 November 2026 from Engineering Toolkit v1.3 (archive SHA-256 `7f405a52796e66437fd04795b4ae14cff4b8a1f633437e17313c3c5f03c5e967`). The toolkit wraps the original in a task-scoped hub (`SKILL.md`) and a shared `references/local-execution-contract.md`. The archive does not record who prepared that adaptation.
 

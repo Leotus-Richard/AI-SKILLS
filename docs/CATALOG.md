@@ -8,12 +8,12 @@ This repository contains **38 skills**. Each Perplexity upload archive contains 
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
-| [create-verification-skill](../skills/create-verification-skill/SKILL.md) | 1.0.0 | MIT | Generate and execute a project-local verification skill for a local app; not remote deployment or installation. |
+| [create-verification-skill](../skills/create-verification-skill/SKILL.md) | 1.0.1 | MIT | Generate and execute a project-local verification skill for a local app; not remote deployment or installation. |
 | [deslop](../skills/deslop/SKILL.md) | 1.0.0 | MIT | Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries. |
 | [how-it-works](../skills/how-it-works/SKILL.md) | 1.0.0 | MIT | Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation. |
 | [interrogate](../skills/interrogate/SKILL.md) | 1.0.0 | MIT | Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real. |
 | [maintain-verification-skill](../skills/maintain-verification-skill/SKILL.md) | 1.0.0 | MIT | Refresh an existing local verification skill and feature map against observed app behavior. |
-| [prototype](../skills/prototype/SKILL.md) | 1.0.0 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
+| [prototype](../skills/prototype/SKILL.md) | 1.0.1 | MIT | Create a disposable local logic or UI prototype to settle a named design question; not production implementation. |
 | [retro](../skills/retro/SKILL.md) | 1.0.0 | MIT | Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes. |
 | [show-me-your-work](../skills/show-me-your-work/SKILL.md) | 1.0.0 | MIT | Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review. |
 
@@ -62,7 +62,7 @@ This repository contains **38 skills**. Each Perplexity upload archive contains 
 Models used by the latest live evaluation (`skill-eval.yml`) of each skill's current version, from `registry/skills.json`.
 
 - **agile-work-hierarchy** 1.0.0: not yet tested with a model
-- **create-verification-skill** 1.0.0: not yet tested with a model
+- **create-verification-skill** 1.0.1: not yet tested with a model
 - **deslop** 1.0.0: not yet tested with a model
 - **domain-modeling** 1.0.0: not yet tested with a model
 - **enterprise-agent-architecture** 1.0.0: not yet tested with a model
@@ -95,7 +95,7 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **principle-subtract-before-you-add** 1.0.0: not yet tested with a model
 - **principle-test-behavior-not-implementation** 1.0.0: not yet tested with a model
 - **principle-type-system-discipline** 1.0.0: not yet tested with a model
-- **prototype** 1.0.0: not yet tested with a model
+- **prototype** 1.0.1: not yet tested with a model
 - **retro** 1.0.0: not yet tested with a model
 - **show-me-your-work** 1.0.0: not yet tested with a model
 - **wayfinder** 1.0.0: not yet tested with a model
@@ -110,6 +110,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### create-verification-skill
 
+- **1.0.1** (2026-11-24, patch): Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Generate and execute a project-local verification skill for a local app; not remote deployment or installation.
 
 ### deslop
@@ -242,6 +243,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### prototype
 
+- **1.0.1** (2026-11-24, patch): Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Create a disposable local logic or UI prototype to settle a named design question; not production implementation.
 
 ### retro
