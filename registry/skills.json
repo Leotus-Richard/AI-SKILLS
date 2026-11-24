@@ -282,6 +282,25 @@
       "evaluations": []
     },
     {
+      "name": "negative-space-programming",
+      "category": "engineering-practice",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "original",
+        "urls": [],
+        "notes": "Original skill by the repository owner, from their private Notion Skills database (last edited 2026-11-11), contributed under Apache-2.0. One-word fix to the bundled TypeScript example at import."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Identifies the invariant a code path relies on and enforces it with a throwing assertion placed before mutation or side effects, with a message naming the value and the expected condition. Keeps expected user and network errors in normal error handling, and never substitutes a silent default for a violated invariant."
+        }
+      ],
+      "evaluations": []
+    },
+    {
       "name": "orchestrate",
       "category": "workflow",
       "license": "Apache-2.0",

@@ -1,0 +1,141 @@
+{
+  "skill_name": "negative-space-programming",
+  "evals": [
+    {
+      "id": "negative-space-programming-001",
+      "prompt": "In our TypeScript service, `applyDiscount` is only ever called after the pricing step has attached `order.discount`. Last week a refactor skipped that step and the function quietly produced NaN totals for hours. Rewrite the function so this cannot pass silently again.\n\n```ts\ntype Order = { total: number; discount?: { rate: number } };\n\nfunction applyDiscount(order: Order): number {\n  return order.total * (1 - order.discount!.rate);\n}\n```",
+      "expected_output": "A version of applyDiscount that checks order.discount is present before using it and stops immediately with a clear error when it is missing, instead of returning NaN or using a default rate.",
+      "assertions": [
+        "The function checks that `order.discount` is defined before reading `rate`",
+        "A missing discount causes an immediately thrown error or failed assertion, not a default rate and not a returned NaN, null, or 0",
+        "The error or assertion message names the discount and what was expected",
+        "The check stops execution; it is not `console.assert` or a log statement"
+      ],
+      "expected_skill": "negative-space-programming"
+    },
+    {
+      "id": "negative-space-programming-002",
+      "prompt": "Review this internal function. It runs after our importer has already validated the CSV, so every row is supposed to have a numeric `quantity` and an existing `sku`.\n\n```js\nfunction reserveStock(row, inventory) {\n  const qty = Number(row.quantity) || 0;\n  const item = inventory.get(row.sku) || { reserved: 0 };\n  item.reserved += qty;\n  inventory.set(row.sku, item);\n}\n```\n\nWhat would you change?",
+      "expected_output": "A review that identifies the silent fallbacks (`|| 0` and the made-up inventory item) as hiding upstream bugs, and recommends failing fast when the quantity is not a number or the SKU is unknown.",
+      "assertions": [
+        "Identifies `Number(row.quantity) || 0` as silently hiding an invalid quantity",
+        "Identifies the `|| { reserved: 0 }` fallback as silently creating an item for an unknown SKU",
+        "Recommends failing immediately, with an assertion or thrown error, when either assumption is violated, rather than keeping the defaults",
+        "Places the proposed checks before `item.reserved` is changed or `inventory.set` is called"
+      ],
+      "expected_skill": "negative-space-programming"
+    },
+    {
+      "id": "negative-space-programming-003",
+      "prompt": "Add protection to `ship_order` in this Python module. Orders must be in state \"paid\" before shipping; anything else means an earlier step is broken.\n\n```python\ndef ship_order(order, mailer, warehouse):\n    warehouse.dispatch(order.id)\n    order.state = \"shipped\"\n    mailer.send_shipping_email(order.customer_email)\n```",
+      "expected_output": "ship_order verifies that order.state is \"paid\" as its first step and raises immediately otherwise, before dispatching, changing state, or sending the email.",
+      "assertions": [
+        "Checks that `order.state` is \"paid\" before `warehouse.dispatch` is called",
+        "The check comes before the state change and before the email is sent",
+        "A wrong state raises an exception or fails an assertion immediately; the function does not return early silently or log and continue",
+        "The failure message includes the expected state and the actual state or the order identifier"
+      ],
+      "expected_skill": "negative-space-programming"
+    },
+    {
+      "id": "negative-space-programming-004",
+      "prompt": "This Express handler creates a user from a signup form. Sometimes people submit it without an email. Add the right handling.\n\n```js\napp.post('/signup', async (req, res) => {\n  const user = await users.create({ email: req.body.email.toLowerCase(), name: req.body.name });\n  res.status(201).json(user);\n});\n```",
+      "expected_output": "The handler validates the email from the request and responds with a 4xx validation error when it is missing. It does not crash the process or use an assertion for this expected user mistake.",
+      "assertions": [
+        "A missing email results in an HTTP 4xx response with a message for the user",
+        "The missing email is handled as a normal validation error, not with `assert` or an exception meant to crash the process",
+        "`users.create` is not called when the email is missing"
+      ],
+      "expected_skill": null
+    },
+    {
+      "id": "negative-space-programming-005",
+      "prompt": "We added an invariant check, but a record with no `accountId` still got written to the ledger. Fix the check.\n\n```js\nfunction postEntry(entry, ledger) {\n  console.assert(entry.accountId, 'entry must have accountId');\n  ledger.write(entry);\n}\n```",
+      "expected_output": "Explains that console.assert only logs, and replaces it with a check that throws, so ledger.write is never reached without an accountId.",
+      "assertions": [
+        "States that `console.assert` logs and does not stop execution",
+        "Replaces it with a throwing assertion or an explicit `throw`",
+        "`ledger.write` cannot run when `accountId` is missing"
+      ],
+      "expected_skill": "negative-space-programming"
+    },
+    {
+      "id": "negative-space-programming-006",
+      "prompt": "Our job runner behaves differently in the build where assertions are compiled out. Here is the code. Find the problem and fix it.\n\n```js\nfunction takeJob(queue) {\n  let job;\n  assert((job = queue.shift()) !== undefined, 'queue must not be empty in takeJob');\n  return job;\n}\n```",
+      "expected_output": "Identifies that the assertion condition performs the queue.shift() side effect, and moves the shift out of the assertion so behavior does not depend on assertions being enabled.",
+      "assertions": [
+        "Identifies that `queue.shift()` runs inside the assertion condition",
+        "Moves the `shift()` call out of the assertion so it runs whether or not assertions are enabled",
+        "Keeps a check that fails when the queue is empty"
+      ],
+      "expected_skill": "negative-space-programming"
+    },
+    {
+      "id": "negative-space-programming-007",
+      "prompt": "This payout check must hold in production. We deploy with `python -O`.\n\n```python\ndef release_payout(payout, account, bank):\n    assert payout.amount <= account.balance, \"payout exceeds balance\"\n    account.balance -= payout.amount\n    bank.transfer(payout)\n```\n\nIs this safe? Change it if not.",
+      "expected_output": "Explains that python -O removes assert statements, so the check disappears in production, and replaces it with an explicit conditional that raises an exception before the balance changes or the transfer runs.",
+      "assertions": [
+        "States that `assert` statements are removed when Python runs with `-O`",
+        "Replaces the `assert` with an explicit check that raises an exception",
+        "The check still runs before `account.balance` is changed and before `bank.transfer` is called"
+      ],
+      "expected_skill": "negative-space-programming"
+    },
+    {
+      "id": "negative-space-programming-008",
+      "prompt": "Our batch worker keeps going after corrupted records, and we only notice days later. Suggest a change.\n\n```ts\nfor (const record of batch) {\n  try {\n    assert(record.tenantId !== undefined, 'record.tenantId must be set by the loader');\n    await store.save(record);\n  } catch (err) {\n    logger.warn('skipping record', err);\n  }\n}\n```\n\n`store.save` can also fail with network timeouts, which we do want to retry or skip.",
+      "expected_output": "Separates the two kinds of failure: network errors from store.save stay handled by retrying or skipping, while the tenantId invariant failure is no longer caught and downgraded to a warning. It stops the batch or propagates.",
+      "assertions": [
+        "Distinguishes the invariant failure (missing `tenantId`) from operational errors such as network timeouts",
+        "The invariant failure is no longer swallowed by the catch block; it propagates or stops processing",
+        "Network or timeout errors from `store.save` are still handled without crashing the worker"
+      ],
+      "expected_skill": "negative-space-programming"
+    },
+    {
+      "id": "negative-space-programming-009",
+      "prompt": "`renderInvoice` receives `data` from our own job queue as parsed JSON, typed `any`. By contract the producer always sets `currency` to a 3-letter code and `lines` to a non-empty array. Make `renderInvoice` robust.\n\n```ts\nfunction renderInvoice(data: any): string {\n  const total = data.lines.reduce((sum: number, line: any) => sum + line.amount, 0);\n  return total.toFixed(2) + ' ' + data.currency;\n}\n```",
+      "expected_output": "renderInvoice states and enforces its contract first: lines is a non-empty array and currency is a 3-letter string. It fails immediately with messages naming the field, rather than rendering with fallbacks such as an empty list or a default currency.",
+      "assertions": [
+        "Checks that `data.lines` is a non-empty array before reducing it",
+        "Checks that `data.currency` is a 3-letter string before using it",
+        "Violations fail immediately with an error or assertion that names the field; no default currency or empty-lines fallback is introduced"
+      ],
+      "expected_skill": "negative-space-programming"
+    },
+    {
+      "id": "negative-space-programming-010",
+      "prompt": "This function calls our pricing API, which times out a few times a day. Add handling so callers get a sensible result.\n\n```ts\nasync function fetchPrice(sku: string): Promise<number> {\n  const res = await fetch('https://pricing.example.com/v1/' + sku);\n  const body = await res.json();\n  return body.price;\n}\n```",
+      "expected_output": "Adds normal error handling for timeouts and non-OK responses, such as a timeout, a retry, or an error or result type returned to callers. It does not treat an API timeout as an internal invariant violation.",
+      "assertions": [
+        "Handles request timeouts or network failures with normal error handling, for example try/catch, a retry, or a returned error",
+        "Handles non-OK HTTP responses explicitly",
+        "Does not use an assertion to crash the process when the API times out"
+      ],
+      "expected_skill": null
+    },
+    {
+      "id": "negative-space-programming-011",
+      "prompt": "Write a JavaScript function `slugify(title)` that lowercases a title, replaces each run of non-alphanumeric characters with a single hyphen, and trims hyphens from both ends.",
+      "expected_output": "A slugify function that lowercases the title, collapses runs of non-alphanumeric characters into single hyphens, and removes leading and trailing hyphens.",
+      "assertions": [
+        "Returns a lowercase string",
+        "Replaces each run of non-alphanumeric characters with a single hyphen",
+        "Removes leading and trailing hyphens"
+      ],
+      "expected_skill": null
+    },
+    {
+      "id": "negative-space-programming-012",
+      "prompt": "Add invariant checks to `settle`. Entries are created by our own code: `entry.posted` must be false and `entry.amountCents` must be an integer before settling.\n\n```ts\nfunction settle(entry: { posted?: boolean; amountCents?: number }, book: Book) {\n  book.credit(entry.amountCents);\n  entry.posted = true;\n}\n```",
+      "expected_output": "settle asserts that entry.posted is false and entry.amountCents is an integer before calling book.credit, each with a message naming the value and the expected condition.",
+      "assertions": [
+        "Checks that `entry.posted` is false before `book.credit` is called",
+        "Checks that `entry.amountCents` is an integer before `book.credit` is called",
+        "Each failed check stops execution immediately with a message naming the value and the expected condition",
+        "No fallback value, such as 0, is substituted for a missing amount"
+      ],
+      "expected_skill": "negative-space-programming"
+    }
+  ]
+}
