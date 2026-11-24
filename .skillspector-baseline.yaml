@@ -30,10 +30,20 @@ rules:
       tracker mutation; it does not instruct unattended deletion.
 
   - id: "MP3"
-    path: "references/upstream/related/create-verification-skill/references/feature-map-example/README.md"
+    path: "*references/feature-map-example/README.md"
     message: "*clear state*"
     reason: >-
       False positive (reviewed 2026-11-24): pstack's example feature map says its
       search feature "covers ... matching, empty, and clear states", meaning UI
       states of a search box. Nothing in the example clears or rewrites agent
-      memory. Applies to the bundled copy in maintain-verification-skill.
+      memory. Covers create-verification-skill and the copy bundled in
+      maintain-verification-skill.
+
+  - id: "MP3"
+    path: "references/upstream/ORIGINAL-SKILL.md"
+    message: "*delete history*"
+    reason: >-
+      False positive (reviewed 2026-11-24): show-me-your-work's rule reads
+      "Append-only. A wrong call gets a new row that supersedes it. Never edit or
+      delete history." It forbids deleting the decision log; it does not
+      manipulate agent memory.

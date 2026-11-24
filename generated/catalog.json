@@ -33,6 +33,38 @@
       "contentSha256": "1a72c81bb5e10b4fccedd723671ae3cb9247ebe982e350ee8928a3462a63d72c"
     },
     {
+      "name": "create-verification-skill",
+      "version": "1.0.0",
+      "description": "Generate and execute a project-local verification skill for a local app; not remote deployment or installation.",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack:create-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Generate and execute a project-local verification skill for a local app; not remote deployment or installation.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/create-verification-skill",
+      "fileCount": 11,
+      "uncompressedBytes": 41607,
+      "contentSha256": "bee40a08bfd7f2eca27b8dbc1697b6273a4e0d43f401cb133033fa9e28be1e8d"
+    },
+    {
       "name": "deslop",
       "version": "1.0.0",
       "description": "Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries.",
@@ -172,6 +204,35 @@
       "fileCount": 3,
       "uncompressedBytes": 13095,
       "contentSha256": "ce4861f7fa682b3bf41b75e88a4c294a1ed752caea515cf09f79788eb3e55755"
+    },
+    {
+      "name": "how-it-works",
+      "version": "1.0.0",
+      "description": "Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation.",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack:how imported from Engineering Toolkit v1.3; upstream original preserved byte for byte.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/how/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/how-it-works",
+      "fileCount": 7,
+      "uncompressedBytes": 15839,
+      "contentSha256": "c5ceddd97cc27c6c485fe79b3bad03114d97fec3170fd2fec6bda8d9cf8e6b57"
     },
     {
       "name": "interrogate",
@@ -987,6 +1048,36 @@
       "fileCount": 10,
       "uncompressedBytes": 31618,
       "contentSha256": "55f74782b2918d2e205ab617a94ba41346531c50693770438df95960c4099791"
+    },
+    {
+      "name": "show-me-your-work",
+      "version": "1.0.0",
+      "description": "Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review.",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "notes": "pstack:show-me-your-work imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit.",
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/show-me-your-work/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/unslop"
+        ]
+      },
+      "testedWith": null,
+      "versions": [
+        {
+          "bump": "initial",
+          "date": "2026-11-24",
+          "expectedBehavior": "Task-scoped and local-only. Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review.",
+          "version": "1.0.0"
+        }
+      ],
+      "path": "skills/show-me-your-work",
+      "fileCount": 8,
+      "uncompressedBytes": 25490,
+      "contentSha256": "d4d0add95bcea8f1e68a535ef05deedca672fb6f51dd6f6dccb8f59c2247baa6"
     },
     {
       "name": "wayfinder",

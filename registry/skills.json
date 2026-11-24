@@ -27,6 +27,32 @@
       "evaluations": []
     },
     {
+      "name": "create-verification-skill",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-ui",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/cursor-team-kit/skills/control-cli",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill"
+        ],
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "notes": "pstack:create-verification-skill imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Generate and execute a project-local verification skill for a local app; not remote deployment or installation."
+        }
+      ],
+      "evaluations": []
+    },
+    {
       "name": "deslop",
       "category": "engineering-practice",
       "license": "MIT",
@@ -133,6 +159,29 @@
           "date": "2026-11-24",
           "bump": "initial",
           "expectedBehavior": "Interviews the user in dependency-aware rounds with recommendations to settle a plan or design in one session, maintaining a domain glossary and qualifying ADRs. Points multi-session planning to Wayfinder and does not treat the interview as authorization to implement."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "how-it-works",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/how/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack"
+        ],
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "notes": "pstack:how imported from Engineering Toolkit v1.3; upstream original preserved byte for byte."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation."
         }
       ],
       "evaluations": []
@@ -780,6 +829,30 @@
           "date": "2026-11-24",
           "bump": "initial",
           "expectedBehavior": "Task-scoped and local-only. Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "show-me-your-work",
+      "category": "engineering-practice",
+      "license": "MIT",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/show-me-your-work/SKILL.md",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack",
+          "https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/unslop"
+        ],
+        "revision": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+        "notes": "pstack:show-me-your-work imported from Engineering Toolkit v1.3; upstream original preserved byte for byte. Dependencies bundled from the same pinned commit."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Task-scoped and local-only. Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review."
         }
       ],
       "evaluations": []
