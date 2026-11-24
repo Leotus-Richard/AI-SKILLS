@@ -47,3 +47,60 @@ rules:
       "Append-only. A wrong call gets a new row that supersedes it. Never edit or
       delete history." It forbids deleting the decision log; it does not
       manipulate agent memory.
+
+  # impeccable 4.0.3 reference playbooks (pbakaus/impeccable, tag skill-v4.0.3),
+  # reviewed 2026-11-24. Each line was read in context; none instructs the agent
+  # to act without consent.
+  - id: "MP3"
+    path: "references/upstream/reference/colorize.md"
+    message: "*new identity is*"
+    reason: >-
+      False positive: "If a new identity is required, use new-work.md" refers to a
+      new brand identity, not the agent's identity.
+  - id: "AR2"
+    path: "references/upstream/reference/degraded/*.md"
+    message: "*without warning*"
+    reason: >-
+      False positive: "a hard turn ceiling that ends the run without warning"
+      describes a time limit on a sub-task; it does not suppress refusals.
+  - id: "EA2"
+    path: "references/upstream/reference/audit*.md"
+    message: "*without verification*"
+    reason: >-
+      False positive: listed under things not to do ("Report false positives
+      without verification").
+  - id: "EA2"
+    path: "references/upstream/reference/critique.md"
+    message: "*No confirmation*"
+    reason: >-
+      False positive: "No confirmation that an action succeeded" is a UX
+      anti-pattern the critique looks for in the user's interface.
+  - id: "EA2"
+    path: "references/upstream/reference/degraded/finish-reviewer.md"
+    message: "*without approval*"
+    reason: >-
+      False positive: "added without approval" is a review label for design
+      elements a build added that the approved comp did not contain.
+  - id: "EA2"
+    path: "references/upstream/reference/delight.md"
+    message: "*without consent*"
+    reason: >-
+      False positive: listed as something delight features must not do ("play
+      sound without consent or ignore mute settings").
+  - id: "EA2"
+    path: "references/upstream/reference/document.md"
+    message: "*without asking*"
+    reason: >-
+      False positive: a safeguard, "Don't overwrite an existing DESIGN.md without
+      asking."
+  - id: "EA2"
+    path: "references/upstream/reference/visualize.md"
+    message: "*without asking*"
+    reason: >-
+      False positive: a prohibition, "Do not substitute a different visual driver
+      after approval without asking."
+  - id: "EA3"
+    path: "LICENSE.txt"
+    message: "*not limited to*"
+    reason: >-
+      False positive: standard Apache License 2.0 wording.

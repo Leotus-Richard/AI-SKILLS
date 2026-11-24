@@ -85,3 +85,9 @@ Skills the hubs tell the agent to read are bundled from the same pinned commits 
 
 `latex` (category `design-and-formatting`) and `orchestrate` (`workflow`) are hubs written for Engineering Toolkit v1.3 as portable adaptations of skills bundled with the GitHub Copilot app. The repository owner contributed the hubs, their contract file and `orchestrate`'s coordination and handoff resources under Apache-2.0. The toolkit kept the Copilot originals without a license; their ownership is not established, so they are **not redistributed** here. Checked at import: the kept files share no sentences with those originals. The hubs no longer point at them, and `orchestrate` uses its companion skills only when installed.
 
+## Impeccable
+
+`impeccable` (category `design-and-formatting`) is Impeccable 4.0.3 by Paul Bakaus, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable) at tag `skill-v4.0.3`, under Apache-2.0, with its `NOTICE.md`. The hub and its support files come from Engineering Toolkit v1.3.
+
+The upstream files were fetched from GitHub at the pinned tag (the GitHub Copilot variant), not taken from the toolkit's copy: that copy came from a desktop app install and contained absolute paths from a local Windows profile. The package bundles the upstream hub and 35 of its 38 reference playbooks. It leaves out the native scripts and the three playbooks that only drive them (live mode, hooks, doctor). Six lines in two playbooks were reworded so the scanners can inspect every file; `skills/impeccable/SOURCE.md` lists each change with before and after hashes. Thirteen SkillSpector findings in the playbooks were reviewed and accepted as false positives in `.skillspector-baseline.yaml`, each with its reason.
+
