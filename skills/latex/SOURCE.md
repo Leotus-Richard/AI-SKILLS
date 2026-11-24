@@ -9,4 +9,8 @@ Changes at import:
 - The hub no longer points at the omitted original. It names the renderer's own documentation instead.
 - Toolkit metadata is replaced with `version`, `author`, and `tags`; this repository starts the skill at 1.0.0.
 
-Bundled files: `LICENSE.txt`, `SKILL.md`, `references/local-execution-contract.md`.
+Bundled files: `LICENSE.txt`, `SKILL.md`.
+
+## Changes in 2.0.0 (24 November 2026)
+
+The toolkit's shared `references/local-execution-contract.md` is removed. It was the same 4.7 KB file in every toolkit skill, and it named skills and a manifest that are not in this library. This skill only formats math, and its own steps already cover the parts of that file that applied, so nothing replaces it.

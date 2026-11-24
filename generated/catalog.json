@@ -36,7 +36,7 @@
     },
     {
       "name": "create-verification-skill",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Generate and execute a project-local verification skill for a local app; not remote deployment or installation.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -74,16 +74,22 @@
           "date": "2026-11-24",
           "expectedBehavior": "No longer carries a copy of maintain-verification-skill under references/upstream/related/; it names that skill as an optional follow-up for upkeep. Existing users who read the bundled copy should install maintain-verification-skill. control-ui and control-cli stay bundled, and generating and proving a verification skill is unchanged.",
           "version": "2.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.",
+          "version": "3.0.0"
         }
       ],
       "path": "skills/create-verification-skill",
-      "fileCount": 10,
-      "uncompressedBytes": 36411,
-      "contentSha256": "0da42ad3603b329beb3983a3e8cd9fce5d9c78b1714f00451fd040ef00f95bcb"
+      "fileCount": 9,
+      "uncompressedBytes": 33449,
+      "contentSha256": "cdf6c330a32af2fac9c58e5a4295230d2a2e70923a86624dde072952331652f6"
     },
     {
       "name": "deslop",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -105,16 +111,22 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Review an authorized local change for unnecessary generated code and redundant guards without weakening trust boundaries.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/deslop",
-      "fileCount": 5,
-      "uncompressedBytes": 10157,
-      "contentSha256": "1b86995355e8749a71af4ed020569ed3d4d9681554c9b395d7849940c2a51db7"
+      "fileCount": 4,
+      "uncompressedBytes": 7229,
+      "contentSha256": "c40811ab46ace14a5f3b3b4f5924c25803fc614257c4379f3ecdd2c3157ac69b"
     },
     {
       "name": "domain-modeling",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs.",
       "category": "workflow",
       "license": "MIT",
@@ -138,12 +150,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. To stress-test a plan through an interview, use grill-with-docs.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/domain-modeling",
-      "fileCount": 8,
-      "uncompressedBytes": 17722,
-      "contentSha256": "ea3dc070ac6fd6a0853df0add34420572f68d4b140c7f3e5f04f09f80717977b"
+      "fileCount": 7,
+      "uncompressedBytes": 14760,
+      "contentSha256": "1f913fc8520444f2945826d7ff800fdc8d0ecd0a3e3aa0a4eabdd90bf833926e"
     },
     {
       "name": "enterprise-agent-architecture",
@@ -238,7 +256,7 @@
     },
     {
       "name": "how-it-works",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -260,16 +278,22 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/how-it-works",
-      "fileCount": 7,
-      "uncompressedBytes": 15839,
-      "contentSha256": "c5ceddd97cc27c6c485fe79b3bad03114d97fec3170fd2fec6bda8d9cf8e6b57"
+      "fileCount": 6,
+      "uncompressedBytes": 12877,
+      "contentSha256": "0a4033b9df3833ccc5487e9bb7712e62080df30fbf1f4b822baad567dabfdfcf"
     },
     {
       "name": "impeccable",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Design, review or refine frontend interfaces using Impeccable's product-specific UX and visual craft playbooks. Use for UI hierarchy, accessibility, responsive states, typography, copy or design systems; not backend-only tasks or automatic browser overlays, hooks or publishing.",
       "category": "design-and-formatting",
       "license": "Apache-2.0",
@@ -293,16 +317,22 @@
           "date": "2026-11-24",
           "expectedBehavior": "Designs, reviews or refines frontend interfaces with Impeccable 4.0.3 playbooks, routed by the bundled command table. Uses local evidence and reference files only; never runs Impeccable's native detector, live mode or hooks, and reports those as capability gaps.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/impeccable",
-      "fileCount": 43,
-      "uncompressedBytes": 312939,
-      "contentSha256": "c24a812719fc8509661a107510e3caa1b5663d2287bac92d90ba245e2efb59c0"
+      "fileCount": 42,
+      "uncompressedBytes": 310114,
+      "contentSha256": "37a52271d8044318679c5858bb6d750282d7a04698b7ddcfcf7e5ebbe70c4828"
     },
     {
       "name": "interrogate",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -324,16 +354,22 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Adversarially review a local design or diff with explicit criteria; independent model review is optional and must be real.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/interrogate",
-      "fileCount": 9,
-      "uncompressedBytes": 29122,
-      "contentSha256": "ee6a00da3013b6a079b5f99a23f24afc5d61d01b0d01b2d92f8590375b5ed6e2"
+      "fileCount": 8,
+      "uncompressedBytes": 26160,
+      "contentSha256": "2cfb51bf9106d64a490e23710ae38ed5a335098eac376045e104128c631b6590"
     },
     {
       "name": "latex",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support.",
       "category": "design-and-formatting",
       "license": "Apache-2.0",
@@ -351,16 +387,22 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "No longer reads references/local-execution-contract.md, which is removed. The skill only formats math, and its own steps already cover what applied from that file. Existing users: nothing to change. The formatting rules and delimiters are unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/latex",
-      "fileCount": 4,
-      "uncompressedBytes": 19320,
-      "contentSha256": "325d8b3b3676f868e411d3ebc626433ea75410d3843b29218ddcf083a0129cac"
+      "fileCount": 3,
+      "uncompressedBytes": 14881,
+      "contentSha256": "9e2ab46c18bfd8ef6ef25343521324e772115f75d8d3adf722d449af6411c065"
     },
     {
       "name": "maintain-verification-skill",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Refresh an existing local verification skill and feature map against observed app behavior.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -390,12 +432,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Uses the create-verification-skill skill when the project does not have a verification skill yet, and no longer carries a copy of it under references/upstream/related/. Existing users: create-verification-skill must be installed too; the installer adds it and the upload ZIP includes it. The maintenance pass itself is unchanged.",
           "version": "2.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.",
+          "version": "3.0.0"
         }
       ],
       "path": "skills/maintain-verification-skill",
-      "fileCount": 5,
-      "uncompressedBytes": 15227,
-      "contentSha256": "8c8c8f59ead2f1993dfb5ba9e84cc4dd1904691f98ea5e66659f0f5368f7e2b9"
+      "fileCount": 4,
+      "uncompressedBytes": 12299,
+      "contentSha256": "5e7297f9dd22ab0cc70b3dd7a2f1c8ece6b42e6e723818cc6a99913efad5fb98"
     },
     {
       "name": "negative-space-programming",
@@ -426,7 +474,7 @@
     },
     {
       "name": "orchestrate",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion.",
       "category": "workflow",
       "license": "Apache-2.0",
@@ -447,12 +495,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Coordinate bounded multi-repository or independent workstreams with explicit ownership, real dependencies, handoff contracts and result verification. Use for authorized fan-out or local coordination briefs; not automatic cloud sessions, PR publication, autonomous approvals or session deletion.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/orchestrate",
-      "fileCount": 6,
-      "uncompressedBytes": 26384,
-      "contentSha256": "dec8b35defc4530c7192d5095e0897cf4f28a7d547aa522d515880320cd27c22"
+      "fileCount": 5,
+      "uncompressedBytes": 23529,
+      "contentSha256": "10280b93d96e6cdcc37e9eb44d3badb20769294025cb0dd5d628b834407c30d1"
     },
     {
       "name": "principle-attack-the-premise",
@@ -1365,7 +1419,7 @@
     },
     {
       "name": "prototype",
-      "version": "1.0.1",
+      "version": "2.0.0",
       "description": "Create a disposable local logic or UI prototype to settle a named design question; not production implementation.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -1393,16 +1447,22 @@
           "date": "2026-11-24",
           "expectedBehavior": "Behavior unchanged. SOURCE.md now records the SHA-256 of each upstream file whose link targets were adjusted at import, so the bundled copy can be verified.",
           "version": "1.0.1"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/prototype",
-      "fileCount": 8,
-      "uncompressedBytes": 26025,
-      "contentSha256": "421329c414dc443dc286dcb0b6c9d13ad8c856b761d950977128649b27a51f67"
+      "fileCount": 7,
+      "uncompressedBytes": 23097,
+      "contentSha256": "04f740dd8be32577be6ce1fecbed287253f24a2559a744376b713ffde55507f0"
     },
     {
       "name": "retro",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -1426,16 +1486,22 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Review a selected coding session for environment improvements using supplied local evidence; do not apply unrequested changes.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/retro",
-      "fileCount": 10,
-      "uncompressedBytes": 31618,
-      "contentSha256": "55f74782b2918d2e205ab617a94ba41346531c50693770438df95960c4099791"
+      "fileCount": 9,
+      "uncompressedBytes": 28656,
+      "contentSha256": "d9cf4cc43b2d4aa97857949c67c85ca4a75fba6569f0d2fbc8616696bb0670cf"
     },
     {
       "name": "show-me-your-work",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review.",
       "category": "engineering-practice",
       "license": "MIT",
@@ -1458,12 +1524,18 @@
           "date": "2026-11-24",
           "expectedBehavior": "Task-scoped and local-only. Maintain one local append-only evidence-linked decision trail for a selected long task; no transcript crawling or fabricated cross-model review.",
           "version": "1.0.0"
+        },
+        {
+          "bump": "major",
+          "date": "2026-11-24",
+          "expectedBehavior": "The shared references/local-execution-contract.md is removed. The limits that govern this skill are now a short list under Scope in SKILL.md: selected task only, local files only, no installs, commits, pushes or publishing on its own initiative, ask before destructive steps, bounded retries, and no claims it did not observe. Existing users: nothing else needs reading at task start. The contract's commit rules now belong to the commit-workflow skill, used when installed. The workflow is unchanged.",
+          "version": "2.0.0"
         }
       ],
       "path": "skills/show-me-your-work",
-      "fileCount": 8,
-      "uncompressedBytes": 25490,
-      "contentSha256": "d4d0add95bcea8f1e68a535ef05deedca672fb6f51dd6f6dccb8f59c2247baa6"
+      "fileCount": 7,
+      "uncompressedBytes": 22562,
+      "contentSha256": "805960d9c427583e1d862e699074c379ac77fd1af75e5e85aaa7b2584595277d"
     },
     {
       "name": "wayfinder",

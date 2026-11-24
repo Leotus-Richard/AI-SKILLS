@@ -26,7 +26,7 @@ Read actual outputs, not a child's self-reported completion alone. Verify change
 
 Use a documented local result record keyed by canonical ID. When a workstream is blocked, update only the affected frontier and retain successful branches. If input contracts change, explicitly invalidate affected downstream evidence; never relabel stale results as verified.
 
-Limit attempts and scope under the shared contract. Wait only through actually available authorized host coordination mechanisms; do not add sleep/watch loops or invent notifications.
+Limit attempts and scope as the skill's scope section says. Wait only through actually available authorized host coordination mechanisms; do not add sleep/watch loops or invent notifications.
 
 ## Preservation and host differences
 
