@@ -16,7 +16,13 @@ npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --list
 npx --yes skills@1.7.4 add Leotus-Richard/AI-SKILLS --skill graph-engineering --agent codex
 ```
 
-Each skill installs on its own. A few require another skill: the [catalog](docs/CATALOG.md#dependencies) lists them with the command that installs both, and `npm run skills:install` from a checkout adds them for you.
+Each skill installs on its own. A few require another skill, and this command adds whatever the named skills require. Run it in the project that will use them, pinned to a tag or commit:
+
+```sh
+npx --yes github:Leotus-Richard/AI-SKILLS#<tag or commit> --skill wayfinder --agent claude-code
+```
+
+The [catalog](docs/CATALOG.md#dependencies) lists each skill's requirements, and `npm run skills:install` does the same from a checkout.
 
 The CLI also supports agents such as `claude-code` and `cursor`. Installation is project-scoped by default; `--global` selects the user scope, and `--copy` uses independent files instead of links. See [installation](docs/INSTALLATION.md) for local checkout commands, updates, Windows considerations, and Perplexity imports.
 

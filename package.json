@@ -11,6 +11,14 @@
   "engines": {
     "node": ">=22.20.0"
   },
+  "bin": {
+    "ai-skills": "scripts/install.mjs"
+  },
+  "files": [
+    "scripts/install.mjs",
+    "scripts/dependencies.mjs",
+    "registry/skills.json"
+  ],
   "scripts": {
     "skills:list": "skills add ./skills --list",
     "skills:install": "node scripts/install.mjs",
@@ -22,9 +30,11 @@
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs"
   },
+  "dependencies": {
+    "skills": "1.7.4"
+  },
   "devDependencies": {
     "fflate": "0.8.2",
-    "skills": "1.7.4",
     "yaml": "2.8.1"
   }
 }
