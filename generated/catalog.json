@@ -3,7 +3,7 @@
   "skills": [
     {
       "name": "agile-work-hierarchy",
-      "description": "Plan, create, review, or reconcile Agile work items as an explicit Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies. Use for hierarchical backlogs and delivery plans across Linear, GitHub Issues, Azure DevOps, and Jira.",
+      "description": "Use when planning, creating, reviewing, or reconciling Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies, in Linear, GitHub Issues, Azure DevOps, or Jira.",
       "category": "workflow",
       "license": "Apache-2.0",
       "provenance": {
@@ -19,12 +19,12 @@
       },
       "path": "skills/agile-work-hierarchy",
       "fileCount": 12,
-      "uncompressedBytes": 89146,
-      "contentSha256": "d2236c9045a09590e83760ee487a28e8e543d1d5fc1b674241d4907f76e0b218"
+      "uncompressedBytes": 92607,
+      "contentSha256": "4546310edd243a02f982d990816b936212ab27461ed961c9a8d2f2400979497f"
     },
     {
       "name": "enterprise-agent-architecture",
-      "description": "Design, review, or document governed enterprise AI agents using the Two-Plane blueprint (Domain Knowledge Plane + Agent Capability Plane), eight design pillars, T0–T5 source authority tiers, five-mechanism hybrid retrieval, intent-scoped tool gateways, risk-tiered governance (Low/Medium/High with HITL), OpenTelemetry auditability, and nine-dimension evaluation. Use this whenever the user is architecting a domain-specific knowledge agent, ops/diagnostic agent, or multi-agent system; choosing between Microsoft Agent Framework, Google ADK/Gemini Enterprise, OpenAI Agents SDK, CrewAI or LangGraph; defining agent guardrails, approval gates, tool permissions or blast radius; or writing an agent design doc, ADR, capability contract or governance baseline — even if they just say \"build an agent for our platform\" or \"how should we govern our agents\".",
+      "description": "Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph.",
       "category": "workflow",
       "license": "Apache-2.0",
       "provenance": {
@@ -34,12 +34,12 @@
       },
       "path": "skills/enterprise-agent-architecture",
       "fileCount": 3,
-      "uncompressedBytes": 24541,
-      "contentSha256": "169195ae23ff38f5ff398d2f905eea4265aa0001f3d133e2b244aae89e28ed60"
+      "uncompressedBytes": 26132,
+      "contentSha256": "f2634a1b0b561cd72cd7bd318f20392626b4895029ab99e986419da1839c58b1"
     },
     {
       "name": "graph-engineering",
-      "description": "Design, review, or refactor AI agent workflows into explicit execution graphs. Use when orchestration has meaningful branches, parallel workers, approvals, retries, or stateful handoffs, including slow or flaky agent loops; prefer a script for simple sequential work.",
+      "description": "Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work.",
       "category": "workflow",
       "license": "Apache-2.0",
       "provenance": {
@@ -49,12 +49,12 @@
       },
       "path": "skills/graph-engineering",
       "fileCount": 6,
-      "uncompressedBytes": 33367,
-      "contentSha256": "1146b36c8d1b1849479580661b19eb65ab896774b62836119f27dacbe3847af3"
+      "uncompressedBytes": 35801,
+      "contentSha256": "369fa1d3271921e694a3af0a21579040c6e36fbba079cd45ee9d054e2796b7ee"
     },
     {
       "name": "grill-with-docs",
-      "description": "Interview the user about a plan, design, or decision in dependency-aware rounds with recommendations, while maintaining a domain glossary and qualifying architecture decision records. Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session.",
+      "description": "Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder.",
       "category": "workflow",
       "license": "MIT",
       "provenance": {
@@ -72,12 +72,12 @@
       },
       "path": "skills/grill-with-docs",
       "fileCount": 3,
-      "uncompressedBytes": 11203,
-      "contentSha256": "3d43924d4c62c0d5a97de8b2b82aebc6eb9264c5a1c1d2e3acffaec1821c743b"
+      "uncompressedBytes": 13076,
+      "contentSha256": "b4b237b075f8e666a307372fdf13436fbcd06babd80f491dc27ae0312ba5be00"
     },
     {
       "name": "wayfinder",
-      "description": "Plan a large, uncertain effort across multiple sessions as a map of decision tickets. Use when asked to chart a route, establish a planning frontier, resolve planning decisions, or resume a Wayfinder map. Maintain the destination, dependencies, decisions, unresolved fog, and a resume packet.",
+      "description": "Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs.",
       "category": "workflow",
       "license": "MIT",
       "provenance": {
@@ -97,9 +97,9 @@
         ]
       },
       "path": "skills/wayfinder",
-      "fileCount": 4,
-      "uncompressedBytes": 27136,
-      "contentSha256": "af1fa53c339e36f06ed2d3ae66b642b7176a342f4741078304eac2a5428e1fc1"
+      "fileCount": 5,
+      "uncompressedBytes": 29330,
+      "contentSha256": "719ca3a6c985b47fea240320673a94334f034815736e27bc3dcb2e49bc646b74"
     }
   ]
 }

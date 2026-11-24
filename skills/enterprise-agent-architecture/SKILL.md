@@ -1,6 +1,9 @@
 ---
 name: enterprise-agent-architecture
-description: Design, review, or document governed enterprise AI agents using the Two-Plane blueprint (Domain Knowledge Plane + Agent Capability Plane), eight design pillars, T0–T5 source authority tiers, five-mechanism hybrid retrieval, intent-scoped tool gateways, risk-tiered governance (Low/Medium/High with HITL), OpenTelemetry auditability, and nine-dimension evaluation. Use this whenever the user is architecting a domain-specific knowledge agent, ops/diagnostic agent, or multi-agent system; choosing between Microsoft Agent Framework, Google ADK/Gemini Enterprise, OpenAI Agents SDK, CrewAI or LangGraph; defining agent guardrails, approval gates, tool permissions or blast radius; or writing an agent design doc, ADR, capability contract or governance baseline — even if they just say "build an agent for our platform" or "how should we govern our agents".
+description: "Use when designing, reviewing, or documenting governed enterprise AI agents (knowledge, diagnostic, or action agents and multi-agent systems): capability contracts, source authority tiers, hybrid retrieval, tool permissions and approval gates, risk-tiered governance, audit, and evaluation. Covers choosing among Microsoft Agent Framework, Google ADK, OpenAI Agents SDK, CrewAI, and LangGraph."
+metadata:
+  author: Leotus-Richard
+  tags: [ai-agents, architecture, governance, retrieval, evaluation, design-review]
 ---
 
 # Enterprise Agent Architecture
@@ -116,6 +119,27 @@ Use these to structure a design doc or to find gaps in an existing one.
 **Design doc** — Capability contract → Knowledge model (entities + triples) → Source registry with tiers → Retrieval plan per question class → Reasoning & uncertainty rules → Tool inventory with risk tier and operation class → Governance controls & approval flow → Observability/audit trace schema → Evaluation suite → Open questions (from the 30).
 
 **Architecture review** — For each pillar: current state, gap, risk (Low/Medium/High), recommendation. Lead with any High-risk tool that lacks a HITL gate or any retrieval path that ignores authority tiers.
+
+## Prerequisites
+
+- The user's domain boundary: who the agent serves, what it owns, and what it must refuse. Ask when it is unclear.
+- Current official documentation for any framework or platform being recommended. The cheat-sheet is a starting heuristic, not a version-checked comparison.
+- Access to existing designs, tool inventories, or code when reviewing an architecture. Without it, label the review as based on the description given.
+
+## Limitations
+
+- This is design guidance. A design document does not show that a control is enforced, a retrieval path honors ACLs, or an evaluation gate runs.
+- Framework capabilities change between releases, and this skill does not verify them.
+- It is not a security, legal, or regulatory compliance assessment.
+
+## Troubleshooting
+
+| Symptom | Cause | Solution |
+| --- | --- | --- |
+| The conversation jumps to framework or vector-database choice | Boundary and knowledge model not set | Return to the capability contract and knowledge model (Pillars 1–2) before tooling |
+| A tool has no risk tier or operation class | Unclassified tool | Classify it before it is mounted; keep it off the intent gateway until then (Pillar 6) |
+| Sources disagree | No authority ranking applied | Resolve with T0–T5 tiers and freshness; show the conflict instead of blending answers |
+| The user asks for something the design cannot evidence | Missing source or tool | Say what evidence is missing and record it as an open question |
 
 ## Example use and acceptance
 

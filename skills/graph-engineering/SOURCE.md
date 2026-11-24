@@ -5,3 +5,7 @@ This is the user-supplied Graph Engineering runbook, contributed to this reposit
 The publication attribution in SKILL.md is user-supplied and was not independently verified. It is preserved as an attribution caveat, not a claim that this repository owns or republishes the attributed publication. No additional publication text is included.
 
 The contribution license is provided in LICENSE.txt. No verified upstream repository revision is asserted for this user-supplied material.
+
+## Revision on 24 November 2026
+
+Front-loaded the description's "Use when" trigger and shortened it; added `metadata` (author, tags) and Prerequisites, Limitations, and Troubleshooting sections drawn from the skill's existing guidance. Guided by SkillEvaluator 1.0.1 Tier 1 findings; no new capability is claimed. Added an Examples section with a short review example; the incident example reference is unchanged.

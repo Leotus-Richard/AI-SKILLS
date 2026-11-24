@@ -1,6 +1,9 @@
 ---
 name: "grill-with-docs"
-description: "Interview the user about a plan, design, or decision in dependency-aware rounds with recommendations, while maintaining a domain glossary and qualifying architecture decision records. Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session."
+description: "Use when asked to grill a plan, stress-test a design, or clarify and document a domain model in one session: interview in dependency-aware rounds with recommendations, keeping a domain glossary and qualifying architecture decision records. For multi-session planning, use Wayfinder."
+metadata:
+  author: "Matt Pocock (adapted by Leotus-Richard)"
+  tags: [planning, design-review, interviewing, domain-modeling, adr, glossary]
 ---
 
 # Grill with Docs
@@ -132,6 +135,26 @@ The glossary and ADRs are not a full specification. Other answers otherwise rema
 
 For each artifact, distinguish text prepared for saving from a file actually created or updated. Where no repository write tool is available, provide clearly titled copyable document blocks or downloadable files supported by the current environment.
 
+
+## Prerequisites
+
+- Nothing to install. The interview needs the plan or design under discussion, and any relevant documents, glossary, or code the user can share.
+- Saving the glossary or ADRs to a repository needs a write tool and the user's request to save. Otherwise return copyable documents.
+
+## Limitations
+
+- Built for one working session. Unresolved decisions that span sessions belong in Wayfinder.
+- Agreement in the interview does not show that the design is implemented or correct. The glossary and ADRs are not a full specification.
+- Facts the agent cannot access stay open questions; it does not fill them in.
+
+## Troubleshooting
+
+| Symptom | Cause | Solution |
+| --- | --- | --- |
+| Code contradicts a stated rule | Implementation and intent differ | Show the discrepancy and ask which behavior is intended |
+| An answer conflicts with an existing glossary term | Overloaded or drifting vocabulary | Surface the conflict, propose a resolution, and update the glossary only after agreement |
+| A decision fails the ADR conditions | Not every decision needs a record | Keep it in the session summary instead of writing an ADR |
+| Saving a document fails or no write tool exists | Missing capability or permission | Return the content as a titled, copyable block and say it was not saved |
 
 ## Example
 

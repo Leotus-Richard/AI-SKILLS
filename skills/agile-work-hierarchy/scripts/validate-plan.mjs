@@ -6,6 +6,9 @@
  * Exit codes: 0 valid structure, 1 validation errors, 2 usage/read/JSON errors.
  * Import: validatePlan(plan) returns [{ code, path, message }, ...].
  */
+// Strings are built with + rather than template literals: SkillSpector 2.13's
+// bounded static parser treats ${...} here as unresolved runtime shell values and
+// stops inspecting the file, which leaves the security scan incomplete.
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -33,7 +36,7 @@ export function validatePlan(plan) {
       return [];
     }
     if (required && value.length === 0) add('NONEMPTY_ARRAY_REQUIRED', path, 'At least one entry is required.');
-    value.forEach((entry, index) => text(entry, `${path}[${index}]`));
+    value.forEach((entry, index) => text(entry, path + '[' + index + ']'));
     return value;
   };
 
@@ -52,46 +55,46 @@ export function validatePlan(plan) {
   const itemPaths = new Map();
   const records = [];
   plan.items.forEach((item, index) => {
-    const path = `$.items[${index}]`;
+    const path = '$.items[' + index + ']';
     if (!isRecord(item)) {
       add('ITEM_OBJECT_REQUIRED', path, 'Expected a work-item object.');
       return;
     }
     records.push({ item, path });
-    text(item.id, `${path}.id`);
+    text(item.id, path + '.id');
     if (hasText(item.id)) {
-      if (items.has(item.id)) add('DUPLICATE_ID', `${path}.id`, `Duplicate item ID: ${item.id}.`);
+      if (items.has(item.id)) add('DUPLICATE_ID', path + '.id', 'Duplicate item ID: ' + item.id + '.');
       else {
         items.set(item.id, item);
         itemPaths.set(item.id, path);
       }
     }
-    if (!KINDS.has(item.kind)) add('INVALID_KIND', `${path}.kind`, 'Unknown work-item kind.');
-    text(item.title, `${path}.title`);
-    text(item.outcome, `${path}.outcome`);
-    textList(item.acceptanceCriteria, `${path}.acceptanceCriteria`);
-    textList(item.verification, `${path}.verification`);
+    if (!KINDS.has(item.kind)) add('INVALID_KIND', path + '.kind', 'Unknown work-item kind.');
+    text(item.title, path + '.title');
+    text(item.outcome, path + '.outcome');
+    textList(item.acceptanceCriteria, path + '.acceptanceCriteria');
+    textList(item.verification, path + '.verification');
     if (item.parentId !== undefined && item.parentId !== null && !hasText(item.parentId)) {
-      add('PARENT_ID_REQUIRED', `${path}.parentId`, 'Use null for a root or a known local parent ID.');
+      add('PARENT_ID_REQUIRED', path + '.parentId', 'Use null for a root or a known local parent ID.');
     }
     if (item.status !== undefined && !STATUSES.has(item.status)) {
-      add('INVALID_STATUS', `${path}.status`, 'Unknown canonical status.');
+      add('INVALID_STATUS', path + '.status', 'Unknown canonical status.');
     }
     if ((item.kind === 'epic' || item.kind === 'milestone') && !GOAL_MODES.has(item.goalMode)) {
-      add('GOAL_MODE_REQUIRED', `${path}.goalMode`, 'A goal must declare bounded or ongoing.');
+      add('GOAL_MODE_REQUIRED', path + '.goalMode', 'A goal must declare bounded or ongoing.');
     }
     if (item.customerReady !== undefined && typeof item.customerReady !== 'boolean') {
-      add('CUSTOMER_READY_BOOLEAN', `${path}.customerReady`, 'Expected a boolean declaration.');
+      add('CUSTOMER_READY_BOOLEAN', path + '.customerReady', 'Expected a boolean declaration.');
     }
     if (item.doneEvidence !== undefined || item.status === 'done') {
-      textList(item.doneEvidence, `${path}.doneEvidence`, item.status === 'done');
+      textList(item.doneEvidence, path + '.doneEvidence', item.status === 'done');
     }
     if (item.status === 'done' && item.kind === 'feature' && item.customerReady !== true) {
-      add('FEATURE_NOT_CUSTOMER_READY', `${path}.customerReady`, 'A done feature requires customerReady: true.');
+      add('FEATURE_NOT_CUSTOMER_READY', path + '.customerReady', 'A done feature requires customerReady: true.');
     }
     if (item.status === 'done' && (item.kind === 'epic' || item.kind === 'milestone')
         && item.goalMode === 'ongoing' && !hasText(item.closureDecision)) {
-      add('ONGOING_GOAL_CLOSURE_REQUIRED', `${path}.closureDecision`, 'Closing an ongoing goal requires an explicit closure decision.');
+      add('ONGOING_GOAL_CLOSURE_REQUIRED', path + '.closureDecision', 'Closing an ongoing goal requires an explicit closure decision.');
     }
   });
 
@@ -101,24 +104,24 @@ export function validatePlan(plan) {
     add('EXTERNAL_ARRAY_REQUIRED', '$.externalReferences', 'Expected an array of external reference stubs.');
   } else {
     externalInput.forEach((reference, index) => {
-      const path = `$.externalReferences[${index}]`;
+      const path = '$.externalReferences[' + index + ']';
       if (!isRecord(reference)) {
         add('EXTERNAL_OBJECT_REQUIRED', path, 'Expected an external reference object.');
         return;
       }
-      text(reference.id, `${path}.id`);
-      text(reference.url, `${path}.url`);
+      text(reference.id, path + '.id');
+      text(reference.url, path + '.url');
       if (hasText(reference.url)) {
         try {
           const url = new URL(reference.url);
           if (!['http:', 'https:'].includes(url.protocol)) throw new Error('Unsupported reference protocol');
         } catch {
-          add('INVALID_EXTERNAL_URL', `${path}.url`, 'Expected an absolute HTTP(S) reference URL.');
+          add('INVALID_EXTERNAL_URL', path + '.url', 'Expected an absolute HTTP(S) reference URL.');
         }
       }
       if (hasText(reference.id)) {
         if (items.has(reference.id) || external.has(reference.id)) {
-          add('DUPLICATE_ID', `${path}.id`, `Ambiguous or duplicate reference ID: ${reference.id}.`);
+          add('DUPLICATE_ID', path + '.id', 'Ambiguous or duplicate reference ID: ' + reference.id + '.');
         } else external.set(reference.id, reference);
       }
     });
@@ -132,10 +135,10 @@ export function validatePlan(plan) {
     const parentId = item.parentId === undefined ? null : item.parentId;
     const parent = items.get(parentId);
     if (hasText(parentId)) {
-      if (parentId === item.id) add('SELF_PARENT', `${path}.parentId`, 'An item cannot contain itself.');
+      if (parentId === item.id) add('SELF_PARENT', path + '.parentId', 'An item cannot contain itself.');
       if (!parent) {
         add(external.has(parentId) ? 'EXTERNAL_PARENT_FORBIDDEN' : 'UNKNOWN_PARENT',
-          `${path}.parentId`, 'A parent must identify a local work item.');
+          path + '.parentId', 'A parent must identify a local work item.');
       } else if (hasText(item.id) && parentId !== item.id && items.get(item.id) === item) {
         parents.get(item.id).push(parentId);
         children.get(parentId).push(item.id);
@@ -145,52 +148,52 @@ export function validatePlan(plan) {
     switch (item.kind) {
       case 'epic':
       case 'milestone':
-        if (parentId !== null) add('GOAL_MUST_BE_ROOT', `${path}.parentId`, 'Epics and milestones are roots.');
+        if (parentId !== null) add('GOAL_MUST_BE_ROOT', path + '.parentId', 'Epics and milestones are roots.');
         break;
       case 'feature':
         if (!parent || !['epic', 'milestone'].includes(parent.kind)) {
-          add('FEATURE_PARENT', `${path}.parentId`, 'A feature must have an epic or milestone parent.');
+          add('FEATURE_PARENT', path + '.parentId', 'A feature must have an epic or milestone parent.');
         }
         break;
       case 'story':
-        if (!parent || parent.kind !== 'feature') add('STORY_PARENT', `${path}.parentId`, 'A story must have a feature parent.');
+        if (!parent || parent.kind !== 'feature') add('STORY_PARENT', path + '.parentId', 'A story must have a feature parent.');
         break;
       case 'task':
-        if (!parent || parent.kind !== 'story') add('TASK_PARENT', `${path}.parentId`, 'A task must have a story parent.');
+        if (!parent || parent.kind !== 'story') add('TASK_PARENT', path + '.parentId', 'A task must have a story parent.');
         break;
       case 'bug':
         if (parentId !== null) {
           if (!parent || parent.kind !== 'story') {
-            add('BUG_PARENT', `${path}.parentId`, 'An explicitly parented bug may belong to a story only.');
+            add('BUG_PARENT', path + '.parentId', 'An explicitly parented bug may belong to a story only.');
           }
           if (!isRecord(item.bugParentException) || item.bugParentException.requestedBy !== 'user'
               || !hasText(item.bugParentException.reason)) {
-            add('BUG_PARENT_EXCEPTION_REQUIRED', `${path}.bugParentException`,
+            add('BUG_PARENT_EXCEPTION_REQUIRED', path + '.bugParentException',
               'A parented bug requires the recorded user request and a nonempty reason.');
           }
         } else if (item.bugParentException !== undefined) {
-          add('BUG_EXCEPTION_WITHOUT_PARENT', `${path}.bugParentException`, 'A root bug needs no parent exception.');
+          add('BUG_EXCEPTION_WITHOUT_PARENT', path + '.bugParentException', 'A root bug needs no parent exception.');
         }
         break;
       default:
         break;
     }
     if (item.kind !== 'bug' && item.bugParentException !== undefined) {
-      add('BUG_EXCEPTION_ON_OTHER_KIND', `${path}.bugParentException`, 'Only a parented bug uses this exception.');
+      add('BUG_EXCEPTION_ON_OTHER_KIND', path + '.bugParentException', 'Only a parented bug uses this exception.');
     }
 
     for (const field of ['dependsOn', 'relatedTo']) {
       if (field === 'relatedTo' && item[field] === undefined) continue;
-      const targets = textList(item[field] === undefined ? [] : item[field], `${path}.${field}`, false);
+      const targets = textList(item[field] === undefined ? [] : item[field], path + '.' + field, false);
       const seen = new Set();
       targets.forEach((target, index) => {
         if (!hasText(target)) return;
-        const edgePath = `${path}.${field}[${index}]`;
+        const edgePath = path + '.' + field + '[' + index + ']';
         const duplicate = seen.has(target);
-        if (duplicate) add('DUPLICATE_EDGE', edgePath, `Repeated ${field} target: ${target}.`);
+        if (duplicate) add('DUPLICATE_EDGE', edgePath, 'Repeated ' + field + ' target: ' + target + '.');
         seen.add(target);
         if (target === item.id) add('SELF_EDGE', edgePath, 'An item cannot depend on or relate to itself.');
-        if (!items.has(target) && !external.has(target)) add('UNKNOWN_REFERENCE', edgePath, `Unknown target ID: ${target}.`);
+        if (!items.has(target) && !external.has(target)) add('UNKNOWN_REFERENCE', edgePath, 'Unknown target ID: ' + target + '.');
         if (field === 'dependsOn' && items.has(target) && target !== item.id
             && hasText(item.id) && items.get(item.id) === item && !duplicate) {
           dependencies.get(item.id).push(target);
@@ -202,11 +205,11 @@ export function validatePlan(plan) {
   let pureCycle = false;
   detectCycles(parents, cycle => {
     pureCycle = true;
-    add('CONTAINMENT_CYCLE', '$.items', `Containment cycle: ${cycle.join(' -> ')}.`);
+    add('CONTAINMENT_CYCLE', '$.items', 'Containment cycle: ' + cycle.join(' -> ') + '.');
   });
   detectCycles(dependencies, cycle => {
     pureCycle = true;
-    add('DEPENDENCY_CYCLE', '$.items', `Dependency cycle: ${cycle.join(' -> ')}.`);
+    add('DEPENDENCY_CYCLE', '$.items', 'Dependency cycle: ' + cycle.join(' -> ') + '.');
   });
 
   // A dependency needs the prerequisite's completed result. A parent's Done also
@@ -221,14 +224,14 @@ export function validatePlan(plan) {
       for (const child of childIds) completion.get(child).add(parent);
     }
     const graph = new Map([...completion].map(([id, targets]) => [id, [...targets]]));
-    detectCycles(graph, cycle => add('COMPLETION_CYCLE', '$.items', `Required-completion cycle: ${cycle.join(' -> ')}.`));
+    detectCycles(graph, cycle => add('COMPLETION_CYCLE', '$.items', 'Required-completion cycle: ' + cycle.join(' -> ') + '.'));
   }
 
   for (const [id, childIds] of children) {
     if (items.get(id).status !== 'done') continue;
     for (const childId of childIds) {
       if (items.get(childId).status !== 'done') {
-        add('DONE_PARENT_UNDONE_CHILD', `${itemPaths.get(id)}.status`, `Done parent still contains a child that is not done: ${childId}.`);
+        add('DONE_PARENT_UNDONE_CHILD', itemPaths.get(id) + '.status', 'Done parent still contains a child that is not done: ' + childId + '.');
       }
     }
   }
@@ -288,7 +291,7 @@ function main(args) {
   }
   const errors = validatePlan(plan);
   if (errors.length) {
-    for (const error of errors) console.error(`${error.code} ${error.path}: ${error.message}`);
+    for (const error of errors) console.error(error.code + ' ' + error.path + ': ' + error.message);
     return 1;
   }
   console.log('Valid plan structure. External graph, evidence, and user authority were not verified.');
