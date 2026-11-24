@@ -129,8 +129,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-          # Changed-skill mode needs history to find the merge base.
-          fetch-depth: ${{ github.event_name == 'pull_request' && 0 || 1 }}
+          # Changed-skill mode needs history to find the merge base. Quoted
+          # because a bare 0 is falsy, so `&& 0 || 1` would always yield 1.
+          fetch-depth: ${{ github.event_name == 'pull_request' && '0' || '1' }}
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -146,10 +147,12 @@ jobs:
         id: select
         run: |
           set -euo pipefail
-          if [ "$SCAN_MODE" = changed ] && [ -n "$BASE_SHA" ]; then
-            base="$(git merge-base "$BASE_SHA" HEAD)"
+          if [ "$SCAN_MODE" = changed ] && [ -n "$BASE_SHA" ] && base="$(git merge-base "$BASE_SHA" HEAD 2>/dev/null)"; then
             names="$(git diff --name-only "$base" HEAD -- skills/ | cut -d/ -f2 | sort -u)"
           else
+            if [ "$SCAN_MODE" = changed ]; then
+              echo "::warning::Could not find the PR merge base; scanning all skills."
+            fi
             names="$(find skills -mindepth 2 -maxdepth 2 -name SKILL.md | cut -d/ -f2 | sort)"
           fi
           selected=""
