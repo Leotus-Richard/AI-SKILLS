@@ -134,14 +134,17 @@ jobs:
           # because a bare 0 is falsy, so `&& 0 || 1` would always yield 1.
           fetch-depth: ${{ github.event_name == 'pull_request' && '0' || '1' }}
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
+      # Not actions/setup-python: its Linux builds need LD_LIBRARY_PATH, which
+      # SkillEvaluator strips when it runs its pinned SkillSpector via
+      # `uv tool run`, so that interpreter fails to start (exit 127). uv's
+      # standalone Python needs no LD_LIBRARY_PATH.
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
       - name: Install SkillEvaluator
         run: |
-          python -m venv "$RUNNER_TEMP/skillevaluator-venv"
-          "$RUNNER_TEMP/skillevaluator-venv/bin/pip" install --quiet --disable-pip-version-check \
+          uv python install 3.13
+          uv venv --python 3.13 --python-preference only-managed "$RUNNER_TEMP/skillevaluator-venv"
+          uv pip install --quiet --python "$RUNNER_TEMP/skillevaluator-venv/bin/python" \
             "skillevaluator==${SKILLEVALUATOR_VERSION}"
           echo "$RUNNER_TEMP/skillevaluator-venv/bin" >> "$GITHUB_PATH"
       - name: Select skills
