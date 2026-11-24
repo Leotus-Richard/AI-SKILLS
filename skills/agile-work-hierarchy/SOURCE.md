@@ -14,3 +14,7 @@ Provider references synthesize current official documentation accessed on 29 Oct
 Capabilities vary by provider edition, workspace configuration, permissions, and available connector. Documentation research does not establish a successful live tracker round trip. The plan validator checks declared local structure and completion assertions; it does not prove real authorization, customer readiness, trustworthy evidence, or completeness of external dependency graphs. The example plan is synthetic and does not represent existing tickets or delivered software.
 
 The bundled LICENSE.txt preserves the Apache-2.0 contribution terms. Documentation citations are references to provider behavior, not an assertion that provider documentation is relicensed under this contribution.
+
+## Revision on 24 November 2026
+
+Front-loaded the description's "Use when" trigger and shortened it; added `metadata` (author, tags) and Prerequisites, Limitations, and Troubleshooting sections drawn from the skill's existing guidance. Guided by SkillEvaluator 1.0.1 Tier 1 findings; no new capability is claimed. Moved the example into an Examples section and added an Available Scripts table. `scripts/validate-plan.mjs` builds strings with `+` instead of template literals so SkillSpector's static parser can inspect the whole file; its output is unchanged (compared on library calls and every CLI exit path).

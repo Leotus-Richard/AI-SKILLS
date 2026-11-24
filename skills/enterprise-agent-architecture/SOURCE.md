@@ -9,3 +9,7 @@ The source referenced a long-form architecture file that was not supplied. This 
 Two import clarifications preserve the design intent: observed live state does not override normative policy or authorize an action, and causal audit records use approval receipt references and redacted evidence instead of logging approval tokens or unrestricted payloads.
 
 This import does not independently verify the source's framework capabilities or governance assertions. Check current primary documentation for version-specific implementation work. The architecture conventions are design guidance; importing this file does not authorize live operations or establish that any proposed control is enforced.
+
+## Revision on 24 November 2026
+
+Front-loaded the description's "Use when" trigger and shortened it; added `metadata` (author, tags) and Prerequisites, Limitations, and Troubleshooting sections drawn from the skill's existing guidance. Guided by SkillEvaluator 1.0.1 Tier 1 findings; no new capability is claimed. The description dropped the pillar and tier enumeration (still in the body) but keeps the agent types and framework names that route requests here.

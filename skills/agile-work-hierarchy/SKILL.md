@@ -1,6 +1,9 @@
 ---
 name: agile-work-hierarchy
-description: Plan, create, review, or reconcile Agile work items as an explicit Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies. Use for hierarchical backlogs and delivery plans across Linear, GitHub Issues, Azure DevOps, and Jira.
+description: "Use when planning, creating, reviewing, or reconciling Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy, with independent Bugs and separate dependencies, in Linear, GitHub Issues, Azure DevOps, or Jira."
+metadata:
+  author: Leotus-Richard
+  tags: [agile, backlog, planning, work-items, linear, github-issues, azure-devops, jira]
 ---
 
 # Agile Work Hierarchy
@@ -68,4 +71,37 @@ Scale the result to the task. A useful plan or review contains:
 - A platform projection and any missing native enforcement or connector capabilities.
 - For live work, a readback report of created, reused, changed, unresolved, and failed operations with actual URLs and evidence. Distinguish verified native links from logical links and unexecuted proposals.
 
+## Examples
+
 Example request: “Plan an MVP that lets customers export their saved searches; also track the existing login crash.” Expected result: an MVP root → a customer-ready export Feature → outcome-focused Stories → verifiable Tasks, plus an independent login Bug. Export format decisions may block export implementation; the login Bug acquires no relationship merely because it is in the same MVP discussion. The [example plan](assets/example-plan.json) demonstrates this shape without selecting a tracker or claiming delivery.
+
+## Available Scripts
+
+| Script | Purpose | Arguments |
+| --- | --- | --- |
+| `scripts/validate-plan.mjs` | Checks a JSON plan's structure: one canonical parent per item, permitted kinds, unique IDs, acyclic containment and dependencies, and completion assertions. Reads input only; never contacts a tracker. | `<plan.json>`, or `-` to read standard input. Exit 0: valid structure; 1: invariant violations; 2: usage, read, or JSON error. |
+
+See [plan format and validator](references/plan-format.md) for the plan shape and the importable `validatePlan(plan)` function.
+
+## Prerequisites
+
+- Drafting and reviewing need no tools.
+- The validator needs Node.js 22.20 or newer, with no package installation or network access.
+- Live tracker work needs a connector or API access for the target workspace, with permission to create and link items, plus the user's authorization for that operation and target.
+
+## Limitations
+
+- The validator checks declared structure only. It cannot judge acceptance criteria, prove customer readiness, or see dependencies outside the plan.
+- Native hierarchy depth, item types, and dependency support differ by provider, edition, and configuration. Missing levels become logical links that the tracker does not enforce.
+- Canonical kinds are this library's convention, not a universal Agile definition.
+
+## Troubleshooting
+
+| Error or symptom | Cause | Solution |
+| --- | --- | --- |
+| `FEATURE_PARENT`, `STORY_PARENT`, or `TASK_PARENT` | A level is skipped, for example a Task directly under a Feature | Add or reuse the missing Story or Feature; do not relax the containment rules |
+| `BUG_PARENT` or `BUG_PARENT_EXCEPTION_REQUIRED` | A Bug was given a parent without an explicit request | Remove the parent, or record the user's request and reason in `bugParentException` |
+| `CONTAINMENT_CYCLE` or `DEPENDENCY_CYCLE` | A loop in parents or prerequisites | Remove the edge that does not carry a real result or authority |
+| Validator exits with 2 | Wrong path or invalid JSON | Check the file path, or pipe the plan with `-` |
+| Tracker has no native level for Features | Provider or process limitation | Keep a logical hierarchy register and disclose which links are logical; do not reconfigure global types without the user's decision |
+| Write result unknown after a timeout | Ambiguous mutation | Reconcile by operation key and target before retrying, as in [execution and readback](references/execution.md) |

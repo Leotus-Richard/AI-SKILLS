@@ -1,6 +1,8 @@
 ---
 name: "wayfinder"
-description: "Plan a large, uncertain effort across multiple sessions as a map of decision tickets. Use when asked to chart a route, establish a planning frontier, resolve planning decisions, or resume a Wayfinder map. Maintain the destination, dependencies, decisions, unresolved fog, and a resume packet."
+description: "Use when charting a route, resolving planning decisions, or resuming a Wayfinder map for a large, uncertain multi-session effort. Keeps decision tickets, a destination, fog, and a resume packet. One-session decisions: use grill-with-docs."
+metadata:
+  author: "Matt Pocock (adapted by Leotus-Richard)"
 ---
 
 # Wayfinder: multi-session decision planning
@@ -164,6 +166,8 @@ Adapted from [Matt Pocock's Wayfinder skill](https://github.com/mattpocock/skill
 
 This adaptation replaces skill-invocation commands, setup commands, mandatory background agents, automatic repository writes, and throwaway Git branches with the shared methods and an explicit portable register. It preserves the source's destination, decision-ticket model, frontier, fog, human participation, and session boundaries. Actual integrations may be used only when available and requested; text returned here is not evidence that an external system was updated.
 
+
+See also [operating notes](references/operating-notes.md).
 
 ## Example
 

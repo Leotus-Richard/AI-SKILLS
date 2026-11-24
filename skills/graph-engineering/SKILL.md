@@ -1,6 +1,9 @@
 ---
 name: graph-engineering
-description: Design, review, or refactor AI agent workflows into explicit execution graphs. Use when orchestration has meaningful branches, parallel workers, approvals, retries, or stateful handoffs, including slow or flaky agent loops; prefer a script for simple sequential work.
+description: "Use when designing, reviewing, or refactoring AI agent workflows into explicit execution graphs: branches, parallel workers, approvals, retries, stateful handoffs, or slow and flaky agent loops. Prefer a script for simple sequential work."
+metadata:
+  author: Leotus-Richard
+  tags: [ai-agents, workflows, orchestration, execution-graphs, design-review]
 ---
 
 # Graph Engineering for AI Agent Systems
@@ -51,6 +54,44 @@ For a complete new graph, use the design reference's eight-part output: diagram,
 For a review, lead with findings ranked by impact: the concrete failure, supporting code or execution evidence, and the smallest useful fix. Use before/after graph fragments when they clarify a change. If the existing design is sound, say so and focus on the few changes that matter.
 
 Explain why each dependency, gate, and loop bound exists. Distinguish implemented behavior, design proposals, and measured results.
+
+## Examples
+
+Example request: "Our support agent loops between search and summarize until it times out. Review it."
+
+Expected result, leading with findings:
+
+```text
+1. Unbounded cycle: search ↔ summarize has no convergence test or attempt cap.
+   Fix: add a router that exits on "answer supported by cited evidence",
+   a 3-attempt cap, and an explicit "insufficient evidence" route.
+2. Full chat history passed to every node. Fix: pass the query and the cited
+   passages only.
+Graph after the fix:
+  classify → search → (router: enough evidence?) → answer
+                ↑ no, attempts < 3 ┘          └ attempts exhausted → escalate
+```
+
+For a worked operational case, see [references/incident-example.md](references/incident-example.md).
+
+## Prerequisites
+
+- The workflow's goal, and its existing code, prompts, or a description of the current loop.
+- Current documentation for the orchestration framework if the user has chosen one; otherwise stay framework-neutral.
+
+## Limitations
+
+- A graph design does not prove exactly-once side effects, latency, or cost. Those need implementation and measurement.
+- The guidance is framework-neutral. Mapping onto a specific framework's checkpointing and retry primitives must be checked against its documentation.
+
+## Troubleshooting
+
+| Symptom | Cause | Solution |
+| --- | --- | --- |
+| Every step became its own node | Over-decomposition | Collapse sequential deterministic steps into one code node or a plain script |
+| A loop never converges or exhausts its budget | Missing exit criteria | Add a convergence test, attempt cap, deadline, and exhaustion route |
+| A retried step duplicated a side effect | No operation key or reconciliation | Use stable operation keys and reconcile an unknown outcome before retrying |
+| Routing changes unpredictably | Router relies on unvalidated model output | Validate the classification before code uses it to choose a path |
 
 ## Provenance
 
