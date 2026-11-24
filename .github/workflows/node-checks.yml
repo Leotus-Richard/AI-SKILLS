@@ -1,0 +1,55 @@
+name: Node checks (reusable)
+
+# Shared validate/catalog/test/build steps. Callers pick the runner so the same
+# steps run on self-hosted Ubuntu and on GitHub-hosted macOS/Windows.
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        description: JSON runner spec, e.g. '["self-hosted","linux","x64"]' or '"windows-latest"'
+        type: string
+        required: true
+      upload-artifact:
+        description: Upload dist/ as an artifact with this name; empty skips the upload
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Validate, test, build
+    runs-on: ${{ fromJSON(inputs.runs-on) }}
+    timeout-minutes: 30
+    env:
+      DISABLE_TELEMETRY: '1'
+      DO_NOT_TRACK: '1'
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.20.0'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Validate skills and registry
+        run: npm run validate
+      - name: Check generated catalog
+        run: npm run catalog:check
+      - name: Run tests
+        run: npm test
+      - name: Build upload packages
+        run: npm run build
+      - name: Upload validated packages
+        if: inputs.upload-artifact != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.upload-artifact }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14

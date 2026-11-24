@@ -15,7 +15,8 @@ Before editing, inspect the working tree and keep unrelated changes intact. Do n
 3. Include an example input, expected result, and meaningful acceptance or diagnostic steps. Distinguish instructions from supplied source content, proposals from changes actually made, and structural checks from observed runtime behavior.
 4. Update `SOURCE.md` with the source URLs, revision or version where available, what changed, and any limits on the evidence. Preserve required license and copyright notices. Do not turn a user-supplied attribution into a verified publication claim.
 5. Add or update the entry in `registry/skills.json`. Use the existing `workflow` category for this collection. Keep the description in `SKILL.md`; do not maintain a second manually copied description in the registry.
-6. Regenerate the catalog and run the checks below. Review generated diffs and packaged contents alongside the source change.
+6. Run the SkillSpector and SkillEvaluator checks in [skill evaluation](docs/SKILL-EVALUATION.md). Fix security findings or add a reviewed baseline rule. For a new or adopted skill, add `evals/<name>/evals.json` and measure its lift before relying on it.
+7. Regenerate the catalog and run the checks below. Review generated diffs and packaged contents alongside the source change.
 
 Do not include secrets, personal filesystem paths, generated session history, or links that imply an artifact exists when it does not. Do not preserve host-specific tool names or slash-command conventions as if every target agent provides them. Describe the needed capability and a truthful fallback when it is unavailable.
 
