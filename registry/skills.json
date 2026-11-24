@@ -193,6 +193,29 @@
       "evaluations": []
     },
     {
+      "name": "impeccable",
+      "category": "design-and-formatting",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "adapted-upstream",
+        "urls": [
+          "https://github.com/pbakaus/impeccable/tree/68b1129634a1cdd9a0ba50b27376c71b4b083ae8/.github/skills/impeccable",
+          "https://impeccable.style"
+        ],
+        "revision": "68b1129634a1cdd9a0ba50b27376c71b4b083ae8",
+        "notes": "Impeccable 4.0.3 (tag skill-v4.0.3, GitHub Copilot variant) with the Engineering Toolkit v1.3 hub. Native scripts and the live, hooks and doctor playbooks are not included."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Designs, reviews or refines frontend interfaces with Impeccable 4.0.3 playbooks, routed by the bundled command table. Uses local evidence and reference files only; never runs Impeccable's native detector, live mode or hooks, and reports those as capability gaps."
+        }
+      ],
+      "evaluations": []
+    },
+    {
       "name": "interrogate",
       "category": "engineering-practice",
       "license": "MIT",

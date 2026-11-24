@@ -6,7 +6,8 @@ Apache License, Version 2.0 in LICENSE.
 Imported and adapted skills retain their own attribution and license notices
 in their skill folders. These include MIT-licensed material from Matt Pocock, MIT-licensed pstack
 skills by Lauren Tan, and MIT-licensed Cursor Team Kit skills by Cursor
-(both from cursor/plugins).
+(both from cursor/plugins). They also include Impeccable by Paul Bakaus
+(Apache-2.0), whose own NOTICE.md travels with that skill.
 The root license does not replace those third-party notices.
 
 Provenance and adaptation details are recorded in registry/skills.json,

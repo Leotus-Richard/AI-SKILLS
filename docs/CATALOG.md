@@ -2,12 +2,13 @@
 
 Generated from canonical `skills/<name>/SKILL.md` files and `registry/skills.json`. Run `npm run catalog` after source changes.
 
-This repository contains **40 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
+This repository contains **41 skills**. Each Perplexity upload archive contains one skill with `SKILL.md` at its root.
 
-## design-and-formatting (1)
+## design-and-formatting (2)
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
+| [impeccable](../skills/impeccable/SKILL.md) | 1.0.0 | Apache-2.0 | Design, review or refine frontend interfaces using Impeccable's product-specific UX and visual craft playbooks. Use for UI hierarchy, accessibility, responsive states, typography, copy or design systems; not backend-only tasks or automatic browser overlays, hooks or publishing. |
 | [latex](../skills/latex/SKILL.md) | 1.0.0 | Apache-2.0 | Format mathematical expressions for the chosen Markdown/chat renderer while preserving formula semantics. Use for inline/display math and literal LaTeX examples; not full TeX documents, package compilation or a guarantee of every host's rendering support. |
 
 ## engineering-practice (8)
@@ -76,6 +77,7 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **graph-engineering** 1.0.0: not yet tested with a model
 - **grill-with-docs** 1.0.0: not yet tested with a model
 - **how-it-works** 1.0.0: not yet tested with a model
+- **impeccable** 1.0.0: not yet tested with a model
 - **interrogate** 1.0.0: not yet tested with a model
 - **latex** 1.0.0: not yet tested with a model
 - **maintain-verification-skill** 1.0.0: not yet tested with a model
@@ -145,6 +147,10 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 ### how-it-works
 
 - **1.0.0** (2026-11-24, initial): Task-scoped and local-only. Explain local subsystem behavior, ownership and runtime flow; use why for historical motivation.
+
+### impeccable
+
+- **1.0.0** (2026-11-24, initial): Designs, reviews or refines frontend interfaces with Impeccable 4.0.3 playbooks, routed by the bundled command table. Uses local evidence and reference files only; never runs Impeccable's native detector, live mode or hooks, and reports those as capability gaps.
 
 ### interrogate
 
@@ -285,6 +291,7 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 - **graph-engineering**: user-supplied; user-supplied source with no independently verified URL.
 - **grill-with-docs**: adapted-upstream; <https://github.com/mattpocock/skills>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/grill-with-docs/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/productivity/grilling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/SKILL.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/GLOSSARY-FORMAT.md>, <https://github.com/mattpocock/skills/blob/a496f5513d4a4cf889bc48e189e579f4b0bdf6aa/skills/engineering/domain-modeling/ADR-FORMAT.md>.
 - **how-it-works**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/how/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
+- **impeccable**: adapted-upstream; <https://github.com/pbakaus/impeccable/tree/68b1129634a1cdd9a0ba50b27376c71b4b083ae8/.github/skills/impeccable>, <https://impeccable.style>.
 - **interrogate**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/interrogate/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>.
 - **latex**: user-supplied; user-supplied source with no independently verified URL.
 - **maintain-verification-skill**: adapted-upstream; <https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/maintain-verification-skill/SKILL.md>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack>, <https://github.com/cursor/plugins/tree/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/create-verification-skill>.

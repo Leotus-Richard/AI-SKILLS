@@ -1,0 +1,260 @@
+{
+  "source": "Impeccable 4.0.3 (pbakaus/impeccable, tag skill-v4.0.3)",
+  "scope": "local-reference-playbooks",
+  "aliases": {
+    "teach": "init",
+    "craft": "new-work"
+  },
+  "commands": [
+    {
+      "command": "craft [feature]",
+      "category": "Build",
+      "purpose": "Deprecated alias for an ordinary new-work request",
+      "references": [
+        "references/upstream/reference/craft.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "shape [feature]",
+      "category": "Build",
+      "purpose": "Plan UX/UI before writing code",
+      "references": [
+        "references/upstream/reference/shape.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "init",
+      "category": "Build",
+      "purpose": "Capture durable product context in PRODUCT.md",
+      "references": [
+        "references/upstream/reference/init.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "document",
+      "category": "Build",
+      "purpose": "Generate DESIGN.md from existing project code",
+      "references": [
+        "references/upstream/reference/document.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "extract [target]",
+      "category": "Build",
+      "purpose": "Pull reusable tokens and components into design system",
+      "references": [
+        "references/upstream/reference/extract.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "critique [target]",
+      "category": "Evaluate",
+      "purpose": "UX design review with heuristic scoring",
+      "references": [
+        "references/upstream/reference/critique.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "audit [target]",
+      "category": "Evaluate",
+      "purpose": "Technical quality checks (a11y, perf, responsive)",
+      "references": [
+        "references/upstream/reference/audit.md",
+        "references/upstream/reference/audit.native.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "polish [target]",
+      "category": "Refine",
+      "purpose": "Final quality pass before shipping",
+      "references": [
+        "references/upstream/reference/polish.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "bolder [target]",
+      "category": "Refine",
+      "purpose": "Amplify safe or bland designs",
+      "references": [
+        "references/upstream/reference/bolder.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "quieter [target]",
+      "category": "Refine",
+      "purpose": "Tone down aggressive or overstimulating designs",
+      "references": [
+        "references/upstream/reference/quieter.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "distill [target]",
+      "category": "Refine",
+      "purpose": "Strip to essence, remove complexity",
+      "references": [
+        "references/upstream/reference/distill.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "harden [target]",
+      "category": "Refine",
+      "purpose": "Production-ready: errors, i18n, edge cases",
+      "references": [
+        "references/upstream/reference/harden.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "onboard [target]",
+      "category": "Refine",
+      "purpose": "Design first-run flows, empty states, activation",
+      "references": [
+        "references/upstream/reference/onboard.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "animate [target]",
+      "category": "Enhance",
+      "purpose": "Add purposeful animations and motion",
+      "references": [
+        "references/upstream/reference/animate.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "colorize [target]",
+      "category": "Enhance",
+      "purpose": "Add strategic color to monochromatic UIs",
+      "references": [
+        "references/upstream/reference/colorize.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "typeset [target]",
+      "category": "Enhance",
+      "purpose": "Improve typography hierarchy and fonts",
+      "references": [
+        "references/upstream/reference/typeset.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "layout [target]",
+      "category": "Enhance",
+      "purpose": "Fix spacing, rhythm, and visual hierarchy",
+      "references": [
+        "references/upstream/reference/layout.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "delight [target]",
+      "category": "Enhance",
+      "purpose": "Add personality and memorable touches",
+      "references": [
+        "references/upstream/reference/delight.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "overdrive [target]",
+      "category": "Enhance",
+      "purpose": "Push past conventional limits",
+      "references": [
+        "references/upstream/reference/overdrive.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "clarify [target]",
+      "category": "Fix",
+      "purpose": "Improve UX copy, labels, and error messages",
+      "references": [
+        "references/upstream/reference/clarify.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "adapt [target]",
+      "category": "Fix",
+      "purpose": "Adapt for different devices and screen sizes",
+      "references": [
+        "references/upstream/reference/adapt.md",
+        "references/upstream/reference/adapt.native.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "optimize [target]",
+      "category": "Fix",
+      "purpose": "Diagnose and fix UI performance",
+      "references": [
+        "references/upstream/reference/optimize.md"
+      ],
+      "nativeOnly": false,
+      "automaticScriptExecution": false
+    },
+    {
+      "command": "live",
+      "category": "Iterate",
+      "purpose": "Visual variant mode: pick elements in the browser, generate alternatives",
+      "references": [],
+      "nativeOnly": true,
+      "automaticScriptExecution": false,
+      "notBundled": "Native feature; its playbook is not bundled. Return the capability gap.",
+      "upstreamReference": "https://github.com/pbakaus/impeccable/blob/68b1129634a1cdd9a0ba50b27376c71b4b083ae8/.github/skills/impeccable/reference/live.md"
+    },
+    {
+      "command": "hooks",
+      "category": "Native runtime",
+      "references": [],
+      "nativeOnly": true,
+      "automaticScriptExecution": false,
+      "notBundled": "Native feature; its playbook is not bundled. Return the capability gap.",
+      "upstreamReference": "https://github.com/pbakaus/impeccable/blob/68b1129634a1cdd9a0ba50b27376c71b4b083ae8/.github/skills/impeccable/reference/hooks.md"
+    },
+    {
+      "command": "doctor",
+      "category": "Native runtime",
+      "references": [],
+      "nativeOnly": true,
+      "automaticScriptExecution": false,
+      "notBundled": "Native feature; its playbook is not bundled. Return the capability gap.",
+      "upstreamReference": "https://github.com/pbakaus/impeccable/blob/68b1129634a1cdd9a0ba50b27376c71b4b083ae8/.github/skills/impeccable/reference/doctor.md"
+    }
+  ]
+}
