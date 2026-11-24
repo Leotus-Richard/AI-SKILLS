@@ -216,3 +216,92 @@ jobs:
           path: ${{ runner.temp }}/skill-reports/
           if-no-files-found: warn
           retention-days: 14
+
+  # Builds the PR comment from both reports. Read-only: it runs this
+  # repository's script, but holds no write permission.
+  report:
+    name: Build PR report
+    needs: [skillspector, tier1]
+    if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26.13.1'
+      # Either report can be missing (a failed scan, or no changed skills);
+      # the script says so in the comment instead of failing here.
+      - name: Download SkillSpector reports
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          name: skillspector-reports
+          path: ${{ runner.temp }}/spector
+      - name: Download Tier 1 reports
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          name: skillevaluator-tier1-attempt-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/tier1
+      - name: Build the comment
+        env:
+          ENFORCED: ${{ vars.SKILL_TIER1_ENFORCE == 'true' }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT: ${{ github.event.pull_request.head.sha }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/comment"
+          node scripts/skill-checks-comment.mjs \
+            --spector "$RUNNER_TEMP/spector" --tier1 "$RUNNER_TEMP/tier1" \
+            --enforced "$ENFORCED" --run-url "$RUN_URL" --commit "$COMMIT" \
+            > "$RUNNER_TEMP/comment/skill-checks-comment.md"
+          cat "$RUNNER_TEMP/comment/skill-checks-comment.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload the comment
+        uses: actions/upload-artifact@v7
+        with:
+          name: skill-checks-comment
+          path: ${{ runner.temp }}/comment/skill-checks-comment.md
+          if-no-files-found: error
+          retention-days: 7
+
+  # The only job with write access. It never checks out or runs PR code; it
+  # posts the prepared Markdown, updating its earlier comment on each push.
+  comment:
+    name: Post PR comment
+    needs: report
+    if: always() && needs.report.result == 'success'
+    runs-on: ${{ fromJSON(vars.SELF_HOSTED_RUNNER_LABELS || '["self-hosted","linux","ARM64","ai-skills"]') }}
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Download the comment
+        uses: actions/download-artifact@v8
+        with:
+          name: skill-checks-comment
+          path: ${{ runner.temp }}/comment
+      - name: Create or update the comment
+        uses: actions/github-script@v9
+        env:
+          COMMENT_FILE: ${{ runner.temp }}/comment/skill-checks-comment.md
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- skill-checks-report -->';
+            const body = fs.readFileSync(process.env.COMMENT_FILE, 'utf8');
+            if (!body.startsWith(marker)) throw new Error('Unexpected comment content');
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
+            const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.startsWith(marker));
+            if (previous) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body });
+              core.info(`Updated comment ${previous.html_url}`);
+            } else {
+              const { data } = await github.rest.issues.createComment({ owner, repo, issue_number, body });
+              core.info(`Created comment ${data.html_url}`);
+            }
