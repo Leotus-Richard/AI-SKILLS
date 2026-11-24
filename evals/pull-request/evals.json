@@ -1,0 +1,144 @@
+{
+  "skill_name": "pull-request",
+  "evals": [
+    {
+      "id": "pull-request-001",
+      "prompt": "Write the pull request for this change. I ran `npm test` and all 42 tests passed.\n\n```diff\n--- a/src/checkout/discount.js\n+++ b/src/checkout/discount.js\n@@ -4,6 +4,9 @@ export async function applyDiscount(req, res) {\n   const code = req.body.code;\n+  if (typeof code !== 'string' || code.trim() === '') {\n+    return res.status(400).json({ error: 'Enter a discount code' });\n+  }\n   const discount = await discounts.find(code);\n--- a/test/checkout/discount.test.js\n+++ b/test/checkout/discount.test.js\n@@ -20,0 +21,8 @@\n+test('rejects an empty discount code with 400', async () => {\n+  const res = await post('/checkout/discount', { code: '   ' });\n+  assert.equal(res.status, 400);\n+});\n```",
+      "expected_output": "A pull request title and a description using the five template headings. Bug fix is the only type ticked, How to Test names npm test, How to Validate describes submitting an empty code and seeing the 400 message, and Tests pass locally is ticked because the user ran them.",
+      "assertions": [
+        "The description has the headings Description, Type of Change, How to Test, How to Validate and Checklist, in that order",
+        "A title is given that names the outcome, such as rejecting empty discount codes, and is not a generic title like \"Fix bug\"",
+        "Under Type of Change, \"Bug fix\" is marked [x] and the other three boxes are left unmarked",
+        "How to Test contains the command `npm test` as a numbered step",
+        "How to Validate has numbered steps that say what the reviewer should see, such as a 400 response or the message \"Enter a discount code\" for an empty code",
+        "\"Tests pass locally\" is ticked"
+      ],
+      "expected_skill": "pull-request"
+    },
+    {
+      "id": "pull-request-002",
+      "prompt": "Draft the PR description for this branch. I haven't run the tests yet and I'm out of time today.\n\n```diff\n--- a/src/api/reports.py\n+++ b/src/api/reports.py\n@@ -31,0 +32,12 @@\n+@router.get(\"/reports/{report_id}/export.csv\")\n+def export_report_csv(report_id: int, user=Depends(current_user)):\n+    report = reports.get_for_user(report_id, user)\n+    rows = [[r.date, r.account, r.amount_cents] for r in report.rows]\n+    return csv_response(rows, filename=f\"report-{report_id}.csv\")\n```",
+      "expected_output": "A description with the five headings where New feature is ticked and Tests pass locally is left unticked with a reason saying the tests were not run. How to Test still gives a command for the reviewer to run.",
+      "assertions": [
+        "The description has the headings Description, Type of Change, How to Test, How to Validate and Checklist, in that order",
+        "Under Type of Change, \"New feature\" is marked [x]",
+        "\"Tests pass locally\" is NOT ticked",
+        "A reason is given beside or below the unticked \"Tests pass locally\" box saying the tests were not run",
+        "How to Test still lists at least one concrete step or command for the reviewer to run",
+        "How to Validate describes requesting the CSV export and what the downloaded file should contain"
+      ],
+      "expected_skill": "pull-request"
+    },
+    {
+      "id": "pull-request-003",
+      "prompt": "Open a PR description for this refactor. Behaviour should be identical; `go test ./...` passes.\n\n```diff\n--- a/internal/billing/invoice.go\n+++ b/internal/billing/invoice.go\n@@ -40,14 +40,5 @@ func (s *Service) Total(inv Invoice) Money {\n-\tvar sum Money\n-\tfor _, line := range inv.Lines {\n-\t\tsum = sum.Add(line.Price.Mul(line.Qty))\n-\t}\n-\tif inv.TaxRate > 0 {\n-\t\tsum = sum.Add(sum.MulRate(inv.TaxRate))\n-\t}\n-\treturn sum\n+\treturn withTax(subtotal(inv.Lines), inv.TaxRate)\n }\n+\n+func subtotal(lines []Line) Money { /* moved from Total */ }\n+func withTax(sum Money, rate Rate) Money { /* moved from Total */ }\n```",
+      "expected_output": "A description with the five headings where Refactoring is the type ticked, and How to Validate says the invoice totals must be unchanged and how to check that.",
+      "assertions": [
+        "The description has the headings Description, Type of Change, How to Test, How to Validate and Checklist, in that order",
+        "Under Type of Change, \"Refactoring\" is marked [x] and \"New feature\" is not",
+        "How to Test contains the command `go test ./...`",
+        "How to Validate says that behaviour or invoice totals must stay the same and gives a way to check it",
+        "The description does not claim any change in behaviour"
+      ],
+      "expected_skill": "pull-request"
+    },
+    {
+      "id": "pull-request-004",
+      "prompt": "Write up this PR. It only touches the README.\n\n```diff\n--- a/README.md\n+++ b/README.md\n@@ -12,3 +12,9 @@\n ## Install\n-Run the installer.\n+Requires Node.js 22 or newer.\n+\n+```sh\n+npm install --save-dev @acme/lint-rules\n+```\n+\n+Then add `\"extends\": \"@acme/lint-rules\"` to your ESLint config.\n```",
+      "expected_output": "A description with the five headings where Documentation update is ticked, the checklist does not claim tests were run, the \"Documentation updated\" box stays unticked because no documentation outside the repository changed, and How to Validate asks the reviewer to follow the new install steps or read the rendered README.",
+      "assertions": [
+        "The description has the headings Description, Type of Change, How to Test, How to Validate and Checklist, in that order",
+        "Under Type of Change, \"Documentation update\" is marked [x] and \"Bug fix\" and \"New feature\" are not",
+        "\"Tests pass locally\" is either unticked with a reason such as no code changed, or ticked only with a statement of what was actually run",
+        "How to Validate asks the reviewer to follow the new install instructions or view the rendered README and says what they should see",
+        "The \"Documentation updated\" checklist box is NOT ticked on the strength of the README change, because that box is only for documentation kept outside the repository"
+      ],
+      "expected_skill": "pull-request"
+    },
+    {
+      "id": "pull-request-005",
+      "prompt": "Write the PR description for this branch.\n\n```diff\n--- a/src/auth/session.ts\n+++ b/src/auth/session.ts\n@@ -18 +18 @@\n-  if (session.expiresAt < now) {\n+  if (session.expiresAt <= now) {\n--- a/package.json\n+++ b/package.json\n@@ -22 +22 @@\n-    \"express\": \"4.18.2\",\n+    \"express\": \"5.1.0\",\n--- a/src/reports/format.ts\n+++ b/src/reports/format.ts\n@@ -1,40 +1,40 @@\n-(40 lines reformatted from 2-space to 4-space indentation, no other change)\n```",
+      "expected_output": "The response points out that the branch mixes three unrelated changes (a session expiry fix, an Express major upgrade and a formatting sweep) and proposes splitting them, before or alongside any description.",
+      "assertions": [
+        "The response says the diff mixes unrelated changes",
+        "It names at least two of the three: the session expiry fix, the Express 4 to 5 upgrade, and the reformatting",
+        "It proposes splitting them into separate pull requests, or asks whether to split before writing one description",
+        "It does not present the three changes as a single coherent change without comment"
+      ],
+      "expected_skill": "pull-request"
+    },
+    {
+      "id": "pull-request-006",
+      "prompt": "Our PR currently just says \"fixes stuff\". Rewrite it properly. Tests: `pytest tests/test_retry.py` passes (6 tests).\n\n```diff\n--- a/worker/retry.py\n+++ b/worker/retry.py\n@@ -9,7 +9,10 @@ def run_with_retry(job, attempts=3):\n     for attempt in range(attempts):\n         try:\n             return job()\n-        except Exception:\n-            time.sleep(1)\n+        except TransientError:\n+            time.sleep(2 ** attempt)\n+        except Exception:\n+            raise\n+    raise RetriesExhausted(job.name, attempts)\n```",
+      "expected_output": "A specific title and a description with the five headings that explains the retry now backs off exponentially, retries only transient errors, re-raises other errors and raises RetriesExhausted at the end.",
+      "assertions": [
+        "The description has the headings Description, Type of Change, How to Test, How to Validate and Checklist, in that order",
+        "A title is given that is specific to retries or backoff, not \"fixes stuff\" or \"Fix bug\"",
+        "The Description explains at least two of: exponential backoff, only transient errors are retried, other exceptions are re-raised, RetriesExhausted is raised after the last attempt",
+        "How to Test contains the command `pytest tests/test_retry.py`",
+        "The Description is written as prose about the effect of the change, not as a list of files"
+      ],
+      "expected_skill": "pull-request"
+    },
+    {
+      "id": "pull-request-007",
+      "prompt": "Write the PR description. This repo has its own template in .github/pull_request_template.md, pasted below. I ran `cargo test` and it passed.\n\nTemplate:\n\n```markdown\n## Summary\n\n## Risk\n\n## Rollback plan\n\n## Verification\n```\n\nChange:\n\n```diff\n--- a/src/cache.rs\n+++ b/src/cache.rs\n@@ -55,3 +55,3 @@ impl Cache {\n-    const TTL: Duration = Duration::from_secs(3600);\n+    const TTL: Duration = Duration::from_secs(300);\n```",
+      "expected_output": "A description that uses the repository's own headings (Summary, Risk, Rollback plan, Verification) in that order, not the bundled template, and fills each one for the TTL change from one hour to five minutes.",
+      "assertions": [
+        "The description uses the headings Summary, Risk, Rollback plan and Verification, in that order",
+        "It does not replace them with the headings \"Type of Change\" or \"Checklist\" from another template",
+        "Summary says the cache TTL changes from 3600 seconds (one hour) to 300 seconds (five minutes)",
+        "Verification mentions `cargo test`",
+        "No heading from the repository template is deleted or left with no text"
+      ],
+      "expected_skill": "pull-request"
+    },
+    {
+      "id": "pull-request-008",
+      "prompt": "Write the PR for this change. `make test` passes. I also updated the on-call wiki page \"Runbook: queue backlog\" with the new threshold.\n\n```diff\n--- a/alerts/queue.yaml\n+++ b/alerts/queue.yaml\n@@ -6,3 +6,3 @@ - alert: QueueBacklog\n-  expr: queue_depth > 1000\n+  expr: queue_depth > 5000\n   for: 10m\n```",
+      "expected_output": "A description with the five headings where \"Documentation updated\" is ticked and names the wiki page \"Runbook: queue backlog\", because documentation outside the repository was updated.",
+      "assertions": [
+        "The description has the headings Description, Type of Change, How to Test, How to Validate and Checklist, in that order",
+        "The \"Documentation updated\" checklist box is ticked",
+        "The wiki page \"Runbook: queue backlog\" is named in the description or beside that checklist box",
+        "The Description says the queue backlog alert threshold changes from 1000 to 5000",
+        "How to Test contains the command `make test`"
+      ],
+      "expected_skill": "pull-request"
+    },
+    {
+      "id": "pull-request-009",
+      "prompt": "Give me a commit message for this staged change, nothing else.\n\n```diff\n--- a/src/util/slug.js\n+++ b/src/util/slug.js\n@@ -3 +3 @@\n-  return text.toLowerCase().replace(/ /g, '-');\n+  return text.toLowerCase().trim().replace(/\\s+/g, '-');\n```",
+      "expected_output": "A commit message for the slug change: a short subject line and, at most, a brief body. It is not a pull request description.",
+      "assertions": [
+        "The response is a commit message with a short subject line about slugs or whitespace",
+        "It does not contain the headings \"Type of Change\", \"How to Test\" or \"Checklist\"",
+        "It contains no checkbox list"
+      ],
+      "expected_skill": null
+    },
+    {
+      "id": "pull-request-010",
+      "prompt": "A teammate opened a PR with this diff. Review it and tell me if you see any bugs.\n\n```diff\n--- a/src/orders/total.js\n+++ b/src/orders/total.js\n@@ -2,5 +2,5 @@ export function orderTotal(items) {\n   let total = 0;\n-  for (let i = 0; i < items.length; i++) {\n+  for (let i = 0; i <= items.length; i++) {\n     total += items[i].price * items[i].qty;\n   }\n   return total;\n```",
+      "expected_output": "A code review that identifies the off-by-one error: the loop now reads items[items.length], which is undefined and throws. It is a review, not a pull request description.",
+      "assertions": [
+        "The response identifies that `i <= items.length` reads one element past the end of the array",
+        "It says this will throw or produce a wrong result because `items[items.length]` is undefined",
+        "It is written as review feedback and does not produce a pull request description template with a checklist"
+      ],
+      "expected_skill": null
+    },
+    {
+      "id": "pull-request-011",
+      "prompt": "What is the difference between \"Squash and merge\" and \"Rebase and merge\" on GitHub, and when would I pick each?",
+      "expected_output": "A direct explanation: squash combines the branch into one commit on the base branch, rebase replays each commit onto the base branch without a merge commit, with guidance on when each fits.",
+      "assertions": [
+        "Explains that squash and merge combines the pull request's commits into a single commit",
+        "Explains that rebase and merge adds the commits individually on top of the base branch without a merge commit",
+        "Gives at least one reason to choose each",
+        "Does not output a pull request description template"
+      ],
+      "expected_skill": null
+    }
+  ]
+}
