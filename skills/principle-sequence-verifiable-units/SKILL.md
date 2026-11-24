@@ -2,38 +2,23 @@
 name: principle-sequence-verifiable-units
 description: "Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer."
 metadata:
-  version: "1.0.0"
+  version: "2.0.0"
   author: "Lauren Tan (pstack)"
   tags: [engineering-principles]
 ---
 
-# Principle Sequence Verifiable Units
+# Sequence work into verifiable units
 
-## Scope
+Order work as a sequence of small units, each ending in a state you can check, and don't advance until the current one is green.
 
-Read `references/local-execution-contract.md` at task start. This skill is task-specific and local-only. Do not activate remote integrations, persistent modes, hooks or unrelated implementation.
+**Why:** A break caught at the unit that caused it is cheap to localize. A break caught after a batch is buried, and you have already built further on a broken base. Sequencing those same units into a delivery a reviewer can replay turns "trust me" into "watch it go red, then green."
 
-## Workflow
+**Execution.** In a sweep, migration, or any run of similar edits, verify each change before starting the next. Each unit is a before/after bracket: known-good state, one change, run the check, then proceed. Rebase onto clean trunk first so every check measures against the real baseline. When a lever does the edits, the per-unit check is nearly free. Run it anyway.
 
-1. Read the preserved source leaf for the exact trigger, rule and examples.
-2. Apply only to the current relevant decision, using the local execution contract as the scope authority.
-3. Preserve its invariant rather than mechanically applying examples to unrelated systems.
-4. Report the concrete decision or check this principle changed.
+**Delivery.** Stack commits and PRs in the order that proves the work. The canonical shape is the failing test first, then the fix on top. Other story orders are a subtraction before the reshape, a baseline capture before the treatment, the scaffold before the feature. Each commit lands on its own and the sequence reads as an argument.
 
-## Default output
+The sequencing complement to the **principle-prove-it-works** skill, which keeps each check real, and the **principle-build-the-lever** skill, which makes the per-unit check cheap.
 
-A justified local design/action/check; no unrelated workflow activation.
+Skills named here are optional. Apply this principle without them when they are not installed.
 
-## Failure boundary
-
-If evidence or scope is insufficient, report the gap rather than treating a principle as proof.
-
-## Upstream resources
-
-The full original skill and its resources are preserved under `references/upstream/`. Read `references/upstream/ORIGINAL-SKILL.md` for detailed rubrics, templates and examples when its branch is relevant. Resolve its relative resource paths from that directory. Its tool names, model IDs, publication steps, transcript paths and persistent modes are source-specific examples, not permission to execute them. Follow this hub and the local execution contract when those instructions conflict.
-
-Links in the original to other pstack skills open local copies in `references/upstream/related/`, taken from the same pinned commit. Use the installed skill of the same name if there is one; this skill works without it.
-
-## Provenance
-
-Adapted from [pstack:principle-sequence-verifiable-units](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-sequence-verifiable-units/SKILL.md). The original MIT notice is bundled. This is a local-only adaptation, not an endorsement or a claim of native host support.
+_Source: [pstack](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-sequence-verifiable-units/SKILL.md) by Lauren Tan, MIT license (see LICENSE.txt). SOURCE.md lists the changes from the original._

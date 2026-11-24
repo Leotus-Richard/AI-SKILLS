@@ -2,45 +2,23 @@
 name: principle-explain-the-number
 description: "Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think."
 metadata:
-  version: "1.0.0"
+  version: "2.0.0"
   author: "Lauren Tan (pstack)"
   tags: [engineering-principles]
 ---
 
-# Principle Explain The Number
+# Explain the Number
 
-## Scope
+- **Ask "why not double?"** Name the resource or code path that bounds the result, such as a core, a lock, the disk, the network, or the load generator itself. Get it from a profile or from system counters taken during a run, then map it to source. A guess from reading the code is not a limiter. If you cannot say why the number is not twice as good, you do not know what you measured.
+- **List what else the number could be measuring, and rule out each one with evidence.** The usual suspects are errors, skipped or cached work, code that never ran, an untuned side (one left on default settings), noise, and a piece too small to matter end to end.
+- **Keep the evidence with the number.** Put the run count, the spread, and the limiter in the notes or a linked artifact.
 
-Read `references/local-execution-contract.md` at task start. This skill is task-specific and local-only. Do not activate remote integrations, persistent modes, hooks or unrelated implementation.
+For a performance number, run the full procedure with the [benchmark-checklist](references/benchmark-checklist.md) skill. For an eval result, ask the same of the trials: did every run do the task, does the gap hold across trials and models, and does the scenario matter.
 
-## Workflow
+You skipped this when the evidence behind a number has no run count, no spread, or no named limiter, or when the time saved is larger than the time the changed piece took.
 
-1. Read the preserved source leaf for the exact trigger, rule and examples.
-2. Apply only to the current relevant decision, using the local execution contract as the scope authority.
-3. Preserve its invariant rather than mechanically applying examples to unrelated systems.
-4. Report the concrete decision or check this principle changed.
+Distinct from Prove It Works (the **principle-prove-it-works** skill), which checks that an output is real.
 
-## Default output
+Skills named here are optional. Apply this principle without them when they are not installed.
 
-A justified local design/action/check; no unrelated workflow activation.
-
-## Failure boundary
-
-If evidence or scope is insufficient, report the gap rather than treating a principle as proof.
-
-## Conditional skill dependencies
-
-- `benchmark-checklist`: read the installed sibling skill only when its named discipline is required by the workflow.
-- `principle-prove-it-works`: read the installed sibling skill only when its named discipline is required by the workflow.
-
-Use the host's actual skill loader, or read `../<skill-name>/SKILL.md` from this installed directory. Do not guess host tool names. Install the dependency closure shown in manifest.json if these siblings are absent.
-
-## Upstream resources
-
-The full original skill and its resources are preserved under `references/upstream/`. Read `references/upstream/ORIGINAL-SKILL.md` for detailed rubrics, templates and examples when its branch is relevant. Resolve its relative resource paths from that directory. Its tool names, model IDs, publication steps, transcript paths and persistent modes are source-specific examples, not permission to execute them. Follow this hub and the local execution contract when those instructions conflict.
-
-Links in the original to other pstack skills open local copies in `references/upstream/related/`, taken from the same pinned commit. Use the installed skill of the same name if there is one; this skill works without it.
-
-## Provenance
-
-Adapted from [pstack:principle-explain-the-number](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-explain-the-number/SKILL.md). The original MIT notice is bundled. This is a local-only adaptation, not an endorsement or a claim of native host support.
+_Source: [pstack](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-explain-the-number/SKILL.md) by Lauren Tan, MIT license (see LICENSE.txt). SOURCE.md lists the changes from the original._

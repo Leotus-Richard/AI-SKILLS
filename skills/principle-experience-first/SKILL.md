@@ -2,38 +2,23 @@
 name: principle-experience-first
 description: "Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones."
 metadata:
-  version: "1.0.0"
+  version: "2.0.0"
   author: "Lauren Tan (pstack)"
   tags: [engineering-principles]
 ---
 
-# Principle Experience First
+# Experience First
 
-## Scope
+When implementation convenience conflicts with user delight, choose delight.
 
-Read `references/local-execution-contract.md` at task start. This skill is task-specific and local-only. Do not activate remote integrations, persistent modes, hooks or unrelated implementation.
+- Every feature, control, and option must be justified
+- Ship less, ship better (polished experience with three features beats rough one with ten)
+- Prototype before committing (design decisions are cheaper in throwaway HTML than production code)
+- Get the details right (transitions, alignment, spacing, feedback, error states)
+- Tighten the core loop (every feature should serve the central workflow or get out of the way)
 
-## Workflow
+The user is whoever consumes the work. For a UI that is the end user. For a library or an internal API it is the colleague who imports it. The engineer who maintains the code next is a user too. Weigh their experience the same way, and explain impact from their perspective.
 
-1. Read the preserved source leaf for the exact trigger, rule and examples.
-2. Apply only to the current relevant decision, using the local execution contract as the scope authority.
-3. Preserve its invariant rather than mechanically applying examples to unrelated systems.
-4. Report the concrete decision or check this principle changed.
+Foundations should serve the experience. Foundational thinking governs the *sequence* of work. This principle governs the *target*.
 
-## Default output
-
-A justified local design/action/check; no unrelated workflow activation.
-
-## Failure boundary
-
-If evidence or scope is insufficient, report the gap rather than treating a principle as proof.
-
-## Upstream resources
-
-The full original skill and its resources are preserved under `references/upstream/`. Read `references/upstream/ORIGINAL-SKILL.md` for detailed rubrics, templates and examples when its branch is relevant. Resolve its relative resource paths from that directory. Its tool names, model IDs, publication steps, transcript paths and persistent modes are source-specific examples, not permission to execute them. Follow this hub and the local execution contract when those instructions conflict.
-
-Links in the original to other pstack skills open local copies in `references/upstream/related/`, taken from the same pinned commit. Use the installed skill of the same name if there is one; this skill works without it.
-
-## Provenance
-
-Adapted from [pstack:principle-experience-first](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-experience-first/SKILL.md). The original MIT notice is bundled. This is a local-only adaptation, not an endorsement or a claim of native host support.
+_Source: [pstack](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-experience-first/SKILL.md) by Lauren Tan, MIT license (see LICENSE.txt). SOURCE.md lists the changes from the original._

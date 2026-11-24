@@ -29,30 +29,30 @@ This repository contains **42 skills**. Each Perplexity upload archive contains 
 
 | Skill | Version | License | Description |
 | --- | --- | --- | --- |
-| [principle-attack-the-premise](../skills/principle-attack-the-premise/SKILL.md) | 1.0.0 | MIT | Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it. |
-| [principle-boundary-discipline](../skills/principle-boundary-discipline/SKILL.md) | 1.0.0 | MIT | Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions. |
-| [principle-build-the-lever](../skills/principle-build-the-lever/SKILL.md) | 1.0.0 | MIT | Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun. |
-| [principle-encode-lessons-in-structure](../skills/principle-encode-lessons-in-structure/SKILL.md) | 1.0.0 | MIT | Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text. |
-| [principle-exhaust-the-design-space](../skills/principle-exhaust-the-design-space/SKILL.md) | 1.0.0 | MIT | Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing. |
-| [principle-experience-first](../skills/principle-experience-first/SKILL.md) | 1.0.0 | MIT | Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones. |
-| [principle-explain-the-number](../skills/principle-explain-the-number/SKILL.md) | 1.0.0 | MIT | Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think. |
-| [principle-fix-root-causes](../skills/principle-fix-root-causes/SKILL.md) | 1.0.0 | MIT | Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes. |
-| [principle-foundational-thinking](../skills/principle-foundational-thinking/SKILL.md) | 1.0.0 | MIT | Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious. |
-| [principle-guard-the-context-window](../skills/principle-guard-the-context-window/SKILL.md) | 1.0.0 | MIT | Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads. |
-| [principle-laziness-protocol](../skills/principle-laziness-protocol/SKILL.md) | 1.0.0 | MIT | Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem. |
-| [principle-make-operations-idempotent](../skills/principle-make-operations-idempotent/SKILL.md) | 1.0.0 | MIT | Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs. |
-| [principle-migrate-callers-then-delete-legacy-apis](../skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md) | 1.0.0 | MIT | Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers. |
-| [principle-minimize-reader-load](../skills/principle-minimize-reader-load/SKILL.md) | 1.0.0 | MIT | Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope. |
-| [principle-model-the-domain](../skills/principle-model-the-domain/SKILL.md) | 1.0.0 | MIT | Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files. |
-| [principle-never-block-on-the-human](../skills/principle-never-block-on-the-human/SKILL.md) | 1.0.0 | MIT | Apply when tempted to ask 'should I do X?' on reversible work. |
-| [principle-outcome-oriented-execution](../skills/principle-outcome-oriented-execution/SKILL.md) | 1.0.0 | MIT | Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code. |
-| [principle-prove-it-works](../skills/principle-prove-it-works/SKILL.md) | 1.0.0 | MIT | Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.' |
-| [principle-redesign-from-first-principles](../skills/principle-redesign-from-first-principles/SKILL.md) | 1.0.0 | MIT | Apply when integrating a new requirement into an existing design. |
-| [principle-separate-before-serializing-shared-state](../skills/principle-separate-before-serializing-shared-state/SKILL.md) | 1.0.0 | MIT | Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant. |
-| [principle-sequence-verifiable-units](../skills/principle-sequence-verifiable-units/SKILL.md) | 1.0.0 | MIT | Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer. |
-| [principle-subtract-before-you-add](../skills/principle-subtract-before-you-add/SKILL.md) | 1.0.0 | MIT | Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base. |
-| [principle-test-behavior-not-implementation](../skills/principle-test-behavior-not-implementation/SKILL.md) | 1.0.0 | MIT | Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined. |
-| [principle-type-system-discipline](../skills/principle-type-system-discipline/SKILL.md) | 1.0.0 | MIT | Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas. |
+| [principle-attack-the-premise](../skills/principle-attack-the-premise/SKILL.md) | 2.0.0 | MIT | Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it. |
+| [principle-boundary-discipline](../skills/principle-boundary-discipline/SKILL.md) | 2.0.0 | MIT | Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions. |
+| [principle-build-the-lever](../skills/principle-build-the-lever/SKILL.md) | 2.0.0 | MIT | Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun. |
+| [principle-encode-lessons-in-structure](../skills/principle-encode-lessons-in-structure/SKILL.md) | 2.0.0 | MIT | Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text. |
+| [principle-exhaust-the-design-space](../skills/principle-exhaust-the-design-space/SKILL.md) | 2.0.0 | MIT | Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing. |
+| [principle-experience-first](../skills/principle-experience-first/SKILL.md) | 2.0.0 | MIT | Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones. |
+| [principle-explain-the-number](../skills/principle-explain-the-number/SKILL.md) | 2.0.0 | MIT | Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think. |
+| [principle-fix-root-causes](../skills/principle-fix-root-causes/SKILL.md) | 2.0.0 | MIT | Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes. |
+| [principle-foundational-thinking](../skills/principle-foundational-thinking/SKILL.md) | 2.0.0 | MIT | Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious. |
+| [principle-guard-the-context-window](../skills/principle-guard-the-context-window/SKILL.md) | 2.0.0 | MIT | Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads. |
+| [principle-laziness-protocol](../skills/principle-laziness-protocol/SKILL.md) | 2.0.0 | MIT | Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem. |
+| [principle-make-operations-idempotent](../skills/principle-make-operations-idempotent/SKILL.md) | 2.0.0 | MIT | Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs. |
+| [principle-migrate-callers-then-delete-legacy-apis](../skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md) | 2.0.0 | MIT | Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers. |
+| [principle-minimize-reader-load](../skills/principle-minimize-reader-load/SKILL.md) | 2.0.0 | MIT | Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope. |
+| [principle-model-the-domain](../skills/principle-model-the-domain/SKILL.md) | 2.0.0 | MIT | Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files. |
+| [principle-never-block-on-the-human](../skills/principle-never-block-on-the-human/SKILL.md) | 2.0.0 | MIT | Apply when tempted to ask 'should I do X?' on reversible work. |
+| [principle-outcome-oriented-execution](../skills/principle-outcome-oriented-execution/SKILL.md) | 2.0.0 | MIT | Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code. |
+| [principle-prove-it-works](../skills/principle-prove-it-works/SKILL.md) | 2.0.0 | MIT | Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.' |
+| [principle-redesign-from-first-principles](../skills/principle-redesign-from-first-principles/SKILL.md) | 2.0.0 | MIT | Apply when integrating a new requirement into an existing design. |
+| [principle-separate-before-serializing-shared-state](../skills/principle-separate-before-serializing-shared-state/SKILL.md) | 2.0.0 | MIT | Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant. |
+| [principle-sequence-verifiable-units](../skills/principle-sequence-verifiable-units/SKILL.md) | 2.0.0 | MIT | Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer. |
+| [principle-subtract-before-you-add](../skills/principle-subtract-before-you-add/SKILL.md) | 2.0.0 | MIT | Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base. |
+| [principle-test-behavior-not-implementation](../skills/principle-test-behavior-not-implementation/SKILL.md) | 2.0.0 | MIT | Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined. |
+| [principle-type-system-discipline](../skills/principle-type-system-discipline/SKILL.md) | 2.0.0 | MIT | Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas. |
 
 ## workflow (7)
 
@@ -84,30 +84,30 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **maintain-verification-skill** 1.0.0: not yet tested with a model
 - **negative-space-programming** 1.0.0: not yet tested with a model
 - **orchestrate** 1.0.0: not yet tested with a model
-- **principle-attack-the-premise** 1.0.0: not yet tested with a model
-- **principle-boundary-discipline** 1.0.0: not yet tested with a model
-- **principle-build-the-lever** 1.0.0: not yet tested with a model
-- **principle-encode-lessons-in-structure** 1.0.0: not yet tested with a model
-- **principle-exhaust-the-design-space** 1.0.0: not yet tested with a model
-- **principle-experience-first** 1.0.0: not yet tested with a model
-- **principle-explain-the-number** 1.0.0: not yet tested with a model
-- **principle-fix-root-causes** 1.0.0: not yet tested with a model
-- **principle-foundational-thinking** 1.0.0: not yet tested with a model
-- **principle-guard-the-context-window** 1.0.0: not yet tested with a model
-- **principle-laziness-protocol** 1.0.0: not yet tested with a model
-- **principle-make-operations-idempotent** 1.0.0: not yet tested with a model
-- **principle-migrate-callers-then-delete-legacy-apis** 1.0.0: not yet tested with a model
-- **principle-minimize-reader-load** 1.0.0: not yet tested with a model
-- **principle-model-the-domain** 1.0.0: not yet tested with a model
-- **principle-never-block-on-the-human** 1.0.0: not yet tested with a model
-- **principle-outcome-oriented-execution** 1.0.0: not yet tested with a model
-- **principle-prove-it-works** 1.0.0: not yet tested with a model
-- **principle-redesign-from-first-principles** 1.0.0: not yet tested with a model
-- **principle-separate-before-serializing-shared-state** 1.0.0: not yet tested with a model
-- **principle-sequence-verifiable-units** 1.0.0: not yet tested with a model
-- **principle-subtract-before-you-add** 1.0.0: not yet tested with a model
-- **principle-test-behavior-not-implementation** 1.0.0: not yet tested with a model
-- **principle-type-system-discipline** 1.0.0: not yet tested with a model
+- **principle-attack-the-premise** 2.0.0: not yet tested with a model
+- **principle-boundary-discipline** 2.0.0: not yet tested with a model
+- **principle-build-the-lever** 2.0.0: not yet tested with a model
+- **principle-encode-lessons-in-structure** 2.0.0: not yet tested with a model
+- **principle-exhaust-the-design-space** 2.0.0: not yet tested with a model
+- **principle-experience-first** 2.0.0: not yet tested with a model
+- **principle-explain-the-number** 2.0.0: not yet tested with a model
+- **principle-fix-root-causes** 2.0.0: not yet tested with a model
+- **principle-foundational-thinking** 2.0.0: not yet tested with a model
+- **principle-guard-the-context-window** 2.0.0: not yet tested with a model
+- **principle-laziness-protocol** 2.0.0: not yet tested with a model
+- **principle-make-operations-idempotent** 2.0.0: not yet tested with a model
+- **principle-migrate-callers-then-delete-legacy-apis** 2.0.0: not yet tested with a model
+- **principle-minimize-reader-load** 2.0.0: not yet tested with a model
+- **principle-model-the-domain** 2.0.0: not yet tested with a model
+- **principle-never-block-on-the-human** 2.0.0: not yet tested with a model
+- **principle-outcome-oriented-execution** 2.0.0: not yet tested with a model
+- **principle-prove-it-works** 2.0.0: not yet tested with a model
+- **principle-redesign-from-first-principles** 2.0.0: not yet tested with a model
+- **principle-separate-before-serializing-shared-state** 2.0.0: not yet tested with a model
+- **principle-sequence-verifiable-units** 2.0.0: not yet tested with a model
+- **principle-subtract-before-you-add** 2.0.0: not yet tested with a model
+- **principle-test-behavior-not-implementation** 2.0.0: not yet tested with a model
+- **principle-type-system-discipline** 2.0.0: not yet tested with a model
 - **prototype** 1.0.1: not yet tested with a model
 - **retro** 1.0.0: not yet tested with a model
 - **show-me-your-work** 1.0.0: not yet tested with a model
@@ -176,98 +176,122 @@ Newest first. Each entry states the expected behavior of that version; see [vers
 
 ### principle-attack-the-premise
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. Related principles are named, not bundled, and are optional. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it.
 
 ### principle-boundary-discipline
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions.
 
 ### principle-build-the-lever
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. Related principles are named, not bundled, and are optional. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun.
 
 ### principle-encode-lessons-in-structure
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The body now opens with the rule from the description. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text.
 
 ### principle-exhaust-the-design-space
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The body now opens with the rule from the description. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing.
 
 ### principle-experience-first
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones.
 
 ### principle-explain-the-number
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. Related principles are named, not bundled, and are optional. The benchmark checklist moves to references/benchmark-checklist.md. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think.
 
 ### principle-fix-root-causes
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes.
 
 ### principle-foundational-thinking
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious.
 
 ### principle-guard-the-context-window
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The body now opens with the rule from the description. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads.
 
 ### principle-laziness-protocol
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The body now opens with the rule from the description. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem.
 
 ### principle-make-operations-idempotent
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs.
 
 ### principle-migrate-callers-then-delete-legacy-apis
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers.
 
 ### principle-minimize-reader-load
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. Related principles are named, not bundled, and are optional. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope.
 
 ### principle-model-the-domain
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files.
 
 ### principle-never-block-on-the-human
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when tempted to ask 'should I do X?' on reversible work.
 
 ### principle-outcome-oriented-execution
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code.
 
 ### principle-prove-it-works
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'
 
 ### principle-redesign-from-first-principles
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when integrating a new requirement into an existing design.
 
 ### principle-separate-before-serializing-shared-state
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant.
 
 ### principle-sequence-verifiable-units
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. Related principles are named, not bundled, and are optional. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer.
 
 ### principle-subtract-before-you-add
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base.
 
 ### principle-test-behavior-not-implementation
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when you write, change, or keep a test. Call the code as its users do and assert the exact result they see. Rewrite or delete a test that would pass if every imported function returned undefined.
 
 ### principle-type-system-discipline
 
+- **2.0.0** (2026-11-24, major): SKILL.md is now the principle itself, from upstream pstack. The toolkit hub, references/local-execution-contract.md and references/upstream/ are removed, so nothing else needs reading. Existing users: the contract's local-only limits no longer ship with this skill, so the host's and the user's own rules govern commits, pushes and other outward actions. Related principles are named, not bundled, and are optional. The trigger and description are unchanged.
 - **1.0.0** (2026-11-24, initial): Applies one engineering principle to the current task only, not as a persistent mode. Trigger: Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas.
 
 ### prototype

@@ -2,38 +2,28 @@
 name: principle-fix-root-causes
 description: "Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes."
 metadata:
-  version: "1.0.0"
+  version: "2.0.0"
   author: "Lauren Tan (pstack)"
   tags: [engineering-principles]
 ---
 
-# Principle Fix Root Causes
+# Fix Root Causes
 
-## Scope
+When debugging, do not fix symptoms. Trace every problem to its root cause and fix it there.
 
-Read `references/local-execution-contract.md` at task start. This skill is task-specific and local-only. Do not activate remote integrations, persistent modes, hooks or unrelated implementation.
+**Why:** Symptom fixes accumulate. Each workaround makes the system harder to reason about, and the real bug remains. Root-cause fixes are slower upfront but reduce total debugging time.
 
-## Workflow
+**Pattern:**
+- Reproduce first
+- Ask "why" until you hit the root cause
+- Do not add guards (adding a nil check to silence a crash is a symptom fix)
+- If a workaround needs a paragraph-long comment to justify it, the code is wrong (fix the code, not the comment)
+- Check for the pattern, not just the instance (grep for the same pattern, fix all instances)
+- When stuck, instrument. Don't guess (add logging, read the actual error)
+- If the deciding fact took a deep dig to find, propose the cheap, always-on signal that would have shown it at first look
 
-1. Read the preserved source leaf for the exact trigger, rule and examples.
-2. Apply only to the current relevant decision, using the local execution contract as the scope authority.
-3. Preserve its invariant rather than mechanically applying examples to unrelated systems.
-4. Report the concrete decision or check this principle changed.
+**Restart bugs: suspect state before code**
 
-## Default output
+When something "fails after restart," suspect stale persistent state first: config files, caches, lock files, serialized state. If clearing a state file restores behavior, prioritize state validation as the fix.
 
-A justified local design/action/check; no unrelated workflow activation.
-
-## Failure boundary
-
-If evidence or scope is insufficient, report the gap rather than treating a principle as proof.
-
-## Upstream resources
-
-The full original skill and its resources are preserved under `references/upstream/`. Read `references/upstream/ORIGINAL-SKILL.md` for detailed rubrics, templates and examples when its branch is relevant. Resolve its relative resource paths from that directory. Its tool names, model IDs, publication steps, transcript paths and persistent modes are source-specific examples, not permission to execute them. Follow this hub and the local execution contract when those instructions conflict.
-
-Links in the original to other pstack skills open local copies in `references/upstream/related/`, taken from the same pinned commit. Use the installed skill of the same name if there is one; this skill works without it.
-
-## Provenance
-
-Adapted from [pstack:principle-fix-root-causes](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-fix-root-causes/SKILL.md). The original MIT notice is bundled. This is a local-only adaptation, not an endorsement or a claim of native host support.
+_Source: [pstack](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-fix-root-causes/SKILL.md) by Lauren Tan, MIT license (see LICENSE.txt). SOURCE.md lists the changes from the original._

@@ -2,38 +2,38 @@
 name: principle-boundary-discipline
 description: "Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions."
 metadata:
-  version: "1.0.0"
+  version: "2.0.0"
   author: "Lauren Tan (pstack)"
   tags: [engineering-principles]
 ---
 
-# Principle Boundary Discipline
+# Boundary Discipline
 
-## Scope
+Place validation, type narrowing, and error handling at system boundaries. Trust internal code unconditionally. Business logic lives in pure functions. The shell is thin and mechanical.
 
-Read `references/local-execution-contract.md` at task start. This skill is task-specific and local-only. Do not activate remote integrations, persistent modes, hooks or unrelated implementation.
+**Why:** Scattered validation is noisy, redundant, and gives a false sense of safety. Keep logic out of framework wiring so it can be tested without the framework.
 
-## Workflow
+**The pattern:**
+- **At boundaries** (CLI args, config files, external APIs, network protocols): validate, return errors, handle defensively.
+- **Inside the system:** typed data, error propagation, no re-validation. Trust the types.
+- **Across the boundary.** Expose domain concepts, not the boundary's private representation. Keep general-purpose mechanism inside and special-purpose policy at the edge.
 
-1. Read the preserved source leaf for the exact trigger, rule and examples.
-2. Apply only to the current relevant decision, using the local execution contract as the scope authority.
-3. Preserve its invariant rather than mechanically applying examples to unrelated systems.
-4. Report the concrete decision or check this principle changed.
+**Applications:**
 
-## Default output
+Validation and error handling:
+- Validate config at parse time (the boundary), not inside business logic
+- Parse raw data into domain types at the boundary
+- Do not re-export transport, storage, framework, or wire types through the public surface
+- No redundant nil checks deep in call chains if the boundary already validated
 
-A justified local design/action/check; no unrelated workflow activation.
+Code organization:
+- Business logic in pure functions with no framework dependencies
+- Parse functions: pure transforms from raw bytes to typed state
+- Prompt construction: structured state in, string out
+- Scoring and assessment: pure transforms from state to results
 
-## Failure boundary
+**The tests:**
+- "Is this data crossing a system boundary right now?" If not, validation is redundant.
+- "Can this be a pure function that the shell just calls?" If yes, extract it.
 
-If evidence or scope is insufficient, report the gap rather than treating a principle as proof.
-
-## Upstream resources
-
-The full original skill and its resources are preserved under `references/upstream/`. Read `references/upstream/ORIGINAL-SKILL.md` for detailed rubrics, templates and examples when its branch is relevant. Resolve its relative resource paths from that directory. Its tool names, model IDs, publication steps, transcript paths and persistent modes are source-specific examples, not permission to execute them. Follow this hub and the local execution contract when those instructions conflict.
-
-Links in the original to other pstack skills open local copies in `references/upstream/related/`, taken from the same pinned commit. Use the installed skill of the same name if there is one; this skill works without it.
-
-## Provenance
-
-Adapted from [pstack:principle-boundary-discipline](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-boundary-discipline/SKILL.md). The original MIT notice is bundled. This is a local-only adaptation, not an endorsement or a claim of native host support.
+_Source: [pstack](https://github.com/cursor/plugins/blob/1e5c90a4b6f249917bd21fe361b3a2a7deb741b8/pstack/skills/principle-boundary-discipline/SKILL.md) by Lauren Tan, MIT license (see LICENSE.txt). SOURCE.md lists the changes from the original._
