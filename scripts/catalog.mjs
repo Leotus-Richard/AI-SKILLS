@@ -150,6 +150,7 @@ export async function createCatalog(repoRoot) {
       related: sortedNames(entry.related),
       provenance: stableObject(entry.provenance),
       testedWith: latestEvaluationFor(entry.evaluations, version),
+      evaluations: evaluationsFor(entry.evaluations, version),
       versions: Array.isArray(entry.versions) ? entry.versions.map(stableObject) : [],
       path,
       fileCount: files.length,
@@ -172,6 +173,46 @@ function latestEvaluationFor(evaluations, version) {
   records.sort((a, b) => String(b.date).localeCompare(String(a.date)));
   const record = records[0];
   return record ? stableObject({ date: record.date, provider: record.provider, models: record.models, tiers: record.tiers }) : null;
+}
+
+// Every evaluation of the current version, newest first: a skill can help one model and not another.
+function evaluationsFor(evaluations, version) {
+  if (!Array.isArray(evaluations) || !version) return [];
+  return evaluations
+    .filter(record => record && record.version === version)
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)))
+    .map(record => stableObject({
+      date: record.date, provider: record.provider, models: record.models, tiers: record.tiers,
+      results: record.results ?? {}, tier3: record.tier3 ?? null, runUrl: record.runUrl ?? null,
+    }));
+}
+
+const percent = value => `${(value * 100).toFixed(1)}%`;
+
+// What Tier 3 found for one record, in a sentence. Lift is stated only when the run reported one.
+export function tier3Text(tier3, status) {
+  if (!tier3) return status ? `Tier 3 ${status}, no scores recorded` : '';
+  const parts = [];
+  if (tier3.lift !== null) {
+    const points = (tier3.lift * 100).toFixed(1);
+    parts.push(`lift ${tier3.lift >= 0 ? '+' : ''}${points} points (${percent(tier3.withoutSkill)} without the skill, ${percent(tier3.withSkill)} with it)`);
+  } else {
+    const short = (scored, side) => (scored !== null && tier3.cases !== null && scored < tier3.cases ? `the ${side} run was incomplete (${scored} of ${tier3.cases} cases scored)` : null);
+    const why = short(tier3.scoredWithSkill, 'with-skill') ?? short(tier3.scoredWithoutSkill, 'without-skill') ?? 'the run did not report one';
+    parts.push(`no lift reported, because ${why}`);
+    if (tier3.withoutSkill !== null) parts.push(`${percent(tier3.withoutSkill)} without the skill`);
+    if (tier3.withSkill !== null) parts.push(`${percent(tier3.withSkill)} with it`);
+  }
+  if (tier3.activationTrials) parts.push(`skill activated in ${tier3.activated} of ${tier3.activationTrials} trials`);
+  return parts.join('; ');
+}
+
+function evaluationText(record) {
+  const { judge, agent, embedding } = record.models;
+  const models = [agent && `agent \`${agent}\``, judge && `judge \`${judge}\``, embedding && `embeddings \`${embedding}\``].filter(Boolean).join(', ');
+  const found = tier3Text(record.tier3, record.results?.tier3);
+  const link = record.runUrl ? ` [run](${record.runUrl})` : '';
+  return `${models} (${record.provider}, ${record.date})${found ? `: ${found}` : ''}.${link}`;
 }
 
 function testedWithText(testedWith) {
@@ -207,9 +248,15 @@ export function renderCatalogMarkdown(catalog, { linkMode = 'source' } = {}) {
   }
   lines.pop();
   lines.push('', ...renderDependencies(catalog, linkMode));
-  lines.push('', '## Tested with', '', 'Models used by the latest live evaluation (`skill-eval.yml`) of each skill\'s current version, from `registry/skills.json`.', '');
+  lines.push('', '## Tested with', '', 'Every live evaluation (`skill-eval.yml`) of each skill\'s current version, newest first, from `registry/skills.json`. A result speaks only for the models it names: the same skill can help one model and not another. Lift is the Tier 3 score with the skill minus the score without it.', '');
   for (const skill of catalog.skills) {
-    lines.push(`- **${skill.name}** ${markdownCell(skill.version ?? 'unversioned')}: ${markdownCell(testedWithText(skill.testedWith))}`);
+    const records = skill.evaluations ?? [];
+    if (!records.length) {
+      lines.push(`- **${skill.name}** ${markdownCell(skill.version ?? 'unversioned')}: ${markdownCell(testedWithText(skill.testedWith))}`);
+      continue;
+    }
+    lines.push(`- **${skill.name}** ${markdownCell(skill.version ?? 'unversioned')}:`);
+    for (const record of records) lines.push(`  - ${evaluationText(record)}`);
   }
   lines.push('', '## Version history', '', 'Newest first. Each entry states the expected behavior of that version; see [versioning](VERSIONING.md).', '');
   for (const skill of catalog.skills) {

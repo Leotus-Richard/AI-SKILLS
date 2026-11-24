@@ -91,7 +91,7 @@ A skill lists the skills it needs under `requires` in `registry/skills.json`, an
 
 ## Tested with
 
-Models used by the latest live evaluation (`skill-eval.yml`) of each skill's current version, from `registry/skills.json`.
+Every live evaluation (`skill-eval.yml`) of each skill's current version, newest first, from `registry/skills.json`. A result speaks only for the models it names: the same skill can help one model and not another. Lift is the Tier 3 score with the skill minus the score without it.
 
 - **agile-work-hierarchy** 1.0.0: not yet tested with a model
 - **commit-workflow** 1.0.0: not yet tested with a model
@@ -106,7 +106,8 @@ Models used by the latest live evaluation (`skill-eval.yml`) of each skill's cur
 - **interrogate** 2.0.0: not yet tested with a model
 - **latex** 2.0.0: not yet tested with a model
 - **maintain-verification-skill** 3.0.0: not yet tested with a model
-- **negative-space-programming** 1.0.0: not yet tested with a model
+- **negative-space-programming** 1.0.0:
+  - agent `qwen/qwen3.6-35b-a3b`, judge `nvidia/nemotron-3.5-super-vl` (lmstudio, 2026-11-24): no lift reported, because the with-skill run was incomplete (10 of 12 cases scored); 93.4% without the skill; skill activated in 1 of 8 trials. [run](https://github.com/Leotus-Richard/AI-SKILLS/actions/runs/45456749648)
 - **orchestrate** 2.0.0: not yet tested with a model
 - **principle-attack-the-premise** 2.0.0: not yet tested with a model
 - **principle-boundary-discipline** 2.0.0: not yet tested with a model
