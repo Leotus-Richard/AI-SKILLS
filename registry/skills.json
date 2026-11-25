@@ -21,7 +21,26 @@
           "version": "1.0.0",
           "date": "2026-11-24",
           "bump": "initial",
-          "expectedBehavior": "Plans, reviews, or reconciles Agile work as an Epic or Milestone \u2192 Feature \u2192 User Story \u2192 Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error)."
+          "expectedBehavior": "Plans, reviews, or reconciles Agile work as an Epic or Milestone → Feature → User Story → Task hierarchy with independent Bugs and separate dependency edges. Drafts by default and changes a tracker only with authorization; the bundled validator checks plan structure (exit 0 valid, 1 violations, 2 usage error)."
+        }
+      ],
+      "evaluations": []
+    },
+    {
+      "name": "bug-report",
+      "category": "engineering-practice",
+      "license": "Apache-2.0",
+      "provenance": {
+        "kind": "original",
+        "urls": [],
+        "notes": "Original skill for this repository, contributed by the repository owner under Apache-2.0. The six-section bug report template is the owner's; the workflow around it was drafted at their request on 2026-11-24."
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-24",
+          "bump": "initial",
+          "expectedBehavior": "Writes a bug report from what was observed, using the repository's own issue template when it has one and the bundled one otherwise: a summary of the bug, numbered steps to reproduce it, the expected behavior and why, the environment with versions read from the system, screenshots, and additional notes. Writes \"unknown\" where a fact is missing instead of inventing it, takes secrets out of logs, says when something is a feature request, and sends a security weakness to private reporting. Files a report only when asked."
         }
       ],
       "evaluations": []

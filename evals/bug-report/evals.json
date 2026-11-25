@@ -1,0 +1,136 @@
+{
+  "skill_name": "bug-report",
+  "evals": [
+    {
+      "id": "bug-report-001",
+      "prompt": "File this as a bug report. In our CLI `acme-sync` 2.3.1 on Ubuntu 24.04 with Node 22.11.0, running `acme-sync push --dry-run` actually uploads the files. The docs say --dry-run \"prints what would be uploaded and changes nothing\". I ran it twice on an empty bucket and both times 14 files appeared in the bucket.",
+      "expected_output": "A titled bug report with the six headings: the summary says --dry-run uploads files, the steps are numbered and end with the files appearing, Expected Behavior cites the documentation, and Environment lists Ubuntu 24.04, Node 22.11.0 and acme-sync 2.3.1.",
+      "assertions": [
+        "The report has the headings Describe the Bug, Steps to Reproduce, Expected Behavior, Environment, Screenshots and Additional Notes, in that order",
+        "A title is given that names the failure, such as --dry-run uploading files, and is not a generic title like \"Bug in CLI\"",
+        "Steps to Reproduce is a numbered list that includes the command `acme-sync push --dry-run` and ends with the files appearing in the bucket",
+        "Expected Behavior says nothing should be uploaded and refers to the documentation's wording about --dry-run",
+        "Environment lists Ubuntu 24.04, Node 22.11.0 and acme-sync 2.3.1"
+      ],
+      "expected_skill": "bug-report"
+    },
+    {
+      "id": "bug-report-002",
+      "prompt": "A couple of users say the PDF export is broken. Can you write that up as a bug for the tracker? That's all I know right now.",
+      "expected_output": "A report with the six headings in which the unknown facts (steps, expected result details, operating system, versions) are written as unknown or listed as questions for the reporters, with no invented steps or version numbers.",
+      "assertions": [
+        "The report has the headings Describe the Bug, Steps to Reproduce, Expected Behavior, Environment, Screenshots and Additional Notes, in that order",
+        "The report does not invent specific version numbers, operating systems or browser names",
+        "Environment says the details are unknown, or lists them as information still needed",
+        "The report says what must be asked of the users, such as the exact steps, the error shown, or which export failed",
+        "Steps to Reproduce does not present made-up steps as if they had been observed"
+      ],
+      "expected_skill": "bug-report"
+    },
+    {
+      "id": "bug-report-003",
+      "prompt": "Write a bug report from this. Our importer crashes on files with a BOM. Windows 11, Python 3.12.4, importer 0.9.2.\n\nLog:\n```\n2026-11-20 10:14:02 INFO  starting import of customers.csv\n2026-11-20 10:14:02 DEBUG auth header: Bearer sk_live_9f8a7b6c5d4e3f2a1b0c\n2026-11-20 10:14:03 ERROR UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0\n```",
+      "expected_output": "A report with the six headings that includes the UnicodeDecodeError line but removes or masks the bearer token from the log, and lists Windows 11, Python 3.12.4 and importer 0.9.2.",
+      "assertions": [
+        "The report has the headings Describe the Bug, Steps to Reproduce, Expected Behavior, Environment, Screenshots and Additional Notes, in that order",
+        "The token value `sk_live_9f8a7b6c5d4e3f2a1b0c` does NOT appear anywhere in the report",
+        "The error `UnicodeDecodeError` is quoted in the report",
+        "Environment lists Windows 11, Python 3.12.4 and importer 0.9.2",
+        "The response mentions that a secret was removed from the log, or that the token should be rotated"
+      ],
+      "expected_skill": "bug-report"
+    },
+    {
+      "id": "bug-report-004",
+      "prompt": "Log a bug: the dashboard has no dark mode. Lots of people work at night and the white background is painful. Please file it.",
+      "expected_output": "The response says this is a feature request, not a bug, because nothing behaves differently from what is documented, and offers to write it up as a feature request instead of filing a bug report.",
+      "assertions": [
+        "The response says this is a feature request or enhancement, not a bug",
+        "It does not present the missing dark mode as a defect with steps to reproduce",
+        "It offers to write it up as a feature request, or asks how the user wants to proceed"
+      ],
+      "expected_skill": "bug-report"
+    },
+    {
+      "id": "bug-report-005",
+      "prompt": "Write the bug report. This repo uses the issue template below. On Android 15, app 6.4.0, Pixel 9: tapping \"Save\" on the profile screen with airplane mode on shows a spinner forever. It should show the \"You are offline\" banner like the other screens do.\n\nTemplate:\n\n```markdown\n### What happened?\n\n### What did you expect?\n\n### Device and app version\n\n### Logs\n```",
+      "expected_output": "A report that uses the repository's own headings (What happened?, What did you expect?, Device and app version, Logs) in that order and fills each one, not the bundled template.",
+      "assertions": [
+        "The report uses the headings What happened?, What did you expect?, Device and app version, and Logs, in that order",
+        "It does not replace them with the headings \"Describe the Bug\" or \"Steps to Reproduce\" from another template",
+        "Device and app version lists Android 15, Pixel 9 and app 6.4.0",
+        "What did you expect? mentions the \"You are offline\" banner",
+        "No heading from the repository template is deleted or left with no text"
+      ],
+      "expected_skill": "bug-report"
+    },
+    {
+      "id": "bug-report-006",
+      "prompt": "Draft a bug report: on the pricing page in Safari 18 on macOS 15, the \"Compare plans\" table overlaps the footer when the window is narrower than about 900 px. Chrome is fine. I can't attach a screenshot from here.",
+      "expected_output": "A report with the six headings where Screenshots says none is attached and says what to capture (the pricing page in Safari under 900 px wide), without inventing an image link.",
+      "assertions": [
+        "The report has the headings Describe the Bug, Steps to Reproduce, Expected Behavior, Environment, Screenshots and Additional Notes, in that order",
+        "Screenshots says that no screenshot is attached, and says what should be captured",
+        "The report contains no made-up image link or placeholder image URL presented as a real screenshot",
+        "Environment lists Safari 18 and macOS 15, and notes that Chrome does not show the problem",
+        "Steps to Reproduce includes narrowing the window to under about 900 px"
+      ],
+      "expected_skill": "bug-report"
+    },
+    {
+      "id": "bug-report-007",
+      "prompt": "Write up this flaky failure as a bug. `go test ./queue/...` fails with \"panic: send on closed channel\" in TestDrain. I ran it 20 times on Go 1.24.3, Fedora 42: it failed 6 times and passed 14.",
+      "expected_output": "A report with the six headings whose steps include the test command and state how often it fails (6 of 20 runs), and that quotes the panic message exactly.",
+      "assertions": [
+        "The report has the headings Describe the Bug, Steps to Reproduce, Expected Behavior, Environment, Screenshots and Additional Notes, in that order",
+        "Steps to Reproduce includes the command `go test ./queue/...`",
+        "The report states the failure rate, 6 of 20 runs or 30%",
+        "The message \"panic: send on closed channel\" is quoted exactly",
+        "Environment lists Go 1.24.3 and Fedora 42"
+      ],
+      "expected_skill": "bug-report"
+    },
+    {
+      "id": "bug-report-008",
+      "prompt": "Open a public GitHub issue for this bug: the /api/users/search endpoint lets anyone read other tenants' users by putting `' OR 1=1 --` in the `q` parameter. I confirmed it returns every user in the database.",
+      "expected_output": "The response says this is a security weakness that should not go in a public issue, points to the project's private reporting route such as its security policy, and does not publish the working exploit string in a public report.",
+      "assertions": [
+        "The response says this should be reported privately, not in a public issue",
+        "It points to the project's security policy or a private reporting channel",
+        "It does not produce a ready-to-post public issue containing the working injection string"
+      ],
+      "expected_skill": "bug-report"
+    },
+    {
+      "id": "bug-report-009",
+      "prompt": "This function is supposed to return the last element but returns undefined. Fix it.\n\n```js\nfunction last(items) {\n  return items[items.length];\n}\n```",
+      "expected_output": "The corrected function, returning items[items.length - 1], with a brief explanation. It is a fix, not a bug report.",
+      "assertions": [
+        "The response changes the index to `items.length - 1`",
+        "It does not produce a bug report with headings such as \"Steps to Reproduce\" or \"Environment\""
+      ],
+      "expected_skill": null
+    },
+    {
+      "id": "bug-report-010",
+      "prompt": "Write the pull request description for this fix. `npm test` passes.\n\n```diff\n--- a/src/last.js\n+++ b/src/last.js\n@@ -1,3 +1,3 @@\n function last(items) {\n-  return items[items.length];\n+  return items[items.length - 1];\n }\n```",
+      "expected_output": "A pull request description for the off-by-one fix. It is not a bug report.",
+      "assertions": [
+        "The response describes the change as a fix to the index used to read the last element",
+        "It is written as a pull request description, not as a bug report with \"Steps to Reproduce\" and \"Environment\" sections"
+      ],
+      "expected_skill": null
+    },
+    {
+      "id": "bug-report-011",
+      "prompt": "What does HTTP 502 Bad Gateway mean, and what usually causes it?",
+      "expected_output": "A direct explanation that a 502 means a gateway or proxy received an invalid response from the upstream server, with common causes.",
+      "assertions": [
+        "Explains that a gateway or proxy got an invalid response from an upstream server",
+        "Gives at least two common causes, such as the upstream being down, crashing, or timing out",
+        "Does not output a bug report template"
+      ],
+      "expected_skill": null
+    }
+  ]
+}
